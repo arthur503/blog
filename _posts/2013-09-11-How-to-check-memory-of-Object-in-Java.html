@@ -1,0 +1,206 @@
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">我在做delicious的书签数据分析的时候，</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">从200309.bz2~200712.bz2总共有6.</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">7G的文件，解压缩为txt文件后约为40G。</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">对于内存只有2G的小破本来说，也勉强算是大数据了吧。</span>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">我希望对delicious中的书签进行一次统计，</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">找到这四年来收藏最多的书签，使用HashMap保存统计结果。</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">不过在实验中，最多只能解析到200411.bz2文件，</span>
+                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">之后就是内存不够的错误。</span>
+                    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">于是想要查到有没有监控内存消耗的jar包，</span>
+                        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">看看HashMap到底消耗了多少内存。</span>
+                        </wbr>
+                    </wbr>
+                </wbr>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">查到的资料Java HashMap 分析之四:</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">查找和内存使用中提到一个检查Java对象内存消耗的工具：</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">sizeOf.jar。从这里下载jar包：</span><a href="http://sizeof.sourceforge.net/" target="_blank" style="color:#1155cc;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">http://
+                <wbr>
+                    sizeof.sourceforge.net/
+                </wbr></a><span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">解压后将Siz</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">eOf.jar复制到某个目录，比如我的/home/</span>
+                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">chenshu,在项目中加入这个jar包，</span>
+                    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">并且设置JVM参数：-javaagent:/home/</span>
+                        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">chenshu/SizeOf.jar。</span>
+                            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">这个类库提供了一些静态函数，利用java.lang.</span>
+                                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">Instrument的Instrumentation.</span>
+                                    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                                        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">getObjectSize()，</span>
+                                        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                                            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">能够计算Java对象真正在虚拟机里面占用的内存大小。</span>
+                                        </wbr>
+                                    </wbr>
+                                </wbr>
+                            </wbr>
+                        </wbr>
+                    </wbr>
+                </wbr>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">下面的代码创建了一个只保存一个对象的HashMap,</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">并计算内存占用。</span>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">官网给的操作介绍如下：</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">Quickstart</span>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">1. include sizeOf.jar in the classpath of your application and use it in your code like this: import net.sourceforge.sizeof ... SizeOf.skipStaticField(true); //java.sizeOf will not compute static fields SizeOf.skipFinalField(true); //java.sizeOf will not compute final fields SizeOf.skipFlyweightObject(</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">true); //java.sizeOf will not compute well-known flyweight objects System.out.println(SizeOf.</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">deepSizeOf()); //this will print the object size in bytesYou can dump object&#39;s size setting the min size to log (if you don&#39;t specify an output stream standard out is used): SizeOf.setMinSizeToLog(1024); //min object size to log in bytes SizeOf.setLogOutputStream(new FileOutputStream(&quot;&quot;));Use the humanReadable() method to get the object size in byte, kilo or mega (if you need giga your in trouble guy!): SizeOf.humanReadable(SizeOf.</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">deepSizeOf());</span>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">2. start your application with the following JVM parameter: -javaagent:/path_to/sizeOf.</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;white-space:normal;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">jar</span>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">3. have fun!</span>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff">注</span><span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">意：第二步一定要设定JVM parameter！我没有设定会报错如下：Exception in thread &quot;main&quot; java.lang.</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">IllegalStateException:</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Instrumentation is null 设定方法是在run as -&gt; Run Configuration -&gt; Arguments选项卡 -&gt; VM arguments 中，添加jar包的位置，如：-javaagent:D:\</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">java\SizeOf.jar。这样，</span>
+                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">就可以查看某一个Javai对象的内存了。</span>
+                </wbr>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">查看后发现，</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">保存了260W行数据之后，</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">HashMap占内存185M啊尼玛。还是内存不足错误，</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">该怎么办呢？</span>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">------------------------</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">-----------------------------</span>
+    </wbr>
+</p>
+<p>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Sizeof.jar包虽好，</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">不过这只能查看某一个Object的大小，</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">不能查看整个过程中的内存使用情况。因此，</span>
+                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">又在网上搜索得到使用Memory Analyser插件。在官网Memory Analyzer (MAT)下载最新插件，</span>
+                    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">直接解压缩到plugins文件夹下没效果，</span>
+                        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">于是将解压缩得到的plugins和features文件夹下的</span>
+                            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">文件分别copy到eclipse对应的文件夹下。</span>
+                                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">可以调出window view。</span>
+                                </wbr>
+                            </wbr>
+                        </wbr>
+                    </wbr>
+                </wbr>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">MAT分析需要.hprof文件。在VM configuration的arguments中添加：-</span>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">XX:+</span>
+        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">HeapDumpOnOutOfMemoryError则在出现</span>
+            <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">OutOfMemoryError错误后，</span>
+                <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">会在对应project的文件夹下生成.hprof文件。之后，</span>
+                    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">在Eclipse中open对应的.hprof文件，</span>
+                        <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+                            <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">就有引导使用MAT分析数据。</span>
+                        </wbr>
+                    </wbr>
+                </wbr>
+            </wbr>
+        </wbr>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">至于使用MAT分析数据，Java and android performance analysis, Eclipse Memory Analyzer这篇文章里写的很详细（需翻墙）。 </span>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">参考资料：</span>
+</p>
+<p>
+    <wbr style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">
+        <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Java HashMap 分析之四:查找和内存使用</span>
+    </wbr>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Size Of in Java [closed]java.sizeOf ProjectMemory Analyzer (MAT)</span>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Java and android performance analysis, </span>
+</p>
+<p>
+    <span style="color:#222222;font-family:arial, sans-serif;font-size:13px;background-color:#ffffff;">Eclipse Memory Analyzer</span>
+</p>
+<p>
+    <br />
+</p>
