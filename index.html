@@ -36,6 +36,14 @@ title: 龙珠的博客：修炼自己与发现世界
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
+　　<h2>{{ page.title }}</h2>
+　　<p>最新文章</p>
+　　<ul>
+　　　　{% for post in site.posts %}
+　　　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+　　　　{% endfor %}
+　　</ul>
+
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
 $ git checkout gh-pages
