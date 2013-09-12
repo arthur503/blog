@@ -1,11 +1,11 @@
 ﻿---
 layout: default
-title: Ouscn  龙珠：修炼自己和发现世界 12:59
+title: ouscn 13:16
 ---
 <h2>{{ page.title }}</h2>
-<p>New Posts 最新文章</p>
+<p>New posts</p>
 <ul>
-{% for post in site.posts %}
-<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-{% endfor %}
+    {% for post in site.posts %}
+	     <li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
 </ul>
