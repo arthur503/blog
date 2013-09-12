@@ -1,54 +1,12 @@
 <!DOCTYPE html>
 　　<html>
+　　<head>
+　　　　<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+　　　　<title>{{ page.title }}</title>
+　　</head>
+　　<body>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Blog content" />
+　　　　{{ content }}
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-	
-	
-	<!-- 调用点点网的css -->
-	<link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
-    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
-	<style type="text/css">
-        .container {
-            width:600px;
-        }
-    </style>
-	
-    <title>{{ page.title }}</title>
-
-  </head>
-
-  <body>
- <a  href="http://arthur503.github.io/blog/">Back to Main Page</a>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-
-	   <!-- 文章正文 -->  
-		<br>
-　		{{ content }}
-		<br>
-      </section>
-    </div>
-	
-
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-		<br>
-		{{ page.date | date_to_string }}</p>
-        <p class="copyright">Blog maintained by <a href="https://github.com/arthur503">arthur503</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-  
-  
-  </body>
-</html>
-
+　　</body>
+　　</html>
