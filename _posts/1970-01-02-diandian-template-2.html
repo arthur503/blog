@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{{ page.title }} 统计：Delicious数据集中收藏最多的书签是哪些？（有【存疑】）_龙珠</title>
+    <meta name="description" content="Arthur Blog Content" />
+    <meta name="keywords" content="文字" />
+
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+	
+        .container {
+            width:600px;
+        }
+  
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://arthur503.github.io/blog/">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+           <!-- CONTENT_TEMPLATE -->                 
+                        
+<h2 class="title">222统计：Delicious数据集中收藏最多的书签是哪些？（有【存疑】）</h2>
+
+
+<div class="entry rich-content"><p>之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。</p>
+
+之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。<br><br>
+之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。
+<p>之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。之前从网上下载到Delicious的书签数据集，从200309.bz2~200712.bz2，每月一个.bz2压缩文件，总共6.7G左右（解压缩应该40G左右）。</p>
+解压缩应该40G左右）
+
+<p>这些天一直在做怎么统计这些数据，得到收藏最多的书签。基本思路简单，就是扫描每个文件，保存出现的次数，最后做排序，得到Top K个书签。</p>
+<p>关于海量数据处理，July在<a href="http://blog.csdn.net/v_july_v/article/details/7382693" target="_blank" title="教你如何迅速秒杀掉：99%的海量数据处理面试题">教你如何迅速秒杀掉：99%的海量数据处理面试题</a>列了很多方法来实现，基本思想都是大而化小，分而治之，各个击破。</p>
+<p>我一直在看Hash的部分，希望能实现Hash+堆排序的算法，因此把这个数据拿来用。</p>
+<p>不过在实现中还是有很多问题。</p>
+<p><strong>一、扫描文件</strong></p>
+<p>数据集给的是.bz2文件，一一解压出来不仅麻烦，还占存储空间（约40G），而且之后做Hash的时候，还需要再占用40G空间，电脑存储空间不够。</p>
+<p>因此，在网上搜索能直接读取.bz2文件的方法，具体见前文：<a href="http://ouscn.diandian.com/post/2013-09-07/40053564598" target="_blank" title="bz2:Java中读取bz2文件数据">bz2:Java中读取bz2文件数据</a></p>
+<p><strong>二、内存不足</strong></p>
+<p>最开始的想法是：创建一个HashMap&lt;String, Integer&gt;，放入url和count。但在执行过程中，发现内存不足。</p>
+<p>为了查看到底是哪些对象占用内存，搜索了计算Object内存的方法，具体见前文：<a href="http://ouscn.diandian.com/post/2013-09-07/40052132892" target="_blank">Java：如何查看Object的大小</a></p>
+<p>如那个所说，使用这种方法，在放入260W行之后，HashMap占内存185M。其实很容易算出来：</p>
+<p>虽然保存的url长度不一，但一般如：&quot;http://www.nordlys.no/debatt/article253576.ece&quot;的长度是46，每个char占内存2byte，所以url占内存46*2=92byte，260W行则占内存：260W &nbsp;* 92byte = 239,200,000，约为239M。</p>
+<p>而我的eclipse内存最大设置是350M。何况，现在来看所有文档估计有5亿行左右，不重复的虽然没统计但也肯定远大于260W了。因此，需要另想办法。</p>
+<p>对于无法一下放入内存的数据，July也给出了办法，是：将大文件通过hash映射到N个小文件中，之后对每个小文件分别统计Top k，最后汇总统计总的Top k。</p>
+<p>这里有个我之前不解的地方，即：如何保证相同的url都出现在同一个小文件中。其实很简单，只需要取url的hashcode，然后根据此hashcode对N取余，决定将其放入哪个小文件中即可。这样，对相同url的统计就不会遗漏（其实还是当时对hash没有理解。。）</p>
+<p>方法是这样，但是是否可行？</p>
+<p>这里需要考虑：</p>
+<p>1. 需要分成多少个小文件才合适？</p>
+<p>2. N值太大的话，在写入过程中，会不会FileOutputStream太多也会占用内存过大而死掉？</p>
+<p>我先测试了一下，写了10000个FileOutputStream，每个创建一个txt文件，写入一行，最后关闭。测试FileOutputStream[] 总的占内存大小，结果发现没多大，也就十多M的样子。这下OK了。</p>
+<p>那考虑需要分成多少个小文件呢？</p>
+<p>之前对文件总量没有太好的估计，随便选了一个2000的值。这样，40G的文件平均下来，每个txt文件就是20M。</p>
+<p>由于不知道创建多个文件+每个文件较小和少数文件+每个文件较大那个比较快（需要比较写入速度和读取速度），所以没有深入研究这个N该如何取最合适。在此【存疑】，以后要是感兴趣可以再研究。目前来看，2000个文件还是OK的。</p>
+<p><strong>三、Top 1和Top k</strong></p>
+<p>最开始为了简单，写的是Top1的代码，只需要比较一个就好了。在测试通过之后，改写为Top k的代码，同时，希望尽可能完整的保存原始信息（包括：date，hashcode，url，tags）。因此，写了新类BookMark.java，并重写了其中的equals方法和hashcode方法，具体操作可以参考前文：<a href="http://ouscn.diandian.com/post/2013-09-06/40053641450" target="_blank" title="孪生兄弟：How to override equals and hashCode Method in Java?">孪生兄弟：How to override equals and hashCode Method in Java?</a></p>
+<p>另外，对于排序算法，现在还没写堆排序，使用的最简单的时间复杂度为O(n^2)的排序。等我再修改后，对比一下各个排序算法的效果。</p>
+<p>好了，架构完成！</p>
+<p>在调试了n多个bug之后，表示测试通过。</p>
+<p>在测试的时候，估算了下，6.7G的.bz2文件大概需要跑7、8个小时，因此，在晚上睡觉前运行。第二天早上起来，尼玛，竟然还没运行完！预估错误！才跑了1/3左右的数据，约1.6亿行，索性不跑了，开始统计，最后结果如下：</p>
+<p>*Delicious书签数据集200309.bz2~200612.bz2(该文件只跑了430W行，没跑完)，bz2文件总大小2.64G，写入的2000个txt文件总大小为15.4G，总行数为1亿6170万行，总耗时8个小时左右。</p>
+<p>*运行环境：Intel Core i3 CPU M380 2.53G * 4，eclipse -Xmx为350M，window xp sp3，32位。</p>
+<p>*还剩200701.bz2~200712.bz2文件（剩下的文件总共4G）。</p>
+<p>*最后得到的Top 10的书签为：</p>
+<p>URL:http://www.alvit.de/handbook/ Count:64922</p>
+<p>URL:http://slashdot.org/ Count:51204</p>
+<p>URL:http://www.flickr.com/ Count:52396</p>
+<p>URL:http://script.aculo.us/ Count:69018</p>
+<p>URL:http://www.last.fm/ Count:43641</p>
+<p>URL:http://www.oswd.org/ Count:39915</p>
+<p>URL:http://en.wikipedia.org/wiki/Main_Page Count:40104</p>
+<p>URL:http://www.lifehacker.com/ Count:43137</p>
+<p>URL:http://www.pandora.com/ Count:62574</p>
+<p>URL:http://www.netvibes.com/ Count:45967</p>
+<p>终于到接收成果的时候了，可以看出，03-06年最火的收藏是flicker, last.fm, wiki, lifehacker, pandora这样耳熟的名字。</p>
+<p>&nbsp;</p>
+<p>下一步工作：</p>
+<p>1. 修改排序算法，比较各个排序算法的时间复杂度；</p>
+<p>2. 按照要求的错误率p，设计布隆过滤器，统计不重复的url个数；</p>
+<p>3. 改进布隆过滤器，统计出现奇数次的url个数（即：bit为0/1的个数，或可删减的布隆过滤器）；</p>
+<p>4. 改进布隆过滤器，统计出现k次的url的个数；</p>
+<p>5. 可否统计出现k次的url有哪些？怎么保存和实现？（只维护一个出现次数小于k的HashMap？应该也不够）</p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://blog.csdn.net/v_july_v/article/details/7382693" target="_blank" title="教你如何迅速秒杀掉：99%的海量数据处理面试题">教你如何迅速秒杀掉：99%的海量数据处理面试题</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-09-07/40053564598" target="_blank" title="bz2:Java中读取bz2文件数据">bz2:Java中读取bz2文件数据</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-09-07/40052132892" target="_blank">Java：如何查看Object的大小</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-09-06/40053641450" target="_blank" title="孪生兄弟：How to override equals and hashCode Method in Java?">孪生兄弟：How to override equals and hashCode Method in Java?</a><br /></p></li>
+</ol></div>
+                        
+          <!-- CONTENT_TEMPLATE_END -->    
+
+                    <div class="bottom-meta clearfix">
+                        <a>{{ page.date | date_to_string }}</a>
+                    </div>
+                </div>
+
+
+		<div id="footer_wrap" class="outer">
+		<footer class="inner">
+		<br>
+        <p class="copyright">Blog maintained by <a href="https://github.com/arthur503">arthur503</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+		<br>
+      </footer>
+    </div>
+	
+    </div>
+
+
