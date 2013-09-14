@@ -41,7 +41,48 @@ title: 龙珠的博客：修炼自己与发现世界
 <p>欢迎来到我的博客！</p>
 <p>我的博客主要专注三个方面：专业技能（Java，数据挖掘，微博分析等）、读书笔记、生活思考，主要用来整理个人的思考碎片，并记录思考的结果。如果你有意见，更欢迎讨论。</p>
 </font>
+<h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>tech folder:</h3>
 
+<font size=4>
+　　<ul>
+　　　　{% for post in site.categories.tech %}
+　　　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+            <li>
+                <h2>
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                </h2>
+             
+            </li>
+　　　　{% endfor %}
+　　</ul>
+</font>
+
+<a>total list</a>
+    <div class="sidenav">
+        <h2>Tech</h2>
+        <ul class="artical-list">
+        {% for post in site.categories.tech%}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+        <h2>bookreport</h2>
+        <ul class="artical-list">
+        {% for post in site.categories.bookreport%}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+        <h2>bookreport</h2>
+        <ul class="artical-list">
+        {% for post in site.categories.bookreport%}
+            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+<h3>
 
 <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>最新文章列表:</h3>
@@ -53,6 +94,20 @@ title: 龙珠的博客：修炼自己与发现世界
 　　　　{% endfor %}
 　　</ul>
 </font>
+
+
+<a>tech folder</a>
+        <ul class="artical-list">
+        {% for post in site.categories.tech %}
+            <li>
+                <h2>
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                </h2>
+             
+            </li>
+        {% endfor %}
+        </ul>
+		
 
 
 <h3>
