@@ -1,0 +1,472 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>编辑距离：我和你到底有多远？（二）_龙珠</title>
+    <meta name="description" content="上一篇编辑距离：我和你到底有多远？（一）讲了编辑距离的原理，这一篇讲代码实现。【串和序列处理 2】字符串编辑距离算法这篇文章中，给出了heartraid写的Java实现代码。这里面需要注意的一点是，代码中构建的是D[len(A)][len(B)]，而不是我们之前讲的D[len(A)+1][len(B)+1]，即把我们之前说的id的D[0][]和D[][0]行去除掉了。因此，读代码时，D[0][0]相当于我们之前讲的D[1][1]。代码如下：package net.hr.algorithm.stroper;/** * …" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=bf7679a0-160f-11e3-bf8a-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">编辑距离：我和你到底有多远？（二）</h2>
+                            <div class="entry rich-content"><p>上一篇<a href="http://ouscn.diandian.com/post/2013-09-05/40052499927" target="_blank" title="编辑距离：我和你到底有多远？（一）">编辑距离：我和你到底有多远？（一）</a>讲了编辑距离的原理，这一篇讲代码实现。</p>
+<p><a href="http://hxraid.iteye.com/blog/615469" target="_blank" title="【串和序列处理 2】字符串编辑距离算法">【串和序列处理 2】字符串编辑距离算法</a>这篇文章中，给出了heartraid写的Java实现代码。这里面需要注意的一点是，代码中构建的是D[len(A)][len(B)]，而不是我们之前讲的D[len(A)+1][len(B)+1]，即把我们之前说的id的D[0][]和D[][0]行去除掉了。因此，读代码时，D[0][0]相当于我们之前讲的D[1][1]。<br /></p>
+<p>代码如下：</p>
+<pre config="brush:java;toolbar:false;">package net.hr.algorithm.stroper;
+/**
+ * 字符串编辑距离
+ * 
+ * 这是一种字符串之间相似度计算的方法。
+ * 给定字符串S、T，将S转换T所需要的插入、删除、替代操作的数量叫做S到T的编辑路径。
+ * 其中最短的路径叫做编辑距离。
+ * 
+ * 这里使用了一种动态规划的思想求编辑距离。
+ * 
+ * @author heartraid
+ *
+ */
+public class StrEditDistance {
+                                                                               
+    /**字符串X*/
+    private String strX=&quot;&quot;;
+    /**字符串Y*/
+    private String strY=&quot;&quot;;
+    /**字符串X的字符数组*/
+    private char[] charArrayX=null;
+    /**字符串Y的字符数组*/
+    private char[] charArrayY=null;
+                                                                                   
+    public StrEditDistance(String sa,String sb){
+        this.strX=sa;
+        this.strY=sb;
+    }
+    /**
+     * 得到编辑距离
+     * @return 编辑距离
+     */
+    public int getDistance(){
+        charArrayX=strX.toCharArray();
+        charArrayY=strY.toCharArray();
+        return editDistance(charArrayX.length-1,charArrayY.length-1);
+}
+    /**
+     * 动态规划解决编辑距离
+     * 
+     * editDistance(i,j)表示字符串X中[0.... i]的子串 Xi 到字符串Y中[0....j]的子串Y1的编辑距离。
+     * 
+     * @param i 字符串X第i个字符
+     * @param j 字符串Y第j个字符
+     * @return 字符串X(0...i)与字符串Y(0...j)的编辑距离
+     */
+    private int editDistance(int i,int j){
+        if(i==0&amp;&amp;j==0){
+            //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=&quot;+isModify(i,j));
+            return isModify(i,j);
+        }
+        else if(i==0||j==0){
+            if(j&gt;0){
+                //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=edit[&quot;+i+&quot;,&quot;+(j-1)+&quot;]+1&quot;);
+                if(isModify(i,j) == 0) return j;
+                                return editDistance(i, j-1) + 1;
+            }
+            else{
+                //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=edit[&quot;+(i-1)+&quot;,&quot;+j+&quot;]+1&quot;);
+                if(isModify(i,j) == 0) return i;
+                                return editDistance(i-1,j)+1;
+            }
+        }
+        else {
+            //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=min( edit[&quot;+(i-1)+&quot;,&quot;+j+&quot;]+1,edit[&quot;+i+&quot;,&quot;+(j-1)+&quot;]+1,edit[&quot;+(i-1)+&quot;,&quot;+(j-1)+&quot;]+isModify(&quot;+i+&quot;,&quot;+j+&quot;)&quot;);
+            int ccc=minDistance(editDistance(i-1,j)+1,editDistance(i,j-1)+1,editDistance(i-1,j-1)+isModify(i,j));
+            return ccc;
+        }
+                                                                                   
+    }
+    /**
+     * 求最小值
+     * @param disa 编辑距离a
+     * @param disb 编辑距离b
+     * @param disc 编辑距离c
+     */
+    private int minDistance(int disa,int disb,int disc){
+        int dismin=Integer.MAX_VALUE;
+        if(dismin&gt;disa) dismin=disa;
+        if(dismin&gt;disb) dismin=disb;
+        if(dismin&gt;disc) dismin=disc;
+        return dismin;
+    }
+    /**
+     * 单字符间是否替换
+     * 
+     * isModify(i,j)表示X中第i个字符x(i)转换到Y中第j个字符y(j)所需要的操作次数。
+     * 如果x(i)==y(j)，则不需要任何操作isModify(i, j)=0； 否则，需要替换操作，isModify(i, j)=1。
+     * @param i 字符串X第i个字符
+     * @param j 字符串Y第j个字符
+     * @return 需要替换，返回1；否则，返回0
+     */
+    private int isModify(int i,int j){
+        if(charArrayX[i]==charArrayY[j])
+            return 0;
+        else return 1;
+    }
+                                                                                   
+    /**
+     * 测试
+     * @param args
+     */
+    public static void main(String[] args) {    
+        System.out.println(&quot;编辑距离是：&quot;+new StrEditDistance(&quot;eeba&quot;,&quot;abac&quot;).getDistance());
+    }
+                                                                               
+}</pre>
+<p>我跑了一下，完全没有问题。</p>
+<p>不过，我还是想要加入相邻字母交换功能，所以对其进行了修改。</p>
+<p>主要修改在isModify()函数中。判断若D[i][j]与D[i-1][j-1]可以互换，则swap。</p>
+<p>修改的函数需要满足两点：</p>
+<p> * 1.若点（i，j）可以swap，则在（i+2，j+2)及以上才可以再次swap；</p>
+<p> * 2.若再次查询（i，j）点时，仍然返回0；</p>
+<p>对于1的解决方法是：记录当前swap的i和j，再次比较时，相差大与1才可以swap；</p>
+<p>对于2的解决方法是：设定二维数组，若已存在，直接返回值。</p>
+<p>修改后的代码如下：</p>
+<pre config="brush:java;toolbar:false;">package com.arthur.editdistance;
+                                                               
+import com.dzgz.util.Utils;
+                                                               
+/**
+ * 字符串编辑距离
+ * 
+ * 这是一种字符串之间相似度计算的方法。
+ * 给定字符串S、T，将S转换T所需要的插入、删除、替代操作的数量叫做S到T的编辑路径。
+ * 其中最短的路径叫做编辑距离。
+ * 
+ * 这里使用了一种动态规划的思想求编辑距离。
+ * 
+ * @author heartraid
+ * @author arthur——根据heartraid的代码修改。增加了相邻字母交换（swap）的编辑操作。
+ *
+ */
+public class StrEditDistance {
+                                                               
+    /**字符串X*/
+    private String strX=&quot;&quot;;
+    /**字符串Y*/
+    private String strY=&quot;&quot;;
+    /**字符串X的字符数组*/
+    private char[] charArrayX=null;
+    /**字符串Y的字符数组*/
+    private char[] charArrayY=null;
+    /**arthur:是否两个相邻字母进行swap的counter。偶数时可以swap。**/
+    private int counterI = 0;
+    private int counterJ = 0;
+    private int[][] resultArray;
+                                                                   
+    public StrEditDistance(String sa,String sb){
+        this.strX=sa;
+        this.strY=sb;
+        System.out.println(&quot;Edit Distance of &quot;+sa+&quot; and &quot;+sb+&quot; is:&quot;);
+                                                                       
+        //arthur.初始化距离结果数组
+        resultArray = new int[sa.length()][sb.length()];
+        for(int i=0;i&lt;sa.length();i++){
+            for(int j=0;j&lt;sb.length();j++){
+                resultArray[i][j] = -1;
+            }
+        }
+    }
+    /**
+     * 得到编辑距离
+     * @return 编辑距离
+     */
+    public int getDistance(){
+        charArrayX=strX.toCharArray();
+        charArrayY=strY.toCharArray();
+        return editDistance(charArrayX.length-1,charArrayY.length-1);
+}
+    /**
+     * 动态规划解决编辑距离
+     * 
+     * editDistance(i,j)表示字符串X中[0.... i]的子串 Xi 到字符串Y中[0....j]的子串Y1的编辑距离。
+     * 
+     * @param i 字符串X第i个字符
+     * @param j 字符串Y第j个字符
+     * @return 字符串X(0...i)与字符串Y(0...j)的编辑距离
+     */
+    private int editDistance(int i,int j){
+        if(i==0&amp;&amp;j==0){
+            //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=&quot;+isModify(i,j));
+            return isModify(i,j);
+        }
+/*      if(i&lt;0 || j&lt;0){
+            return 0;   //arthur:此处可以替代上面的if(i==0&amp;&amp;j==0)
+        }*/
+                                                                       
+        else if(i==0||j==0){
+            if(j&gt;0){
+                //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=edit[&quot;+i+&quot;,&quot;+(j-1)+&quot;]+1&quot;);
+                if(isModify(i,j) == 0) return j;
+                                return editDistance(i, j-1) + 1;
+            }
+            else{
+                //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=edit[&quot;+(i-1)+&quot;,&quot;+j+&quot;]+1&quot;);
+                if(isModify(i,j) == 0) return i;
+                                return editDistance(i-1,j)+1;
+            }
+        }
+        else {
+            //System.out.println(&quot;edit[&quot;+i+&quot;,&quot;+j+&quot;]=min( edit[&quot;+(i-1)+&quot;,&quot;+j+&quot;]+1,edit[&quot;+i+&quot;,&quot;+(j-1)+&quot;]+1,edit[&quot;+(i-1)+&quot;,&quot;+(j-1)+&quot;]+isModify(&quot;+i+&quot;,&quot;+j+&quot;)&quot;);
+            int ccc=minDistance(editDistance(i-1,j)+1,editDistance(i,j-1)+1,editDistance(i-1,j-1)+isModify(i,j));
+//          System.out.println(&quot;i is:&quot;+i+&quot;.j is:&quot;+j+&quot;.min ccc is:&quot;+ccc);
+            return ccc;
+        }
+                                                                   
+    }
+    /**
+     * 求最小值
+     * @param disa 编辑距离a
+     * @param disb 编辑距离b
+     * @param disc 编辑距离c
+     */
+    private int minDistance(int disa,int disb,int disc){
+        int dismin=Integer.MAX_VALUE;
+        if(dismin&gt;disa) dismin=disa;
+        if(dismin&gt;disb) dismin=disb;
+        if(dismin&gt;disc) dismin=disc;
+        return dismin;
+    }
+    /**
+     * 单字符间是否替换
+     * 
+     * isModify(i,j)表示X中第i个字符x(i)转换到Y中第j个字符y(j)所需要的操作次数。
+     * 如果x(i)==y(j)，则不需要任何操作isModify(i, j)=0； 否则，需要替换操作，isModify(i, j)=1。
+     * @param i 字符串X第i个字符
+     * @param j 字符串Y第j个字符
+     * @return 需要替换，返回1；否则，返回0
+     */
+    private int isModify(int i,int j){
+        if(resultArray[i][j] != -1){
+            return resultArray[i][j];
+        }
+                                                                       
+        if(charArrayX[i]==charArrayY[j]){
+            resultArray[i][j] = 0;
+            return 0;
+        }
+                                                                                   
+        //arthur:添加可以相邻字母swap的操作。
+        /**
+         * 需要满足：
+         * 1.若点（i，j）可以swap，则在（i+2，j+2)及以上才可以再次swap；
+         * 2.若再次查询（i，j）点时，仍然返回0；（方法：设定二维数组，若已存在，直接返回值。不需要再查找）。
+         * 代码如下：
+         *      if(resultArray[i][j] != -1){
+                    return resultArray[i][j];
+                }
+         */
+        if((i-counterI)&gt;1 &amp;&amp; (j-counterJ)&gt;1 &amp;&amp; charArrayX[i]==charArrayY[j-1] &amp;&amp; charArrayX[i-1]==charArrayY[j]){ 
+//          System.out.println(&quot;Before Swap:i is:&quot;+i+&quot; j is:&quot;+j+&quot; counterI is:&quot;+counterI+&quot;, counterJ is:&quot;+counterJ);
+            counterI = i;
+            counterJ = j;
+//          System.out.println(&quot;After Swap:i is:&quot;+i+&quot; j is:&quot;+j+&quot; counterI is:&quot;+counterI+&quot;, counterJ is:&quot;+counterJ);
+            resultArray[i][j] = 0;
+            return 0;
+        }else{
+            resultArray[i][j] = 1;
+            return 1;
+        }
+    }
+                                                                   
+    /**
+     * 测试
+     * @param args
+     */
+    public static void main(String[] args) {    
+        System.out.println(new StrEditDistance(&quot;eeba&quot;,&quot;abac&quot;).getDistance());
+        System.out.println(new StrEditDistance(&quot;sososs&quot;,&quot;ssooss&quot;).getDistance());
+        System.out.println(new StrEditDistance(&quot;abc&quot;,&quot;ca&quot;).getDistance());
+        System.out.println(new StrEditDistance(&quot;ca&quot;,&quot;abc&quot;).getDistance());      
+    }
+                                                               
+}</pre>
+<p>不过，加入了swap操作之后，会有个问题。</p>
+<p>文章<a href="http://www.cnblogs.com/finallyliuyu/archive/2010/09/13/1825258.html" target="_blank" title="有关编辑距离计算的一点整理。">有关编辑距离计算的一点整理。</a>中提到，对于abc和ca来说，编辑距离到底是几？<br /></p>
+<p>若按照L氏距离计算，距离应该为3；按照D氏距离计算，距离应该是2。</p>
+<p>作者对这种现象的解释如下：</p>
+<blockquote>
+ <p>大体情况是这样的，L和D自己对编辑距离的定义是没有问题的，符合泛函理论中对距离定义的三个要素条件。后来一些人就想将L和D的距离定义融合在一起，成为了Damerau–Levenshtein distance（以下简称D-L距离），认为这样就既可以克服了D定义只能识别单一编辑操作引起的错误的局限，又弥补了L定义不包含相邻字符互换操作的遗憾。其实上面的公式1计算的就是D-L距离。但是这个D-L距离并不满足泛函理论中所要求的距离定义的三要素标准，它不满足三角不等式，所以这个定义是有问题的，数学上具有不严谨性。于是也就有了将abc与ca的编辑距离错算为3的情况。但是由于这个错误并不影响工程中的应用，并且这个公式能够给实际工作带来便利，就一直沿用了下来。</p>
+ <p>下面引用wiki上的相关段落：</p>
+ <p>Let us calculate pair-wise distances between the strings <strong>TO</strong>, <strong>OT</strong> and <strong>OST</strong> using this algorithm. The distance between <strong>TO</strong> and <strong>OT</strong>is 1. The same for <strong>OT</strong> vs. <strong>OST</strong>. But the distance between <strong>TO</strong> and <strong>OST</strong> is 3, even though the strings can be made equal using one deletion and one transposition. Clearly, the algorithm does not compute precisely the value we want. Furthermore, the <a href="http://en.wikipedia.org/wiki/Triangle_inequality">triangle inequality</a> does not hold.</p>
+ <p>In reality this algorithm calculates the cost of the so-called <a href="http://en.wikipedia.org/wiki/Optimal_string_alignment">optimal string alignment</a>, which does not always equal the <a href="http://en.wikipedia.org/wiki/Edit_distance">edit distance</a>.</p>
+</blockquote>
+<p>也就是说，我所用的D-L距离，并不满足泛函理论中的三要素标准，数学上不够严谨。但是并不影响工程使用。</p>
+<p>从代码上来看，swap操作仅限于相邻字母间的swap。而对于abc和ca，其实相当于非相邻字母swap操作对待了，因此在计算时，距离仍为3.这种情况只能发生在一个字符串长度为2的情况下，如果需要改进代码的话，可以对字符串长度增加一个判断。若有字符串B长度为2，取editDistance(A,B)=min(editDistance(A,B), editDistance(A,swap(B))+1)即可。</p>
+<p>而对于长度均大于2的swap操作，如abcd和cbad，只能是距离为2了。否则，添加非相邻字母的swap操作，好像很麻烦的样子。</p>
+<p>&nbsp;</p>
+<p>扩展：</p>
+<p>查资料发现，其实编辑距离是“String Metric”（字符串度量）的一种常用的距离表示。String Metric的维基百科定义如下：</p>
+<blockquote>
+ <p>In mathematics and computer science, a string metric (also known as a string similarity metric or string distance function) is a metric that measures similarity or dissimilarity (distance) between two text strings for approximate string matching or comparison and in fuzzy string searching.<br /></p>
+</blockquote>
+<p>而除了L氏距离，还有许多其他表示字符串度量的方法，如下（List of string metrics）：</p>
+<blockquote>
+ <p>Hamming distance</p>
+ <p>Levenshtein distance and Damerau–Levenshtein distance</p>
+ <p>Needleman–Wunsch distance or Sellers' algorithm</p>
+ <p>Smith–Waterman distance</p>
+ <p>FASTA</p>
+ <p>BLAST</p>
+ <p>Gotoh distance or Smith-Waterman-Gotoh distance</p>
+ <p>Monge Elkan distance</p>
+ <p>Block distance or L1 distance or City block distance</p>
+ <p>Jaro–Winkler distance</p>
+ <p>Soundex distance metric</p>
+ <p>Simple matching coefficient (SMC)</p>
+ <p>Dice's coefficient</p>
+ <p>Jaccard similarity or Jaccard coefficient or Tanimoto coefficient</p>
+ <p>Tversky index</p>
+ <p>Overlap coefficient</p>
+ <p>Variational distance</p>
+ <p>Hellinger distance or Bhattacharyya distance</p>
+ <p>Information radius (Jensen–Shannon divergence)</p>
+ <p>Skew divergence</p>
+ <p>Confusion probability</p>
+ <p>Tau metric, an approximation of the Kullback–Leibler divergence</p>
+ <p>Fellegi and Sunters metric (SFS)</p>
+ <p>Maximal matches</p>
+ <p>Lee distance</p>
+</blockquote>
+<p>在维基百科中有相应的链接，若有时间，可以找来看看。</p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://en.wikipedia.org/wiki/Edit_distance" target="_blank" title="Edit distance">Edit distance</a></p></li>
+ <li><p><a href="http://en.wikipedia.org/wiki/String_metric" target="_blank" title="String metric">String metric</a></p></li>
+ <li><p><a href="http://en.wikipedia.org/wiki/String_metric" target="_blank" title="String metric"></a><a href="http://en.wikipedia.org/wiki/Levenshtein_distance" title="Levenshtein distance" class="edui-filter-decoration-none">Levenshtein Distance</a></p></li>
+ <li><p><a href="http://en.wikipedia.org/wiki/String_metric" target="_blank" title="String metric"></a><a href="http://en.wikipedia.org/wiki/Levenshtein_distance" title="Levenshtein distance" class="edui-filter-decoration-none"></a><a href="http://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance" target="_blank" title="Damerau–Levenshtein distance">Damerau–Levenshtein distance</a></p></li>
+ <li><p><a href="http://baike.baidu.com/link?url=o7ZUqwTXDB9e-cBu-m8zOPqaSIrJKP3i2w_B3tbkqwtAEGQYgH6de0HWbIZf7fwg" target="_blank">动态规划</a></p></li>
+ <li><p><a href="http://baike.baidu.com/view/2020247.htm" target="_blank">编辑距离</a></p></li>
+ <li><p><a href="http://baike.baidu.com/view/2020247.htm" target="_blank"></a></p><p><a href="http://zh.wikipedia.org/wiki/%E7%B7%A8%E8%BC%AF%E8%B7%9D%E9%9B%A2" target="_blank">编辑距离</a><br /></p></li>
+ <li><p><a href="http://ccl.pku.edu.cn/doubtfire/Course/Computational%20Linguistics/contents/Minimum%20Edit%20Distance.pdf" target="_blank">最小编辑距离算法</a></p></li>
+ <li><p><a href="http://qinxuye.me/article/get-edit-distance-by-dynamic-programming/" target="_blank" title="动态规划求编辑距离">动态规划求编辑距离</a>、</p></li>
+ <li><p><a href="http://hxraid.iteye.com/blog/615469" target="_blank" title="【串和序列处理 2】字符串编辑距离算法">【串和序列处理 2】字符串编辑距离算法</a></p></li>
+ <li><p><a href="http://www.douban.com/note/267540794/" target="_blank" title="最小编辑距离">最小编辑距离</a></p></li>
+ <li><p><a href="http://www.stanford.edu/class/cs124/lec/med.pdf" target="_blank" title="Minimum Edit Distance">Minimum Edit Distance</a>（Stanford）</p></li>
+ <li><p><a href="http://www.cnblogs.com/finallyliuyu/archive/2010/09/13/1825258.html" target="_blank" title="有关编辑距离计算的一点整理。">有关编辑距离计算的一点整理。</a></p></li>
+ <li><p><a href="http://blog.csdn.net/fisher_jiang/article/details/2487688" target="_blank" title="编辑距离">编辑距离</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-05/40052214722#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-05/40052214722">September 05, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-06/40053641450">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-05/40052499927">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=bf7679a0-160f-11e3-bf8a-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'351'(Mars:'128')--><!--Host Name: hy-10-0-0-92.dd.hn-->

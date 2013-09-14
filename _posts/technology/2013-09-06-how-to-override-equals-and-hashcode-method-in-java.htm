@@ -1,0 +1,255 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>孪生兄弟：How to override equals and hashCode Method in Java?_龙珠</title>
+    <meta name="description" content="本来只想写一下如何重写equals函数，不过查阅的资料里也谈到了equals和hashCode要保持一致性，索性两个一起写了。在我们写自己的类的时候，一般都需要重写equals和hashCode方法。因为在Object类中，这二者都是对地址信息进行判断的，所以，即便内容相同的两个对象也是判断不同的。查看Object.java中的equals代码，重写equals方法有如下要求：1) Reflexive : Object must be equal to itself.2) Symmetric : if a.equals(b) is true the…" />
+    <meta name="keywords" content="Hash,Java,equals,hashCode" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=e6529690-164a-11e3-bf8a-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">孪生兄弟：How to override equals and hashCode Method in Java?</h2>
+                            <div class="entry rich-content"><p>本来只想写一下如何重写equals函数，不过查阅的资料里也谈到了equals和hashCode要保持一致性，索性两个一起写了。</p>
+<p>在我们写自己的类的时候，一般都需要重写equals和hashCode方法。因为在Object类中，这二者都是对地址信息进行判断的，所以，即便内容相同的两个对象也是判断不同的。</p>
+<p>查看Object.java中的equals代码，重写equals方法有如下要求：</p>
+<blockquote>
+ <p>1) Reflexive : Object must be equal to itself.</p>
+ <p>2) Symmetric : if a.equals(b) is true then b.equals(a) must be true.</p>
+ <p>3) Transitive : if a.equals(b) is true and b.equals(c) is true then c.equals(a) must be true.</p>
+ <p>4) Consistent : multiple invocation of equals() method must result same value until any of properties are modified. So if two objects are equals in Java they will remain equals until any of there property is modified.</p>
+ <p>5) Null comparison : comparing any object to null must be false and should not result in NullPointerException.</p>
+</blockquote>
+<p>根据这一原则，之前查Hash资料的时候，有看到重写equals方法的几步法。代码如下：<br /></p>
+<p>@Override</p>
+<p>public boolean equals(Object obj) {</p>
+<p>// TODO Auto-generated method stub</p>
+<p>if(this == obj){</p>
+<p>return true;</p>
+<p>}</p>
+<p>if(obj instanceof A){</p>
+<p>A other = (A)obj;</p>
+<p>return this.myString.equals(other.myString) &amp;&amp;</p>
+<p>this.myInt == other.myInt;</p>
+<p>}</p>
+<p>return false;</p>
+<p>}</p>
+<p>可以看到，重写分为几步：</p>
+<p>1. 使用“==”检查是否是相同引用；</p>
+<p>2. 使用instanceof关键字，检查是否是相同类。这里有个tip，就是instanceof关键字会自动包含null检查，即：如果obj是null，则自动返回false。</p>
+<p>3. 若为相同类，则对类内的值域进行判断。举例代码中使用的是myString和myInt。</p>
+<p>我一开始认为这样的步骤很完美，判断没什么错误。但是后来查别人写的equals代码，发现很多人对obj进行null判断和getClass判断，不解。查了资料才明白。</p>
+<p>在How to override equals and hashCode method in Java - Example, Tips中提到：</p>
+<blockquote>
+ <p>after some research I found that instead of instanceof we can use getClass() method for type identification because instanceof check returns true for subclass also, so its not strictly equals comparison until required by business logic. But instanceof check is fine if your class is immutable and no one is going to sub class it. </p>
+</blockquote>
+<p>也就是说，instanceof关键字对该类的子类也会判断为true，这样不同的类也会判断 ，容易出问题。而且要求条件比较 ，需要保证该类“immutable”并且没有子类才行。</p>
+<p>所以更好的办法是，替代代码，使用null和getClass方法检查。我修改后新代码如下：</p>
+<p>@Override</p>
+<p>public boolean equals(Object obj) {</p>
+<p>// TODO Auto-generated method stub</p>
+<p>if(this == obj){</p>
+<p>return true;</p>
+<p>}</p>
+<p>if((obj != null || this.getClass() == obj.getClass())){</p>
+<p>A other = (A)obj;</p>
+<p>return this.myString.equals(other.myString) &amp;&amp;</p>
+<p>this.myInt == other.myInt ;</p>
+<p>}</p>
+<p>return false;</p>
+<p>}</p>
+<p>但在实验中报错！！</p>
+<p>测试后才发现，原文的代码如下：</p>
+<blockquote>
+ <p>if((obj == null) || (obj.getClass() != this.getClass()))</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;</p>
+</blockquote>
+<p>而我的代码如下：</p>
+<blockquote>
+ <p>if((obj != null || this.getClass() == obj.getClass())){</p>
+ <p>A other = (A)obj;</p>
+ <p>return this.myString.equals(other.<span>myString</span>) &amp;&amp;</p>
+ <p>this.myInt == other.<span>myInt </span>;</p>
+ <p>}</p>
+ <p>return false;</p>
+</blockquote>
+<p>这里就有个问题，就是如果obj不为null的话，就不会进行下一步判断getClass。所以要么把||改为&amp;&amp;，要么使用原文代码。</p>
+<p>最终，重写equals的代码如下：</p>
+<p>@Override</p>
+<p>public boolean equals(Object obj) {</p>
+<p>// TODO Auto-generated method stub</p>
+<p>if(this == obj){</p>
+<p>return true;</p>
+<p>}</p>
+<p>if((obj == null || this.getClass() != obj.getClass())){</p>
+<p>return false;</p>
+<p>}</p>
+<p>A other = (A)obj;</p>
+<p>return this.myString.equals(other.myString) &amp;&amp;</p>
+<p>this.myInt == other.myInt;</p>
+<p>}</p>
+<p>好了，equals修改完毕。不过，工作还没有完。在Object.java文件中，对equals方法的文档有如下：</p>
+<blockquote>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* Note that it is generally necessary to override the {@code hashCode}</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* method whenever this method is overridden, so as to maintain the</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* general contract for the {@code hashCode} method, which states</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* that equal objects must have equal hash codes.</p>
+</blockquote>
+<p>也就是说，只要equals方法被override，则根据“general contract for the hashCode method”，均需要再重写hashCode方法。</p>
+<p>我的理解是，这是因为，在HashMap这样的哈希表中，需要保证equals和hashCode的结果相同，这样才能保证相同的key在哈希表中的位置是相同的。否则，二者结果不同，在哈希表中存储会发生错误和冲突。如：equals相同的两个的对象的hashCode不同，于是两个相同key的对象的存储位置不同，无法更新和获取数据。</p>
+<p>那“general contract for the hashCode method”又是什么呢？</p>
+<p>在Object.java文件中，hashCode方法的文档就有对此的描述：</p>
+<blockquote>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* The general contract of {@code hashCode} is:</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &lt;ul&gt;</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &lt;li&gt;Whenever it is invoked on the same object more than once during</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;an execution of a Java application, the {@code hashCode} method</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;must consistently return the same integer, provided no information</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;used in {@code equals} comparisons on the object is modified.</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;This integer need not remain consistent from one execution of an</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;application to another execution of the same application.</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &lt;li&gt;If two objects are equal according to the {@code equals(Object)}</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;method, then calling the {@code hashCode} method on each of</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;the two objects must produce the same integer result.</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &lt;li&gt;It is &lt;em&gt;not&lt;/em&gt; required that if two objects are unequal</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;according to the {@link java.lang.Object#equals(java.lang.Object)}</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;method, then calling the {@code hashCode} method on each of the</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;two objects must produce distinct integer results. &nbsp;However, the</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;programmer should be aware that producing distinct integer results</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;for unequal objects may improve the performance of hash tables.</p>
+</blockquote>
+<p>即主要包括以下几点：</p>
+<p>1. 在一次Java application运行过程中，多次调用hashCode方法应返回相同int值。【疑问：对”provided no information used in {@code equals} comparisons on the object is modifiedd“应该如何理解？对象修改后，equals和hashCode改变吗？是否同时改变？我认为应该是同时改变的】</p>
+<p>2. 若两个对象equals返回true，则他们的hashCode结果必须相同；</p>
+<p>3. 若两个对象equals返回false，并不一定要求他们的hashCode结果不同。当然，hashCode不同会在使用hash table等的哈希表时，提高效率。</p>
+<p>而对于如何重写hashCode函数，还是等下一系列的Hash系列文章来说吧。</p>
+<p>另外，在<a href="http://javarevisited.blogspot.com/2011/02/how-to-write-equals-method-in-java.html" target="_blank">How to override equals and hashCode method in Java</a>中，还提到重写equals方法时常犯的错误，包括：</p>
+<p>1. 重载（overload）函数而非重写（override）函数。应该override的Object中的equals方法为： public boolean equals(Object obj){}。有可能出错的是参数类型，写成 public boolean equals(Person person){}，造成overload而非override。</p>
+<p>2. 在check值域之前没有先check null。这样会导致nullPointerException。</p>
+<p>3. 没有同时重写equals和hashCode方法。这样在使用HashMap等哈希表的时候会出错。</p>
+<p>4. 没有保持equals方法和compareTo方法的一致性（consistent）。这是个非正式要求，主要用来obey <a href="http://javarevisited.blogspot.sg/2012/04/difference-between-list-and-set-in-java.html">contract of Set</a> to avoid duplicates。</p>
+<blockquote>
+ <p>SortedSet implementation like TreeSet uses compareTo to compare two objects like String and if compareTo() and equals() will not be consistent than TreeSet will allow duplicates which will break Set contract of not having duplicates.</p>
+</blockquote>
+<p>最后，<a href="http://javahowto.blogspot.com/2007/01/override-equals-and-hashcode-methods.html" target="_blank" title="Override equals and hashCode methods">Override equals and hashCode methods</a>文章中，还提到eclipse里还可以通过” Source | Generate hashCode() and equals()... “来自动生成hashCode和equals方法的代码。我试了一下，可以根据选择的值域来重写这两个方法，还是挺好玩的。</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://javarevisited.blogspot.com/2011/02/how-to-write-equals-method-in-java.html" target="_blank">How to override equals and hashCode method in Java</a></p></li>
+ <li><p><a href="http://javahowto.blogspot.com/2007/01/override-equals-and-hashcode-methods.html" target="_blank" title="Override equals and hashCode methods">Override equals and hashCode methods</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-06/40053641450#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-06/40053641450">September 06, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-07/40053564598">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-05/40052214722">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=e6529690-164a-11e3-bf8a-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'266'(Mars:'129')--><!--Host Name: web01.dd.hn-->

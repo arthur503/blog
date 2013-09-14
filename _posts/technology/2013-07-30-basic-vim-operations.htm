@@ -1,0 +1,169 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Vim基本操作_龙珠</title>
+    <meta name="description" content="进入插入模式：a或i进入控制模式：ctrl+c或esc光标移动：hjkl（左上下右）多行移动：n+hjkl删除一行：dd删除多行：n+dd撤销操作：u撤销撤销操作：ctrl+r到本文第一行：1G到本文最后一行：G向下翻页：ctrl+f向上翻页：ctrl+b先写到这里，常用的应该够了，以后不够再继续学。=====哥哥哥====语法高亮。 编辑_vimrc文件加入以下内容： set nu! colorscheme desert syntax enable syntax on 这些设置使得gvim可以显示行号，并使用…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=68cd6270-f8f6-11e2-9690-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Vim基本操作</h2>
+                            <div class="entry rich-content"><p>进入插入模式：a或i</p>
+<p>进入控制模式：ctrl+c或esc</p>
+<p>光标移动：hjkl（左上下右）</p>
+<p>多行移动：n+hjkl</p>
+<p>删除一行：dd</p>
+<p>删除多行：n+dd</p>
+<p>撤销操作：u</p>
+<p>撤销撤销操作：ctrl+r</p>
+<p>到本文第一行：1G</p>
+<p>到本文最后一行：G</p>
+<p>向下翻页：ctrl+f</p>
+<p>向上翻页：ctrl+b</p>
+<p>先写到这里，常用的应该够了，以后不够再继续学。</p>
+<p>=====哥哥哥====</p>
+<p>语法高亮。 </p>
+<p>编辑_vimrc文件加入以下内容： </p>
+<p>set nu! </p>
+<p>colorscheme desert </p>
+<p>syntax enable </p>
+<p>syntax on </p>
+<p>这些设置使得gvim可以显示行号，并使用了desert配色方案，而且打开了语法高亮功能（用不同颜色显示注释、关键字、字符串等）。</p>
+<p>PS：其他的，貌似还有用插件在程序中函数定义跳转，不过现在看的少，等以后觉得需要了再加。</p>
+<p>&nbsp;</p>
+<p>=====咯咯咯=====</p>
+<p>统计字数和行数，按Ctrl+m即可。</p>
+<p>&quot;字符统计函数</p>
+<p>if !exists(&quot;*CalCharCount&quot;)</p>
+<p>function CalCharCount()</p>
+<p>exe '%s/\S/&amp;/gn'</p>
+<p>endfunction</p>
+<p>endif</p>
+<p>&quot;映射命令模式下ctrl+m调用字符统计</p>
+<p>nnoremap &lt;C-m&gt; :call CalCharCount()&lt;cr&gt;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://www.cnblogs.com/cecwxf/archive/2012/03/29/2424433.html" target="_blank" title="WINDOWS下VIM配置">WINDOWS下VIM配置</a>、</p></li>
+ <li><p><a href="http://kenshin54.iteye.com/blog/876203" target="_blank" title="Vim支持中文的字符统计">Vim支持中文的字符统计</a></p></li>
+ <li><a href="http://www.cnblogs.com/jiqingwu/archive/2012/06/14/vim_notes.html" target="_blank" title="VIM使用笔记">VIM使用笔记</a><p><a href="http://kenshin54.iteye.com/blog/876203" target="_blank" title="Vim支持中文的字符统计"></a></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-07-30/40052153821#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-07-30/40052153821">July 30, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-08-03/40053239165">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-07-06/40051957499">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=68cd6270-f8f6-11e2-9690-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'425'(Mars:'313')--><!--Host Name: hy-10-0-0-86.dd.hn-->

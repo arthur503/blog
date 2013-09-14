@@ -1,0 +1,287 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>蓄水长流：蓄水池抽样算法（reservoid sampling）_龙珠</title>
+    <meta name="description" content="在做微信号“待字闺中”的每日算法题的时候，有提到在总数未知的情况下，做随机抽样使用了蓄水池算法，查了一下，还挺有意思的。蓄水池抽样算法缘起于这样一道题目：有一个很大的输入流（大到没有存储器可以全部存储下来），而且只能遍历一次，如何从这个输入流中公平的随机抽取m个值（即保证每个元素被选中的概率相等）？（n未知）刚开始看的时候一头雾水，没有思路。认为既然总数n是未知的，那怎么从中随机抽取呢？但是如果…" />
+    <meta name="keywords" content="算法" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=cb2b7f10-fc43-11e2-93fd-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">蓄水长流：蓄水池抽样算法（reservoid sampling）</h2>
+                            <div class="entry rich-content"><p><span>在做微信号“待字闺中”的每日算法题的时候，有提到在总数未知的情况下，做随机抽样使用了蓄水池算法，查了一下，还挺有意思的。</span></p>
+<p><span>蓄水池抽样算法缘起于这样一道题目：有一个很大的输入流（大到没有存储器可以全部存储下来），而且只能遍历一次，如何从这个输入流中公平的随机抽取m个值（即保证每个元素被选中的概率相等）？（n未知）</span></p>
+<p><span>刚开始看的时候一头雾水，没有思路。认为既然总数n是未知的，那怎么从中随机抽取呢？但是如果拨开分析的话，会发现：总数n是在过程中未知，在最后输入完毕时是确定的值。因此，算法应该关注于在每获得一个元素的情况下，抽样，使得对于已获得的元素，每个元素被选中的概率是相等的。</span></p>
+<p><span>这样，就转换为每次得到新输入的元素就进行计算，算法的时间复杂度是O(n)。</span></p>
+<p><span>我们先考虑m=1的情况：</span></p>
+<p><span>假设输入流只有一个元素，则这个元素被选中的概率为1.</span></p>
+<p><span>假设输入流多于一个元素，则第一个元素经过的时候概率为1；之后每一个元素经过的时候，都要考虑是否剔除原来的元素换成新的元素。在第i个元素经过的时候，要以1/i的概率来考虑是否剔除原来的元素，换成stream[i].</span></p>
+<p><span>我们以stream = [a,b,c]来举例，则最终选取第一个元素（即没有选择第二个、第三个元素）的概率：</span></p>
+<p><span>P(result = stream[1]) = P(result = a) = 1/1 * (1-1/2) * (1-1/3) = 1/3</span></p>
+<p><span>同理，可得：</span></p>
+<p><span>P(result = stream[2]) = P(result = b) = 1/2 * (1-1/3) = 1/3</span></p>
+<p><span>P(result = stream[3]) = P(result = c) = 1/3</span></p>
+<p><span>这样，stream中的三个元素a，b，c被选择的概率相等，均为1/3.</span></p>
+<p><span>推广到一般情况的证明：</span></p>
+<p><span>若stream[i]被选中，需满足：</span></p>
+<p><span>1）在stream[i]流过时被选中：</span></p>
+<p><span>P1 = 1/i</span></p>
+<p><span>2）在stream[i]之后流过的元素都没有被选中：</span></p>
+<p><span>P2 = (1-1/(i+1)) * (1-1/(i+2)) * ... * (1-1/n) = i/(i+1) * (i+1)/(i+2) * ... * (n-1)/n = i/n</span></p>
+<p><span>所以，总的概率是：</span></p>
+<p><span>P(result = stream[i]) = P1 * P2 = 1/i * i/n = 1/n</span></p>
+<p><span>得证。</span></p>
+<p><span><br /></span></p>
+<p><span>参考资料中的代码如下：</span></p>
+<pre config="brush:python;toolbar:false;">'''reservoir sampling(number of sample = 1)'''
+              
+def getSample(stream):
+              
+    i = 0  
+              
+    while stream.exist(i): #流还没结束
+              
+        r = random.randrange(0, i)
+              
+        if r == 1: # P(result = stream[i]) = 1/i
+              
+            result = stream[i]
+              
+        i++              
+              
+    return result</pre>
+<p><span>不过，i=0时，random.randrange(0,0)是报错的（Python语言），因此应该修改为：</span><br /></p>
+<pre config="brush:python;toolbar:false;">'''reservoir sampling(number of sample = 1)'''
+               
+def getSample(stream):
+               
+    result = stream[0]#初始化
+               
+    i = 1
+               
+    while stream.exist(i): #流还没结束
+               
+        r = random.randrange(0, i+1)
+               
+        if r == 0: # P(result = stream[i]) = 1/(i+1) 因为计算机中i是从0计数，所以此处为(i+1)
+               
+            result = stream[i]
+               
+        i += 1              
+               
+    return result</pre>
+<p><span>同理，在m&gt;1时，需要从n个数中公平的取出m个值，需要考虑集合即可。</span><br /></p>
+<p><span>思路是：</span></p>
+<p><span>1）对前m个输入，直接加入到集合result[]中；</span></p>
+<p><span>2）对之后的第i个输入stream[i]，都按照概率m/i进行判断是否采用；不采用则直接pass，采用则随即的对result中m个值中选一个进行替换。</span></p>
+<p><span>这是我的思路，但在实际操作中，对第2步不用随机两次。只需要判断（0，i）之间的随即数是否在（0，m）区间，在的话，直接用stream[i]替换result[i]即可，无需再对result进行随即。</span></p>
+<p><span><br /></span></p>
+<p><span>参考资料中代码如下：</span></p>
+<pre config="brush:python;toolbar:false;">import random
+               
+                 
+               
+def getSample(stream, m):
+               
+    results = []
+               
+    for i in range(0, m-1):
+               
+        results[i] = stream[i]
+               
+    # out of for
+               
+                 
+               
+    i = m
+               
+    while stream[i].available(): # 当前stream[i]有效，流还未完结
+               
+        r = random.randrange(0, i)
+               
+        if r &lt; m:
+               
+            results[r] = stream[i]
+               
+                 
+               
+        i++
+               
+    # out of while
+               
+                     
+               
+                 
+               
+return results</pre>
+<p><span>不过，第一步for循环中，应该是对range(0,m)循环，这样才能得到前m个数。</span><br /></p>
+<p><span>修改后的代码如下：</span></p>
+<pre config="brush:python;toolbar:false;">import random
+                
+                  
+                
+def getSample(stream, m):
+                
+    results = []
+                
+    for i in range(0, m):
+                
+        results[i] = stream[i]
+                
+                  
+                
+    i = m
+                
+    while stream[i].available(): # 当前stream[i]有效，流还未完结
+                
+        r = random.randrange(0, i)
+                
+        if r &lt; m:
+                
+            results[r] = stream[i]
+                
+        i += 1
+                
+                      
+                
+return results</pre>
+<p><span>数学证明：</span><br /></p>
+<p><span>选中stream[i]的概率包括：</span></p>
+<p><span>1）在stream[i]经过时被选中：</span></p>
+<p><span>P1 = m/i</span></p>
+<p><span>2）在stream[i]之后的元素，经过的时候都没有被选中，或被选中了，但替换的时候没有替换stream[i]：</span></p>
+<p><span>我们先计算stream[i+1]不替换stream[i]的概率(没选中 + 选中了但没替换stream[i])：</span></p>
+<p><span>P(i+1) = (1-m/(i+1)) + m/(i+1) * (m-1)/m = (i+1-m)/(i+1) + (m-1)/(i+1） = i/(i+1)</span></p>
+<p><span>P(i+2) = ... = (i+1)/(i+2)</span></p>
+<p><span>...</span></p>
+<p><span>P(n) = ... = (n-1)/n</span></p>
+<p><span>总的概率为：</span></p>
+<p><span>P2 = P(i+1) * P(i+2) * ... * P(n) = i/n</span></p>
+<p><span>所以，最终选中stream[i]的概率为：</span></p>
+<p><span>P = P1 * P2 = m/i * i/n = m/n</span></p>
+<p><span>符合要求。得证。</span></p>
+<p>&nbsp;</p>
+<p>PS：参考资料2、3中，还提到加权分布式蓄水池抽样，需要考虑集合中的数据是有权重的，算法希望数据被抽样选中的概率和该数据的权重成比例。这个等有时间了再看一下。</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://hi.baidu.com/zhongyuan2810/item/f46c893f536df4bd623aff57" target="_blank" title="蓄水池抽样算法(reservoid sampling)">蓄水池抽样算法(reservoid sampling)</a></p></li>
+ <li><p><a href="http://gregable.com/2007/10/reservoir-sampling.html" target="_blank" title="Reservoir Sampling - Sampling from a stream of elements">Reservoir Sampling - Sampling from a stream of elements</a></p></li>
+ <li><p><a href="http://www.open-open.com/news/view/1d1ec16" target="_blank" title="数据工程师必知算法：蓄水池抽样">数据工程师必知算法：蓄水池抽样</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-08-03/40053239165#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-08-03/40053239165">August 03, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-08-04/40052731836">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-07-30/40052153821">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=cb2b7f10-fc43-11e2-93fd-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'251'(Mars:'127')--><!--Host Name: hy-10-0-0-86.dd.hn-->

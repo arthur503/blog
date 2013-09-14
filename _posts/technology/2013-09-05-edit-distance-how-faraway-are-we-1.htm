@@ -1,0 +1,178 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>编辑距离：我和你到底有多远？（一）_龙珠</title>
+    <meta name="description" content="编辑距离是很早之前看到的题目，觉得很好玩的样子，昨晚看完Hash的资料，趁着还有劲头就查了下资料。先说一下问题描述，很简单。原始场景很多，例如，在我们搜索资料的时候，常常打错字，如想查询swim却输入成了swam。我们在使用搜索引擎的时候都会看到，搜索引擎一般会提示“你是不是想搜索XXX？”，纠正拼写错误。那么，搜索引擎是如何判断你想输入哪个单词呢？这就需要判断你所输入的swam与单词库中的哪个单词的编辑距离…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=a629bac0-160f-11e3-bee5-782bcb383994"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">编辑距离：我和你到底有多远？（一）</h2>
+                            <div class="entry rich-content"><p>编辑距离是很早之前看到的题目，觉得很好玩的样子，昨晚看完Hash的资料，趁着还有劲头就查了下资料。</p>
+<p>先说一下问题描述，很简单。原始场景很多，例如，在我们搜索资料的时候，常常打错字，如想查询swim却输入成了swam。我们在使用搜索引擎的时候都会看到，搜索引擎一般会提示“你是不是想搜索XXX？”，纠正拼写错误。那么，搜索引擎是如何判断你想输入哪个单词呢？这就需要判断你所输入的swam与单词库中的哪个单词的编辑距离最小，之后再结合上下文（若有的话）即可推断出你输入的单词，从而给出拼写错误提示。</p>
+<p>其次，我们再定义一下编辑距离，有了定义才有讨论的基础。两个单词之间的编辑距离，顾名思义，是使用最少的编辑操作使得第一个单词转换为第二个单词。那么，编辑操作又包括哪些？</p>
+<p>百度百科上对编辑距离的定义和维基百科基本相同。</p>
+<blockquote>
+ <p>编辑距离，又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+ <p>例如将kitten一字转成sitting：</p>
+ <p>sitten （k→s）</p>
+ <p>sittin （e→i）</p>
+ <p>sitting （→g）</p>
+ <p>俄罗斯科学家Vladimir Levenshtein在1965年提出这个概念。</p>
+</blockquote>
+<p>这里L氏距离中，定义的编辑操作包括三种：替换、插入和删除。</p>
+<p>但是，对于我刚开始接触这个题目的时候，困扰之一的就是如何定义编辑操作。因为除了这三种之外，还有一种：相邻字母交换操作。这在我看来是一个编辑操作，但却没有在Levenshtein距离中定义。</p>
+<p>【注：另外，对于各操作的权值的定义，不同的版本有不同的说法。有认为三种操作权重相同，都为1；也有认为插入和删除操作为1，替换操作为2。对于相邻字母交换操作，没看到相关资料评价。不过本文不谈论此点，因为我认为权值的确定需要参考汇编的代码，由汇编语言中各操作的实现代码来决定，需要汇编操作多的，耗时多，自然权值就大。不过，本文略去，全部以权值为1讨论。如需更改，只需修改代码中对应加值即可。】</p>
+<p>在维基百科<a href="http://en.wikipedia.org/wiki/Edit_distance" target="_blank" title="Edit distance">Edit distance</a>和<a href="http://en.wikipedia.org/wiki/String_metric" target="_blank" title="String metric">String metric</a>中有提到，在信息和计算机科学领域中，通常说的编辑距离就是指L氏距离，可以由 <a href="http://en.wikipedia.org/wiki/Hirschberg%27s_algorithm" title="Hirschberg's algorithm" class="edui-filter-decoration-none">Hirschberg's algorithm</a> 或 <a href="http://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_edit_distance" title="Wagner–Fischer edit distance" class="edui-filter-decoration-none">the Wagner–Fischer algorithm</a>s 算法实现【有空看下】。</p>
+<blockquote>
+ <p>The most widely known string metric is a rudimentary one called the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance" title="Levenshtein distance" class="edui-filter-decoration-none">Levenshtein Distance</a> (also known as Edit Distance).</p>
+</blockquote>
+<blockquote>
+ <p><a href="http://en.wikipedia.org/wiki/Levenshtein_distance" title="Levenshtein distance" class="edui-filter-decoration-none">Levenshtein distance</a> (the most common definition, calculated by <a href="http://en.wikipedia.org/wiki/Hirschberg%27s_algorithm" title="Hirschberg's algorithm" class="edui-filter-decoration-none">Hirschberg's algorithm</a> or <a href="http://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_edit_distance" title="Wagner–Fischer edit distance" class="edui-filter-decoration-none">the Wagner–Fischer algorithm</a>)</p>
+</blockquote>
+<p>而我所认为的应该包含交换操作的距离也有名称，叫<a href="http://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance" target="_blank" title="Damerau–Levenshtein distance">Damerau–Levenshtein distance</a>(named after <a href="http://en.wikipedia.org/wiki/Frederick_J._Damerau" title="Frederick J. Damerau" class="edui-filter-decoration-none">Frederick J. Damerau</a> and <a href="http://en.wikipedia.org/wiki/Vladimir_I._Levenshtein" title="Vladimir I. Levenshtein" class="edui-filter-decoration-none">Vladimir I. Levenshtein</a>)，包含了：替换、插入、删除和相邻字母交换四种编辑操作。</p>
+<p>好，既然定义明白了，下面我们就来讨论一下这个问题该如何去解。网上的资料大部分计算的是L氏距离（毕竟影响最广），我修改了下，也可以用来计算D-L距离。</p>
+<p>查阅了下网上的资料，基本都是用动态规划做的。</p>
+<p>那动态规划到底是个什么东西？</p>
+<p>百度百科里介绍说：</p>
+<blockquote>
+ <p>动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划。1957年出版了他的名著Dynamic Programming，这是该领域的第一本著作。<br /></p>
+</blockquote>
+<p>总的来说，动态规划是“动态规划程序设计是对解最优化问题的一种途径、一种方法，而不是一种特殊算法。”基本思想如下：</p>
+<blockquote>
+ <p>动态规划算法通常用于求解具有某种最优性质的问题。在这类问题中，可能会有许多可行解。每一个解都对应于一个值，我们希望找到具有最优值的解。动态规划算法与分治法类似，其基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。若用分治法来解这类问题，则分解得到的子问题数目太多，有些子问题被重复计算了很多次。如果我们能够保存已解决的子问题的答案，而在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间。我们可以用一个表来记录所有已解的子问题的答案。不管该子问题以后是否被用到，只要它被计算过，就将其结果填入表中。这就是动态规划法的基本思路。<br /></p>
+</blockquote>
+<p><a href="http://baike.baidu.com/link?url=o7ZUqwTXDB9e-cBu-m8zOPqaSIrJKP3i2w_B3tbkqwtAEGQYgH6de0HWbIZf7fwg" target="_blank">动态规划</a>一般可解决的问题很多，具体可以参看百度百科链接，但这次我们就只看编辑距离，以后有兴趣再研究动态规划这一类的问题。</p>
+<p>归根到底，动态规划是要求最优解。而这个问题不是独立的，是可以分解成若干个子问题，而这些子问题往往不是互相独立的。因此，我们需要保存已解决的子问题的答案，填入表中，将原问题一步步分解得到的子问题逐步求解，从而得到整个问题的最优解。</p>
+<p>OK，万事俱备。</p>
+<p>根据动态规划思想，我们可以得到这样的一个操作方法：</p>
+<ol class="edui-filter-decimal">
+ <li><p>对于字符串A和B，我们构建一个m*n的二维数组D。其中，m=len(A)+1, n=len(B)+1。这样，二维数组的范围就是D[0...m-1][0...n-1]（即：D[0...len(A)][0...len(B)]）。</p></li>
+ <li><p>对二维数组初始化。令D[0][0...n-1]=0...n-1, matrix[0...m-1][0]=0...m-1，（其实第0行和第0列就相当于id，真正最后有用的是D[1...m-1][1...n-1]这个len(A)*len(B)的矩阵）。</p></li>
+ <li><p>遍历D[1...m-1][1...n-1]这个矩阵。对于其中的任意元素D[i][j]，有：D[i][j]=min{D[i-1][j]+1, D[i][j-1]+1, D[i-1][j-1]+f(i,j)}。</p><p>此处，我们将插入、删除的操作权值都简化为1。而定义替换操作权值f(i,j)： 若A[i]==B[j]，则为0；若A[i]!=B[j]，则为1。</p><p>【注：完整版为：D[i][j]=min{D[i-1][j]+insertCost(i), D[i][j-1]+deleteCost(j), D[i-1][j-1]+substitudeCost(i,j)}，参考北大中文系詹卫东的<a href="http://ccl.pku.edu.cn/doubtfire/Course/Computational%20Linguistics/contents/Minimum%20Edit%20Distance.pdf" target="_blank">最小编辑距离算法</a>】</p></li>
+ <li><p>遍历完毕，得到最终结果矩阵，D[m-1][n-1]（即D[len(A)][len(B)]）就是字符串A和B的编辑距离。</p></li>
+</ol>
+<p>我们使用詹卫东中的例子sot和stop来演示一下（与原文结果不同，是因为此处操作权值全部按1计算）。<br /></p>
+<p>1.构建二维数组D[4][5]，并初始化D[0][0...4]和D[0...3][0]。如图1.</p>
+<p>2.遍历矩阵，计算并得到最终结果。对于每个元素，都要比较{左元素+1，下元素+1，左下元素+f(i,j)}的最小值，其中若f(i,j) = (A[i] == B[j] ? 0 :1)。得到结果，如图2。其中，右上角的2即是最终编辑距离。</p>
+<p><span class="text-img-holder"><img src="http://m1.img.libdd.com/farm4/2013/0905/18/50D403DC8BE7B94AB61A3155C7A8D6B7D1AF82F917712_500_889.jpg" width="500" height="889" /></span><br /></p>
+<p>完毕。</p>
+<p>这一篇就到这里，下一篇<a href="http://ouscn.diandian.com/post/2013-09-05/40052214722" target="_blank" title="编辑距离：我和你到底有多远？（二）">编辑距离：我和你到底有多远？（二）</a>我们给出Java实现代码，并进一步修改，增加交换编辑操作，实现D-L距离。</p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-05/40052499927#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-05/40052499927">September 05, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-05/40052214722">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-08-30/40052344961">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=a629bac0-160f-11e3-bee5-782bcb383994&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'312'(Mars:'127')--><!--Host Name: db13.dd.hn-->

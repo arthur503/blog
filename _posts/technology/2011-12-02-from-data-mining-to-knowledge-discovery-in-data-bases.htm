@@ -1,0 +1,309 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>基于数据库的从数据挖掘到知识发现——From Data Mining to Knowledge Discovery in Data bases_龙珠</title>
+    <meta name="description" content="From Data Mining to Knowledge Discovery in DatabasesUsama Fayyad, Gregory Piatetsky-Shapiro, and Padhraic Smyth“基于数据库的从数据挖掘到知识发现”，本周的Paper。这篇文章，我自己看完的时候，觉得只是一篇overview，没有什么具体的算法，虽然讲了KDD和DM的关系，但觉得没什么用。但后来李师兄讲这篇文章的时候，有些像是醍醐灌顶一样。师兄说，这只是篇概论，没有什么算法。文章的特点就是很客观、很理性、很全面…" />
+    <meta name="keywords" content="iit,数据挖掘,知识发现,data mining,knowledge discovery" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=10a17a10-1c8d-11e1-b317-782bcb3825eb"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">基于数据库的从数据挖掘到知识发现——From Data Mining to Knowledge Discovery in Data bases</h2>
+                            <div class="entry rich-content"><p>From Data Mining to Knowledge Discovery in Databases</p>
+<p class="edui-filter-align-right">Usama Fayyad, Gregory Piatetsky-Shapiro, and Padhraic Smyth<br /></p>
+<p class="edui-filter-align-left">“基于数据库的从数据挖掘到知识发现”，本周的Paper。<br /></p>
+<p class="edui-filter-align-left">这篇文章，我自己看完的时候，觉得只是一篇overview，没有什么具体的算法，虽然讲了KDD和DM的关系，但觉得没什么用。但后来李师兄讲这篇文章的时候，有些像是醍醐灌顶一样。</p>
+<p class="edui-filter-align-left">师兄说，这只是篇概论，没有什么算法。文章的特点就是很客观、很理性、很全面。它其实解决了数据挖掘（DM）“从哪里来到那里去”的问题，说明了我们为什么要进行数据挖掘。强迫去运用一个技术是一种很二的表现，最牛逼的不是说会编程，而是能对潜在的应用领域提供一个解决方案（前两天看的文章中也提到，skilled和problem solving的不同。会编程、会写DM算法只能算是skilled，能提供解决方案才算是problem solving）。而数据挖掘存在的意义是什么呢？是说，无论我们每个人有多么不同，多么特立独行，在许多的人集合在一起的时候，总会有一种不可抗拒的总体的趋势和模式，比如二八原则、黄金比例、高斯分布等。而我们进行数据挖掘，就是为了发现这些规律，而这，就是知识发现（KDD）的过程。</p>
+<p class="edui-filter-align-left">师兄和我站的角度不一样。我还处在怎么去用的过程，想把自己变成skilled的阶段，师兄已经站得有高度了，开始讨论为什么要去用和怎么去用的问题了，已经是problem solving的阶段。自己当时看完还觉得文章没有什么大用，有些失望，其实只是自己眼界不够，一叶障目，不见泰山。师兄说，经典的，一般都是简单的。这篇文章解决了我们对为什么要进行DM的困惑，不让我们再为了DM而DM，这就是经典。我还需要慢慢体会。</p>
+<p class="edui-filter-align-right">——写在前面 &nbsp; &nbsp;Arthur &nbsp; 2011.12.01<br /></p>
+<p class="edui-filter-align-left">文章简介：an overview of this emerging field, clarifying how data mining and knowledge discovery in databases are related both to each other and to related fields, such as maching learning, statistics, and databases.<br /></p>
+<p class="edui-filter-align-left">这是个关于该领域的概论，阐明了在数据库中，数据挖掘和知识发现的相互关系，以及他们和相关领域的关系，例如机器学习、统计学和数据库。</p>
+<p class="edui-filter-align-left"><br /></p>
+<p class="edui-filter-align-left">一、为什么需要KDD？</p>
+<p class="edui-filter-align-left">传统：从数据中获取知识需要人工分析和理解</p>
+<p class="edui-filter-align-left">缺点：慢、昂贵、高度主观性</p>
+<p class="edui-filter-align-left">数据库快速增长包括：</p>
+<p class="edui-filter-align-left">1.记录/物体的数目N</p>
+<p class="edui-filter-align-left">2.物体的属性数目d</p>
+<p class="edui-filter-align-left">KDD试图解决的问题：数据过载（data overload）</p>
+<p class="edui-filter-align-left"><br /></p>
+<p class="edui-filter-align-left">二、现实世界中的数据挖掘和知识发现</p>
+<p class="edui-filter-align-left">科学领域：</p>
+<ul class="edui-filter-disc">
+ <li class="edui-filter-disc">天文学：SKICAT，图像分析，分类。可处理TB级数据。</li>
+</ul>
+<p>金融领域：</p>
+<ul class="edui-filter-disc">
+ <li class="edui-filter-disc">Marketing: database maketing system, market-basket analysis systems<br /></li>
+ <li class="edui-filter-disc">Investment: LBS Capital Management</li>
+ <li class="edui-filter-disc">Fraud Detection: HNC Falcon and Nestor PRISM system, FAIS system</li>
+ <li class="edui-filter-disc">Manufacturing: CASSIOPEE troubleshooting system</li>
+ <li class="edui-filter-disc">Telecommunications: telecommunication alarm-sequence analyzer(TASA)</li>
+ <li class="edui-filter-disc">Data Cleaning: MERGE-PURGE system</li>
+</ul>
+<p>其他领域：</p>
+<ul class="edui-filter-disc">
+ <li>IBM's ADVANCED SCOUT: NBA球员评价系统</li>
+</ul>
+<p>（新）通过智能应用从富信息环境中获得有用信息：FIREELY, 音乐推荐</p>
+<p>&nbsp;</p>
+<p>三、数据挖掘和知识发现</p>
+<p>二者不同。</p>
+<p>本文中，KDD指的是从数据中发现有用知识的整个过程，而数据挖掘是指该过程中特殊的一步。数据挖掘是应用特殊的算法，从数据中提取出特征。</p>
+<p>KDD中不只包括DM，还包括：data preparation, data selection, data cleaning, incorporation of appropriate prior knowledge, proper interpretation of the results of mining.</p>
+<p>I) KDD的跨学科特性（The interdisciplinary nature of KDD）<br /></p>
+<p>KDD设计的研究领域：maching learning, pattern recognition, databases, statistics, AI, knowledge acquisition for expert systems, data visualization, high-performance computing.</p>
+<p>统一目标（unifying goal）：从大规模数据库的低等级的数据之中提取出高等级的知识。</p>
+<ul class="edui-filter-disc">
+ <li>KDD中的数据库挖掘部分倚重的学科：maching learning, pattern recognition, statistics。以从数据中发现特征。</li>
+</ul>
+<p>A natural question is: How is KDD different from pattern recognition or machine learning(and related fields)?</p>
+<p>Answer: 这些领域为整个KDD过程中的数据挖掘步骤提供了一些数据挖掘方法。KDD关注与从数据中进行知识发现的整个过程。包括：how the data are stored and accessed, how algorithms can be scaled to massive data sets and still run efficiently, how results can be interpreted and visualized, how the overall man-machine interaction can usefully be modeled and supported.</p>
+<ul class="edui-filter-disc">
+ <li>相关的AI领域，包括machine discovery(targets the discovery of empirical laws from observation and experimentation), and causal modeling(for the inference of causal models from data).<br /></li>
+ <li>统计学(Statistics)</li>
+</ul>
+<p>统计学和KDD有很多相同点。</p>
+<p>从数据中进行知识发现，其实也是一种统计探索。</p>
+<p>当试图从一个特殊样本中得到一般特征时，统计学提供了一种语言和框架，来判别结果的不确定性。</p>
+<p>一个关心(a&nbsp;concern)是：如果对任意数据（哪怕是随机数据）进行长时间的探索，总能从统计上找到一些看起来像但其实不是的所谓“特征”。</p>
+<p>不同：KDD, be viewed as encompassing a broader view of modeling than statistics. aims to provide tools to automate(to the degree possible) the entire process of data analysis and the statistician's &quot;art&quot; of hypothesis selection.</p>
+<ul class="edui-filter-disc">
+ <li>Driving force behind KDD：数据库领域</li>
+ <li>数据库的相关领域：数据仓库</li>
+</ul>
+<p>1. Data cleaning: 处理丢失数据，尽可能处理早上和错误数据</p>
+<p>2. Data access</p>
+<p>当所有部分模块都搞定了，我们该如何处理这些数据呢？</p>
+<p><strong>这就是：KDD</strong>。</p>
+<p>II) 基本定义</p>
+<p>KDD: is the nontrivial process of identifying valid, novel, potentially useful, and ultimately understandable patterns in data.</p>
+<p>Data: a set of facts(for example, cases in a databases)</p>
+<p>Pattern: an expression in some language describing a subset of the data or a model applicable to the subset. it will be knowledge if it exceeds some interesting threshold, which is by no means an attempt to define knowledge in the philosophical or even the popular view.</p>
+<p>Data mining: a step in the KDD process that consists of applying data analysis and discovery algorithms that, under acceptable computational efficiency limitations, produce a particular enumeration of patterns(or models) over the data.</p>
+<p>&nbsp;</p>
+<p>四、知识发现过程(KDD process)</p>
+<p>交互的和循环迭代的。</p>
+<p>基本步骤：</p>
+<ol class="edui-filter-decimal">
+ <li>理解应用领域及相关知识，确定目标<br /></li>
+ <li>创建目标数据库</li>
+ <li>数据清洗和预处理</li>
+ <li>数据精简和突出</li>
+ <li>找到与目标匹配的数据挖掘算法</li>
+ <li>探索分析和模型、假设的选择</li>
+ <li>数据挖掘</li>
+ <li>解释挖掘到的特征（可能会重复1~7步骤）</li>
+ <li>发现的知识的使用</li>
+</ol>
+<p>&nbsp;</p>
+<p>五、KDD过程中的数据挖掘</p>
+<p>主要讲数据挖掘的主要目标、达到目标的方法和与这些方法相关的数据挖掘算法。</p>
+<p>KDD的目标有两种类型：</p>
+<p>1. 验证(Verification): verify the user's hypothesis<br /></p>
+<p>2. 发现(discovery): 包括：</p>
+<ul class="edui-filter-disc">
+ <li>预测(prediction): system find the patterns for predicting the future behavior of some entities.</li>
+ <li>描述(description): 系统发现特征，并以人类可以理解的方式展现出来。<br /></li>
+</ul>
+<p>数据挖掘涉及到从观察到的数据中建立合适的模型和提取特征。</p>
+<p>模型建立的两种主要数学方法：</p>
+<ul class="edui-filter-disc">
+ <li>统计学(Statistical)<br /></li>
+ <li>逻辑学(Logical)</li>
+</ul>
+<p>1、数据挖掘方法</p>
+<ol class="edui-filter-decimal">
+ <li>分类(Classification)：将数据归入已定义的几类之一。<br /></li>
+ <li>回归(Regression)：将一个数据映射到一个实数值预测变量</li>
+ <li>聚类(Clustering)：通过有限的类或簇来描述数据。与此相关的是概率密度估计（probability density estimation）</li>
+ <li>概要(Summarization)：为数据的子集找到一种简介的描述</li>
+ <li>依赖模型(Dependency Modeling)：建立模型，描述变量之间的依赖性。包括结构层面和量的层面。</li>
+ <li>变化监测(Change and Deviation detection)：检测数据最重要的变化</li>
+</ol>
+<p>2、数据挖掘算法的模块</p>
+<ol class="edui-filter-decimal">
+ <li>模型描述(Model representation)：描述发现的特征<br /></li>
+ <li>模型评价(Model evaluation)：评价一个特征如何满足KDD的目标</li>
+ <li>搜索(Search)：包括参数搜索(parameter search)和模型搜索(model search)</li>
+</ol>
+<p>&nbsp;</p>
+<p>六、一些数据挖掘方法</p>
+<p>方法很多，本文只挑了几个流行的技术。</p>
+<ol class="edui-filter-decimal">
+ <li>决策树和规划（Decision Tree and Rules）</li>
+ <li>非线性回归和分类方法（Nonlinear Regression and Classification Methods）</li>
+ <li>基于例子的方法（Example-Based Methods）：用数据库中有代表性的例子进行模拟接近，形成一个模型。但有潜在的缺点是：还缺少一个优良的计算数据点间距的算法。</li>
+ <li>概率图形依赖模型（Probabilistic Graphic Dependency Models）：专注于通过图形结构显示概率依赖关系</li>
+ <li>相关学习模型（Relational Learning Models）：Although decision tree and rules have a representation restricted to prepositional logic, relational learning(also known as inductive logic programming) use the more flexible pattern language of first-order logic.</li>
+</ol>
+<p>&nbsp;</p>
+<p>七、讨论</p>
+<p>每种技术都有其使用的问题，使其在该问题中的表现比其他方法好。</p>
+<p>没有一种通用的数据挖掘算法。对一个特殊的应用选择一种合适的算法是一种艺术(art)。</p>
+<p>本文中对数据挖掘的讨论比较简短，再次需要申明一下两点：</p>
+<ol class="edui-filter-decimal">
+ <li>our overview of automated search focused mainly on automated methods for extracting patterns or models from data<br /></li>
+ <li>beware the hype: the state of the art in automated methods in data mining is still in a fairly early stage of development</li>
+</ol>
+<p>&nbsp;</p>
+<p>八、应用问题</p>
+<p>技术标准要考虑到：</p>
+<ul class="edui-filter-disc">
+ <li>充足的数据<br /></li>
+ <li>属性间的相关性</li>
+ <li>低噪声</li>
+ <li>面向时间变化的数据</li>
+ <li>先验知识</li>
+</ul>
+<p>1、研究和应用的挑战</p>
+<p>目前在研究和应用领域，KDD面对的主要挑战包括(均提供了可能的解决方案)：</p>
+<ol class="edui-filter-decimal">
+ <li>更大的数据库<br /></li>
+ <li>高维度</li>
+ <li>过适/过度拟合（overfitting）</li>
+ <li>评价统计意义（accessing of statistical significance）</li>
+ <li>变化的数据和知识</li>
+ <li>丢失数据和噪声</li>
+ <li>领域间复杂关系</li>
+ <li>特征的易理解性</li>
+ <li>与用户交互以及先验知识</li>
+ <li>和其他系统的整合</li>
+</ol>
+<p>&nbsp;</p>
+<p>九、总结评论：人工智能在KDD中的潜在角色</p>
+<p>出了机器学习，其他的人工智能（AI）领域也有可能会对KDD的各方面产生较大的影响。</p>
+<ol class="edui-filter-decimal">
+ <li>自然语言（Natural Language）<br /></li>
+ <li>计划（Planning）</li>
+ <li>智能主体（Intelligent Agent）</li>
+ <li>人工智能的不确定性（Uncertainty in AI）</li>
+ <li>知识表示（Knowledge Representation）</li>
+</ol>
+<p>其他领域，包括人机交互、知识获取技术、机器推理等，也会对KDD有所贡献。</p>
+<p>&nbsp;</p>
+<p>结语：本文中，我们主要的目的是澄清知识获取（KDD）和数据挖掘（DM）的关系。</p>
+<p>我们对KDD的过程进行了概览介绍，并简介了数据挖掘的方法。</p>
+<p>&nbsp;</p>
+<p>后记：</p>
+<p>看国外的Paper的时候，头总是晕晕乎乎的，脑子不够使，很容易理不清逻辑关系。但在做框架的时候，由于需要对原文进行概括，所以还是很需要明白文章的逻辑关系的。昨晚之后，发现，文中也有很多处重复的地方（例如数据挖掘方法的三个模块，文章出现两次），也有一些逻辑上稍微欠妥的地方。但是，虽有瑕疵，瑕不掩瑜。文章整体还是很严谨，逻辑也很清晰，这也是以后要学习的地方。以后可以考虑给自己的文章做一个框架，更容易看出来自己逻辑上有没有什么漏洞和缺陷。</p>
+<p>看一篇文章，里面讲读文献，开头的十几篇，二十几篇要认真读、细细的读，经典的甚至要背诵。我想，这应该是一个建立知识体系框架的过程，所以需要细细的读。等知识体系建立起来，以后读文献就是往里面填充了，重复的文献快速浏览，了解不同，不重复的文献只要建立新的旁支就可以了，这样以后读文献的速度就能快起来。做文献的框架很费力，那我也以15篇文献为目标吧，看看能否把自己的知识体系建立起来。</p>
+<p>算上上一篇HTML5的，这算是第二篇。</p>
+<p class="edui-filter-align-right">——Arthur<br /></p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2011-12-02/7389066#notes" class="notes">1 热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2011-12-02/7389066">December 02, 2011</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2011-12-14/12046605">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2011-11-28/7257322">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=10a17a10-1c8d-11e1-b317-782bcb3825eb&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'307'(Mars:'128')--><!--Host Name: db13.dd.hn-->
