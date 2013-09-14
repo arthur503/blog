@@ -51,6 +51,15 @@ title: 龙珠的博客：修炼自己与发现世界
 				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
         {% endfor %}
         </ul>
+		
+		
+		        <h2>Technology</h2>
+        <ul class="artical-list">
+        {% for post in site.posts.technology %}
+				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+		
 
         <h2>BookReport</h2>
         <ul class="artical-list">
