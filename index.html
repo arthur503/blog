@@ -43,23 +43,15 @@ title: 龙珠的博客：修炼自己与发现世界
 </font>
 
 
-
+<!-- MAIN CONTENT -->
+<!-- 由于在点点下载的html文件逐个添加category麻烦，所以暂时不用。
     <div class="sidenav">
         <h2>Technology</h2>
         <ul class="artical-list">
         {% for post in site.categories.technology %}
 				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
         {% endfor %}
-        </ul>
-		
-		
-		        <h2>Technology</h2>
-        <ul class="artical-list">
-        {% for post in site.posts.technology %}
-				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-        {% endfor %}
-        </ul>
-		
+        </ul>		
 
         <h2>BookReport</h2>
         <ul class="artical-list">
@@ -75,11 +67,12 @@ title: 龙珠的博客：修炼自己与发现世界
         {% endfor %}
         </ul>
     </div>
-		
+	
+需要修改部分 -->		
 		
 		
     <div>		
-        <h2>All Articals  {{ site.baseurl }}{{ post.url }}</h2>
+        <h2>All Articals</h2>
         <ul class="artical-list">
         {% for post in site.posts %}
 				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
@@ -87,15 +80,6 @@ title: 龙珠的博客：修炼自己与发现世界
         </ul>
     </div>
 
-	
-	    <div>		
-        <h2>All Articals {{ site.baseurl }}</h2>
-        <ul class="artical-list">
-        {% for post in site.posts %}
-				<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}">{{ post.title }}</a></li>
-        {% endfor %}
-        </ul>
-    </div>
 	
 	
 <h3>
