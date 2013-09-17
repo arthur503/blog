@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java的垃圾回收机制_龙珠</title>
+    <meta name="description" content="一、Java中如何对对象终结处理？在C++中，对每个对象生成时的内存分配，到结束时的内存回收，都是需要程序员来处理的。如果忘记了回收内存，对象所占用内存长期存在，无法回收，就是内存泄露。内存回收是个很麻烦的问题， 需要程序员很小心的处理，消耗大量精力。对于这同一个问题，C++和Java的处理上截然不同。C++设计者认为，内存的处理如此麻烦，因此一定要程序员自己处理；而Java的设计者认为，内存的处理如此麻烦，因此…" />
+    <meta name="keywords" content="Java,垃圾清理" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=fd928fc0-1fb1-11e3-b755-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java的垃圾回收机制</h2>
+                            <div class="entry rich-content"><p>一、Java中如何对对象终结处理？</p>
+<p>在C++中，对每个对象生成时的内存分配，到结束时的内存回收，都是需要程序员来处理的。如果忘记了回收内存，对象所占用内存长期存在，无法回收，就是内存泄露。</p>
+<p>内存回收是个很麻烦的问题， 需要程序员很小心的处理，消耗大量精力。对于这同一个问题，C++和Java的处理上截然不同。C++设计者认为，内存的处理如此麻烦，因此一定要程序员自己处理；而Java的设计者认为，内存的处理如此麻烦，因此一定不能让程序员自己处理（所以Java中自带垃圾回收机制）。从我个人的感觉而言，Java的垃圾回收机制让程序员摆脱伤脑筋的内存管理，从而更容易上手。但是深入来看，C++的内存管理更贴近机器处理的内部，所以更能写出高效的代码，相对而言，Java代码的效率要低一些。</p>
+<p>那么在Java中，是如何在对象建立之后进行消除呢？</p>
+<p>如果查看Java中的Object.java文件，其中可以重写的有5个方法：clone(), equals(), hashcode(), finalize(), toString()。我们已经讲过了equals()和hashcode()方法，toString()方法很容易理解，所以这次来看finalize()方法（clone()方法以后再讲）。</p>
+<p>finalize()方法的文档如下：</p>
+<pre config="brush:java;toolbar:false;">/**
+     * Called by the garbage collector on an object when garbage collection
+     * determines that there are no more references to the object.
+     * A subclass overrides the {@code finalize} method to dispose of
+     * system resources or to perform other cleanup.
+     * &lt;p&gt;
+     * The general contract of {@code finalize} is that it is invoked
+     * if and when the Java&lt;font size=&quot;-2&quot;&gt;&lt;sup&gt;TM&lt;/sup&gt;&lt;/font&gt; virtual
+     * machine has determined that there is no longer any
+     * means by which this object can be accessed by any thread that has
+     * not yet died, except as a result of an action taken by the
+     * finalization of some other object or class which is ready to be
+     * finalized. The {@code finalize} method may take any action, including
+     * making this object available again to other threads; the usual purpose
+     * of {@code finalize}, however, is to perform cleanup actions before
+     * the object is irrevocably discarded. For example, the finalize method
+     * for an object that represents an input/output connection might perform
+     * explicit I/O transactions to break the connection before the object is
+     * permanently discarded.
+     * &lt;p&gt;
+     * The {@code finalize} method of class {@code Object} performs no
+     * special action; it simply returns normally. Subclasses of
+     * {@code Object} may override this definition.
+     * &lt;p&gt;
+     * The Java programming language does not guarantee which thread will
+     * invoke the {@code finalize} method for any given object. It is
+     * guaranteed, however, that the thread that invokes finalize will not
+     * be holding any user-visible synchronization locks when finalize is
+     * invoked. If an uncaught exception is thrown by the finalize method,
+     * the exception is ignored and finalization of that object terminates.
+     * &lt;p&gt;
+     * After the {@code finalize} method has been invoked for an object, no
+     * further action is taken until the Java virtual machine has again
+     * determined that there is no longer any means by which this object can
+     * be accessed by any thread that has not yet died, including possible
+     * actions by other objects or classes which are ready to be finalized,
+     * at which point the object may be discarded.
+     * &lt;p&gt;
+     * The {@code finalize} method is never invoked more than once by a Java
+     * virtual machine for any given object.
+     * &lt;p&gt;
+     * Any exception thrown by the {@code finalize} method causes
+     * the finalization of this object to be halted, but is otherwise
+     * ignored.
+     *
+     * @throws Throwable the {@code Exception} raised by this method
+     *</pre>
+<p>可以看出，finalize()方法是由Java中的垃圾收集器来调用的。当GC认为没有其他引用指向该对象时，则调用对象的finalize()方法，进行垃圾回收前的清理工作，如：显式的关闭I/O连接等。</p>
+<p>另外，指的注意的是，内存的回收并不是在调用finalize()方法之后立即进行的。实际情况是：一旦垃圾回收器准备好释放对象占用的空间，将首先调用其finalize()方法，并且在<strong>下一次垃圾回收</strong>的动作发生之时，才会真正的回收对象所占用的内存。<strong>因此，finalize()方法的意义是，在JVM垃圾回收时刻做一些重要的清理工作。</strong></p>
+<p>Java语言并不保证由哪个线程调用该方法，但可以保证的是，在调用该方法前，调用的线程不会持有任何用户可见的同步锁。如果在调用finalize()方法期间出现异常，该异常会被忽略，同时该对象的finalize()方法会终止。并且，对于任何对象而言，finalize()方法最多只能被JVM调用一次。</p>
+<p>我们知道，System.gc()是建议JVM进行垃圾清除工作（但JVM并不保证一定执行），从而强行进行终结动作。那么我们测试下代码看看finalize()方法是如何工作的，代码如下：</p>
+<pre config="brush:html;toolbar:false;">package com.arthur.test;
+                                                                                                                                                             
+public class Test {
+                                                                                                                                                                 
+    public static void main(String[] argv){
+        TestFinalize tf = new TestFinalize();       
+        System.gc();
+        System.out.println(&quot;GC1&quot;);  
+                                                                                                                                                                     
+        tf = null;
+        System.gc();
+        System.out.println(&quot;GC2&quot;);
+    }
+}
+                                                                                                                                                             
+class TestFinalize{
+                                                                                                                                                                 
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO Auto-generated method stub
+        System.out.println(&quot;Invoke TestFinalize finalize method.&quot;);
+    }
+                                                                                                                                                             
+    public TestFinalize(){
+        System.out.println(&quot;Create a new TestFinalize.&quot;);
+    }
+}</pre>
+<p>输出结果 为：</p>
+<pre config="brush:html;toolbar:false;">Create a new TestFinalize.
+GC1
+GC2
+Invoke TestFinalize finalize method.</pre>
+<p>在tf不为null时，使用GC1并没有效果；在将tf置为null之后，调用GC2，JVM调用finalize()方法，从而输出“Invoke TestFinalize finalize method.”。</p>
+<p>弄清了finalize()方法，但还是存有疑问：finalize()方法只是做垃圾回收之前的清理工作，即没有消灭自身，也没有实际进行垃圾回收。那Java中到底是如何进行垃圾回收的呢？</p>
+<p>二、Java中垃圾回收器(GC)是如何工作的？</p>
+<p>在JVM中有一个GC<span>（Garbage Collection</span><span>）</span>线程，它在工作时，将一面回收空间，一面使堆中的对象紧凑排列。这样，实现了一种高速的、有无限空间可供分配的堆模型。</p>
+<p>我们先来讲一个简单但速度很慢的垃圾回收技术（这种技术常被用来讲解垃圾收集的工作方式，但很少用于实际JVM中）：计数法。</p>
+<p>对于每个对象，都有一个引用计数器。当有新引用时，计数器+1； 当引用离开作用域或被置为null时，引用计数-1。而垃圾回收器会在包含全部对象的列表上遍历，当发现某个对象的引用计数为0时，就释放该空间。不过，这个方法有个缺陷：如果对象之前存在循环引用，就会出现“对象应该被回收，但是引用计数不为0”的情况。</p>
+<p>在更快的模式中，找到需要回收/存活的对象是另一种技术。这种技术的基本思想是：对于任何“活“的对象，一定能追溯到其存活在堆栈或静态存储区之中的引用。这个引用链条可能穿过好几个对象层次。因此，如果从堆栈和静态存储区开始，遍历所有引用，就能找到所有“活”的对象。这样就解决了“交互引用的对象组”问题——这些对象根本不会被探测到，因此其内存空间被JVM自动回收。</p>
+<p>在找到需要垃圾回收/存活的对象之后，有的JVM中使用停止-复制（stop-and-copy）方法。先暂停程序的运行，之后将所有存活的对象从当前堆复制到另一个堆，没有复制的全部是垃圾进行回收。这样做有个缺点：首先，这需要两个堆，GC在这两个堆之间倒腾，需要维护多一倍的空间。而且，对象移动后，所有指向他的引用都必须修正。其次，复制很耗费时间。尤其是系统进入稳定态后，只产生少量垃圾，那么大量复制就不是必要的，反而很浪费时间。另外，这个方法中，垃圾回收动作不是在后台进行，在垃圾回收时程序会被暂停。</p>
+<p>这样，有些JVM会进行检查，如果没有新垃圾产生，就自动转入另一种工作模式，一般称为标记-清扫（mark-and-sweep）。这种方法的思路是：在遍历堆栈和静态存储区时，遍历所有引用，找到“存活”的对象。但是，这个过程并进行垃圾回收，而是对每个“存活”的对象进行标记。只有全部标记工作完成之后，清理工作才会开始。在清理过程中，没有标记的对象将被释放，不发生任何复制动作。所以剩下的堆空间是不连续的。GC过希望得到连续的空间的话，就需要重新整理剩下的对象。这种模式一般很慢，但是如果新产生垃圾很少的时候，就很快了。</p>
+<p>我们来整理一下思路：</p>
+<p>垃圾标记技术有两种：</p>
+<p>1. 计数法。缺点：会交互引用的问题。</p>
+<p>2. 从堆栈和静态存储空间遍历引用法。</p>
+<p>第一种标记技术基本不使用了，在使用第二种方法标记之后，垃圾回收也有两种模式：</p>
+<p>2.1 <span>停止-复制（stop-and-copy）</span><span>方法。缺点：1. 需要多一倍空间；2. 复制耗费时间；3. 程序会被暂停。</span></p>
+<p>2.2 <span>标记-清扫（mark-and-sweep</span><span>），即“自适应”方法。缺点：速度很慢，容易在堆空间产生很多碎片。适合新产生垃圾较少的情况。</span></p>
+<p>实际JVM中，垃圾回收器会定期进行完整的清理动作。</p>
+<blockquote>
+ <p>1. 先使用停止-复制方法：大型对象不会被复制，包含小对象的块则被复制并整理。每个块都有相应的代数（generation count）来记录它是否还存活。</p>
+ <p>2. JVM会进行监视，如果所有对象很稳定，垃圾回收器效率降低的话，就切换到标记-清扫方式。</p>
+ <p>3. 同样，JVM继续监视效果，如果堆空间出现很多碎片，则继续切换回“停止-复制”方式。</p>
+</blockquote>
+<p>这就是GC的“自适应”技术。也可以称为“自适应的，分代的，停止-复制，标记-清扫”式垃圾回收器。</p>
+<p>不过，Java中并没有强制执行垃圾清理的方法。System.gc()只能是建议JVM进行垃圾清理，JVM并不保证在System.gc()之后一定执行垃圾清理。</p>
+<p>JVM中，GC的执行的目的是回收程序不再使用的内存，一般会在后台执行，无法由用户直接控制（这是我觉得不爽的一点，因为会有程序的执行不在你的掌控之中）。</p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p>《Java编程思想》</p></li>
+ <li><p>Object.java </p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-17/40052186352#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-17/40052186352">September 17, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-17/40052899490">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=fd928fc0-1fb1-11e3-b755-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'483'(Mars:'126')--><!--Host Name: hy-10-0-0-92.dd.hn-->
