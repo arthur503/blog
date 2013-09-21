@@ -1,0 +1,167 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：null是什么？_龙珠</title>
+    <meta name="description" content="null是Java中的一个关键字，代表为空。一、null可以赋给引用类型变量，但不能赋给基本类型变量。Java中的基本类型变量有8种，分别是：int, short, byte, char, double, long, float, boolean。对于这8种基本类型变量的赋值，不可以使用null。对于其他如String，或者自定义类型，都可以使用null定义初值。但是，如下面两种赋值方式是有区别的：String s =    VS String s = null前者是对s赋值一个长度为0的字符串，s指向一个空字符串的内存…" />
+    <meta name="keywords" content="Java" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=fd48df50-22a0-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：null是什么？</h2>
+                            <div class="entry rich-content"><p>null是Java中的一个关键字，代表为空。</p>
+<p>一、null可以赋给引用类型变量，但不能赋给基本类型变量。</p>
+<p>Java中的基本类型变量有8种，分别是：int, short, byte, char, double, long, float, boolean。对于这8种基本类型变量的赋值，不可以使用null。对于其他如String，或者自定义类型，都可以使用null定义初值。但是，如下面两种赋值方式是有区别的：</p>
+<p>String s = &quot;&quot; VS String s = null</p>
+<p>前者是对s赋值一个长度为0的字符串，s指向一个空字符串的内存空间，你可以对这块空间做任何操作；</p>
+<p>后者是对s定义了一个句柄，也就是说有了这个引用，但这个引用并没有指向任何一个内存空间。</p>
+<p>二、null本身不是对象，也不是Object的实例</p>
+<p>如果使用代码：</p>
+<pre config="brush:html;toolbar:false;">System.out.println(&quot;null is Object?&quot;+(null instanceof Object));</pre>
+<p>输出结果是：</p>
+<pre config="brush:html;toolbar:false;">null is Object?false</pre>
+<p>也就是说，null本身不是一个Object的实例。</p>
+<p>因为null不是一个对象，所以对其的操作都会报空指针错。例如，代码如下：</p>
+<pre config="brush:html;toolbar:false;">String s = null;
+System.out.println(&quot;1:&quot;+s.equals(&quot;&quot;));
+System.out.println(&quot;2:&quot;+&quot;&quot;.equals(s));</pre>
+<p>运行结果是会报错：</p>
+<pre config="brush:html;toolbar:false;">Exception in thread &quot;main&quot; java.lang.NullPointerException</pre>
+<p>而如果调整下顺序让2先输出，则结果是：</p>
+<pre config="brush:html;toolbar:false;">2:false
+Exception in thread &quot;main&quot; java.lang.NullPointerException</pre>
+<p>因此，前者会报异常，后者不会。就是因此null的缘故。</p>
+<p>三、对引用变量赋初值为null</p>
+<p>在Java中，如果变量没有显式的赋初值，则会被默认赋值。基本数据类型如int、long等赋值为0，float、double等赋值0.0，boolean赋值为false，而对引用类型变量则是赋初值为null。</p>
+<p>四、容器类型与null</p>
+<blockquote>
+ <p>List：允许重复元素，可以加入任意多个null。</p>
+ <p>Set：不允许重复元素，最多可以加入一个null。</p>
+ <p>Map：Map的key最多可以加入一个null，value字段没有限制。</p>
+ <p>数组：基本类型数组，定义后，如果不给定初始值，则java运行时会自动给定值。引用类型数组，不给定初始值，则所有的元素值为null。</p>
+</blockquote>
+<p>五、null的其他作用</p>
+<p>1. 判断一个引用类型是否为null，使用“==”来判断；</p>
+<p>2. &nbsp;将变量赋值为null，表示不再使用，取消引用，等待JVM对内存的回收。</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://www.cnblogs.com/mingzi/archive/2009/01/03/1367493.html" target="_blank" title="深入Java关键字null">深入Java关键字null</a></p></li>
+ <li><p><a href="http://www.qnr.cn/pc/java/fudao/zhuanye/201205/779644.html" target="_blank" title="Java中null类型研究说明">Java中null类型研究说明</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-21/40053953945#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-21/40053953945">September 21, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-21/40052223905">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-21/40053141562">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=fd48df50-22a0-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'182'(Mars:'125')--><!--Host Name: hy-10-0-0-86.dd.hn-->

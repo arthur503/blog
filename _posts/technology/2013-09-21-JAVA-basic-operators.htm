@@ -1,0 +1,195 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：基本操作符_龙珠</title>
+    <meta name="description" content="一、算数操作符（+、-、*、/）：除号/：整数除法会会接去掉结果的小数位，而不是聪明兮兮的四舍五入。想要四舍五入的结果，用Math.round()吧。二、一元加减操作符（-、+）：一元加减操作符和二元加减操作符都是用相同的符号。根据表达式，编译器会自动判断出使用的哪一种。如：x = a * -b;但是，为了阅读方便，有时更明确的写成：x = &nbsp;a * (-b);更有利于阅读。三、前缀、后缀递增和递减（++、--）：前缀：先加减后运算；后缀：先…" />
+    <meta name="keywords" content="Java" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=5e4e5dc0-22a1-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：基本操作符</h2>
+                            <div class="entry rich-content"><p>一、算数操作符（+、-、*、/）：</p>
+<p>除号/：整数除法会会接去掉结果的小数位，而不是聪明兮兮的四舍五入。想要四舍五入的结果，用Math.round()吧。</p>
+<p>二、一元加减操作符（-、+）：</p>
+<p>一元加减操作符和二元加减操作符都是用相同的符号。根据表达式，编译器会自动判断出使用的哪一种。如：</p>
+<p>x = a * -b;</p>
+<p>但是，为了阅读方便，有时更明确的写成：</p>
+<p>x = &nbsp;a * (-b);</p>
+<p>更有利于阅读。</p>
+<p>三、前缀、后缀递增和递减（++、--）：</p>
+<p>前缀：先加减后运算；</p>
+<p>后缀：先运算后加减。</p>
+<p>执行顺序上，易错：</p>
+<pre config="brush:html;toolbar:false;">int a = 5;
+int b = ++a + a-- + a-- + a++ + --a + --a;
+System.out.println(&quot;a:&quot;+a+&quot;. b:&quot;+b);</pre>
+<p>在计算b时：</p>
+<p>第一个++a执行完毕，整体为6，a=6；<br /></p>
+<p>第二个a--执行完毕，整体为12，a=5；</p>
+<p>第三个a--执行完毕，整体12+5=17，a=4；</p>
+<p>第四个a++执行完毕，整体17+4=21，a=5；</p>
+<p>第五个--a执行完毕，整体21+（5-1）=25，a=（5-1）=4；</p>
+<p>第六个--a执行完毕，整体25+（4-1）=28，a=（4-1）=3.</p>
+<p>我们查看下运行结果是一致的，如下：</p>
+<pre config="brush:html;toolbar:false;">a:3. b:28</pre>
+<p>四、关系操作符（==、!=）</p>
+<p>关系操作符的结果是一个布尔值，计算的是操作符的值之间的关系。</p>
+<p>不过对于“==”而言，有个陷阱。就是在Object.java中，equals方法是通过“==”来判断的。而“==”和“!=”比较的是对象的引用（即对象的地址）而非“对象的值”，因此，很容易出错。具体见我之前写的文章对二者的比较：<a href="http://ouscn.diandian.com/post/2013-08-10/40053450235" target="_blank" title="(Java)相同和相等：equals() == &quot;==&quot;?">(Java)相同和相等：equals() == &quot;==&quot;?</a></p>
+<p>五、逻辑操作符（&amp;&amp;、||、!）</p>
+<p>根据参数的逻辑关系，生成布尔值。</p>
+<p>六、按位操作符（&amp;、|、~、^）</p>
+<p>按位操作符用来操作整数基本数据类型中的单个比特（bit），即二进制位。</p>
+<pre config="brush:html;toolbar:false;">int c = 1;
+int d = ~c;     
+System.out.println(&quot;c:&quot;+Integer.toBinaryString(c)+&quot;.d:&quot;+Integer.toBinaryString(d));
+System.out.println(&quot;c ^ d:&quot;+(c ^ d));</pre>
+<p>运行结果：</p>
+<pre config="brush:html;toolbar:false;">c:1. d:11111111111111111111111111111110
+c ^ d:-1</pre>
+<p>按位操作符除了“~”是一元操作符之外，其余均可以和“=”联合使用。<br /></p>
+<p>对于布尔值，可以还行按位“&amp;”、“|”、“^”的运算，但不能执行按位的“~”运算（可以执行逻辑的非运算，即“！”）。</p>
+<p>七、移位操作符（&lt;&lt;、&gt;&gt;、&gt;&gt;&gt;）</p>
+<p>移位操作符只可用来处理整数类型。</p>
+<p>操作符均表示：对操作符左边的数进行移位操作，移位个数操作符右边的数。</p>
+<p>“有符号”的右移位操作符（&gt;&gt;）使用“符号扩展”：若符号为正，则在高位插入0；若符号为负，则在高位插入1。</p>
+<p>“无符号”的右移位操作符（&gt;&gt;&gt;）使用“零扩展”：无论正负，都在高位插入0（这个是C/C++中没有的）。</p>
+<p>&nbsp;</p>
+<p>附录：</p>
+<p>一、NaN是什么？</p>
+<p>百度百科<a href="http://baike.baidu.com/link?url=DtQZBBrnfZ9EgKH6jTphS48PrLwbTibmHJT80U90XQibNOwp1JieLlf7oDF7WAX4" target="_blank" title="nan">nan</a>的介绍如下：</p>
+<blockquote>
+ <p>NaN，是Not a Number的缩写。</p>
+ <p>NaN 用于处理计算中出现的错误情况，比如 0.0 除以 0.0 或者求负数的平方根。由上面的表中可以看出，对于单精度浮点数，NaN 表示为指数为 emax + 1 = 128（指数域全为 1），且尾数域不等于零的浮点数。IEEE 标准没有要求具体的尾数域，所以 NaN 实际上不是一个，而是一族。不同的实现可以自由选择尾数域的值来表达 NaN，比如 Java 中的常量 Float.NaN 的浮点数可能表达为 01111111110000000000000000000000，其中尾数域的第一位为 1，其余均为 0（不计隐藏的一位），但这取决系统的硬件架构。Java 中甚至允许程序员自己构造具有特定位模式的 NaN 值（通过 Float.intBitsToFloat() 方法）。比如，程序员可以利用这种定制的 NaN 值中的特定位模式来表达某些诊断信息。</p>
+</blockquote>
+<p>二、null、Null、NULL是什么？</p>
+<p>Java中只有null，其他表述都是错误的。</p>
+<p>Java中的null关键字，是用来标识一个不确定的对象。它可以赋给引用类型变量，不能赋给基本类型变量。</p>
+<p>null本身不是Java中的对象，也不是Object的实例。测试代码如下：</p>
+<pre config="brush:html;toolbar:false;">System.out.println(&quot;null instanceof Object:&quot;+(null instanceof Object));</pre>
+<p>返回结果为false。</p>
+<p>具体对null的讲解请见我的文章：<a href="http://ouscn.diandian.com/post/2013-09-21/40053953945" target="_blank" title="Java：null是什么？">Java：null是什么？</a></p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p>《Java编程思想》</p></li>
+ <li><p><a href="http://baike.baidu.com/link?url=DtQZBBrnfZ9EgKH6jTphS48PrLwbTibmHJT80U90XQibNOwp1JieLlf7oDF7WAX4" target="_blank" title="nan">nan</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-08-10/40053450235" target="_blank" title="(Java)相同和相等：equals() == &quot;==&quot;?">(Java)相同和相等：equals() == &quot;==&quot;?</a></p></li>
+ <li><p><a href="http://www.cnblogs.com/mingzi/archive/2009/01/03/1367493.html" target="_blank" title="深入Java关键字null">深入Java关键字null</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-09-21/40053953945" target="_blank" title="Java：null是什么？">Java：null是什么？</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-21/40052223905#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-21/40052223905">September 21, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-21/40053953945">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=5e4e5dc0-22a1-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'247'(Mars:'134')--><!--Host Name: hy-10-0-0-86.dd.hn-->
