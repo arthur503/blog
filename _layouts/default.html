@@ -1,52 +1,43 @@
 <!DOCTYPE html>
-　　<html>
-　　<head>
-	    <meta charset='utf-8' />
-	    <meta name="description" content="Blog content" />
+<html>
+<head>
 
-	    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+    <meta charset="utf-8" />
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="author" content="BieYuu" />
+    <meta name="description" content="BeiYuu's Blog" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/stylesheet.css" type="text/css" />
+</head>
+<body>
 
-
-　　　　<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-　　　　<title>{{ page.title }}</title>
-　　</head>
-
-    
-　　<body>
-
-	<!-- HEADER -->
+    <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/arthur503/blog">View on GitHub</a>
 
           <h1 id="project_title"><a href="http://arthur503.github.io/blog/"><font color="FFFFFF">龙珠</font></h1>
-            <div id="project_description">修炼自己与发现世界</div>
+            <div id="project_description">修炼自己与发现世界23:29</div>
           <h2 id="project_tagline"></h2>
 
         </header>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
 
-      	V23:12
-
-　　　　{{ content }}
-
-      </section>
+    <div class="home-menu">
+        <div class="home-icon-con">
+            <a class="home-menu-icon" href="/">BeiYuu</a>
+            <a class="home-follow" href="#" title="Contact Me">+</a>
+        </div>
+        <div class="home-contact">
+            <a href="http://weibo.com/beiyuu/" target="_blank" style="margin-left:-5px;"><img src="http://www.weibo.com/favicon.ico" alt="" width="25"/></a>
+            <a href="http://www.douban.com/people/beiyuu/" target="_blank" style="text-align:center;"><img src="http://www.douban.com/favicon.ico" alt="" width="22"/></a>
+            <a href="http://instagram.com/beiyuu/" target="_blank" style="text-align:right"><img src="http://d36xtkk24g8jdx.cloudfront.net/bluebar/00c6602/images/ico/favicon.ico" alt="" width="22"/></a>
+        </div>
     </div>
 
+    {{ content }}
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-		<p>Contact Me:  <a href="mailto:arthur.dut@gmail.com"> Arthur Email</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-        <p class="copyright">Blog maintained by <a href="https://github.com/arthur503">arthur503</a></p>
-      </footer>
-    </div>
-
-
-　　</body>
-　　</html>
+ 
+</body>
+</html>
