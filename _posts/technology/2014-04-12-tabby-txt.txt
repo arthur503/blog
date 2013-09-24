@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Test txt
+title: Test .txt file
 ---
 english text file.
 
