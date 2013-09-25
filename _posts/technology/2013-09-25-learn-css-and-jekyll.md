@@ -30,22 +30,8 @@ title: 使用Github搭建博客：css和jekyll修改
 			<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
 </pre>
-但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
-<pre>		
+但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为“page.date | date_to_string ”。
 
-	<pre>
-	    <div id="main_content_wrap" class="outer">
-	      <section id="main_content" class="inner">
-			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>test 2</h2>
-
-			test 22
-
-		   </section>
-		</div>
-	</pre>
-</pre>
-效果还不错。
-这种低级错误，以后还是不要犯了。
 不过，default模板弄完之后，发现如果在post，也就是.md文件里，写入"pre"块中，或直接写for循环代码，会报错！难道是会执行吗？
 发现确实是这样。因为这部分代码会作为静态网页合成的html的一部分，所以有html的标签都会当做标签来执行。若想要不当做标签，除非使用转移字符。另外，实验的时候，在“pre”标签内，先换一行，再加入代码，代码的标签都不在显示。上传也不报错。
 
