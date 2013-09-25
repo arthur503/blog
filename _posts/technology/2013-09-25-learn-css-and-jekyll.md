@@ -20,8 +20,8 @@ CODE2:
 CODE3:
 	    <div id="main_content_wrap" class="outer">
 	      <section id="main_content" class="inner">
-			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
-			{{ page.date | date_to_string }} 
+			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>test 1</h2>
+			 test 11
 
 		   </section>
 		</div>
@@ -30,10 +30,9 @@ CODE3:
 		<pre>
 	    <div id="main_content_wrap" class="outer">
 	      <section id="main_content" class="inner">
-			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
-			
-			<br>
-			{{ page.date | date_to_string }} 
+			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>test 2</h2>
+
+			test 22
 
 		   </section>
 		</div>
