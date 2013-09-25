@@ -10,11 +10,7 @@ title: 使用Github搭建博客：css和jekyll修改
 折腾了一晚上，也没有看到jekyll语言对这部分的讲述。后来参考下载下来的点点网的网页，索性不使用相对地址，改用绝对地址，我的css的绝对地址是：http://arthur503.github.io/blog/stylesheets/stylesheet.css。
 这样之后，可以使用了。但复制index.html部分的代码到default.html这个模板下，还是会报错。“Pages not build”这个错误不知道报了多少回。一行一行的看index.html中的代码，不断的删减查找错误出处，最后发现index中的这个代码：
 
-"
-for(int i=0;i<100;i++){
-	i += 1;
-}
-"
+
 
 会导致错误。
 但是没有这一样，又会使所有的content是个超链接。鉴于刚开始看css还不知道怎么修改，至少删删减减。胡乱删了好多次，真是着急。找到最后，发现是错在post.date方法上了。因为在index中是遍历_posts文件夹，每个文件命名为post，代码如下：
