@@ -18,6 +18,27 @@ CODE2:
 
 但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
 CODE3:
+	    <div id="main_content_wrap" class="outer">
+	      <section id="main_content" class="inner">
+			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
+			{{ page.date | date_to_string }} 
+
+		   </section>
+		</div>
+
+
+		<pre>
+	    <div id="main_content_wrap" class="outer">
+	      <section id="main_content" class="inner">
+			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
+
+			{{ content }}
+			<br>
+			{{ page.date | date_to_string }} 
+
+		   </section>
+		</div>
+		</pre>
 
 效果还不错。
 这种低级错误，以后还是不要犯了。
