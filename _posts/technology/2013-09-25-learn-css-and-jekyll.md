@@ -1,6 +1,6 @@
 ---
 layout:  default
-title: 使用Github搭建博客——css和jekyll修改
+title: 使用Github搭建博客：css和jekyll修改
 ---
 之前搭建完了Github博客，基本的框架起来了。但是对于_posts文件夹下的post文件，之前不知道如何像主文件夹下的index.html一样使用css效果。
 因为没有学过css，所以最开始不知道怎么弄。我把stylesheets、images、javascripts三个文件夹复制到_posts文件夹下，但还是没有效果。
@@ -9,7 +9,9 @@ title: 使用Github搭建博客——css和jekyll修改
 为什么呢？
 折腾了一晚上，也没有看到jekyll语言对这部分的讲述。后来参考下载下来的点点网的网页，索性不使用相对地址，改用绝对地址，我的css的绝对地址是：http://arthur503.github.io/blog/stylesheets/stylesheet.css。
 这样之后，可以使用了。但复制index.html部分的代码到default.html这个模板下，还是会报错。“Pages not build”这个错误不知道报了多少回。一行一行的看index.html中的代码，不断的删减查找错误出处，最后发现index中的这个代码：
-
+<pre>
+test
+</pre>
 效果还不错。
 这种低级错误，以后还是不要犯了。
 另外，如果以后有时间的话，再来搭理下博客吧。这次想要给_posts的文章使用index.html的标准模板的目的达到了。以后的话，还想要加上按照category分类、按照tag搜索等功能。
