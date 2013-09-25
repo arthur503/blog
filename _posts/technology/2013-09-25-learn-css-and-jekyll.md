@@ -12,6 +12,24 @@ title: 使用Github搭建博客：css和jekyll修改
 <pre>
 test
 </pre>
+
+
+会导致错误。
+但是没有这一样，又会使所有的content是个超链接。鉴于刚开始看css还不知道怎么修改，至少删删减减。胡乱删了好多次，真是着急。找到最后，发现是错在post.date方法上了。因为在index中是遍历_posts文件夹，每个文件命名为post，代码如下：
+<pre>
+<!--
+ 	{% for post in site.posts %}
+		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+	 -->
+</pre>
+但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
+<pre>
+<!-- 
+{{ page.date | date_to_string }} 
+ -->
+</pre>
+
 效果还不错。
 这种低级错误，以后还是不要犯了。
 另外，如果以后有时间的话，再来搭理下博客吧。这次想要给_posts的文章使用index.html的标准模板的目的达到了。以后的话，还想要加上按照category分类、按照tag搜索等功能。
