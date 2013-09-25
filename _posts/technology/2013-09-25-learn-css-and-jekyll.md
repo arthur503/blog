@@ -19,9 +19,7 @@ title: 使用Github搭建博客：css和jekyll修改
 
 代码：
 <pre>
-for(int i=0;i<10;i++){
-	println("i");
-}
+
 </pre>
 
 
