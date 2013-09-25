@@ -17,10 +17,6 @@ title: 使用Github搭建博客：css和jekyll修改
 
 另外，在.md文件中，换行两次，在博客里才会显示换行。
 
-代码：
-for(int i=0;i<10;i++){
-	println("i");
-}
-
+代码还不能显示。有代码的话，不管是放入“pre”块还是直接放入文章内，都会page build failed。真蛋疼。
 
 另外，如果以后有时间的话，再来搭理下博客吧。这次想要给_posts的文章使用index.html的标准模板的目的达到了。以后的话，还想要加上按照category分类、按照tag搜索等功能。
