@@ -16,13 +16,7 @@ test
 
 会导致错误。
 但是没有这一样，又会使所有的content是个超链接。鉴于刚开始看css还不知道怎么修改，至少删删减减。胡乱删了好多次，真是着急。找到最后，发现是错在post.date方法上了。因为在index中是遍历_posts文件夹，每个文件命名为post，代码如下：
-<pre>
-<!--
- 	{% for post in site.posts %}
-		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-	{% endfor %}
-	 -->
-</pre>
+
 但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
 <pre>
 <!-- 
