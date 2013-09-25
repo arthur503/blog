@@ -11,6 +11,9 @@ title: 使用Github搭建博客：css和jekyll修改
 这样之后，可以使用了。但复制index.html部分的代码到default.html这个模板下，还是会报错。“Pages not build”这个错误不知道报了多少回。一行一行的看index.html中的代码，不断的删减查找错误出处，最后发现index中的这个代码：
 <pre>
 test
+for(int i=0;i<1000;i++){
+	i += 1;
+}
 </pre>
 
 
