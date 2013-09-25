@@ -1,9 +1,0 @@
----
-layout:  default
-title: Learn jekyll and github pages 23:20
----
-
-<h1>h11111 test h1</h1>
-
-github pages:
-_layout下的default所规定的引用css文件应该是：_posts文件夹下的文件相对于css文件的位置。因为相当于是用default配置文件在_posts对应文件夹下产生了一个html文件。
