@@ -11,10 +11,9 @@
 　　</head>
 
 
-
 　　<body>
 
-	<!-- HEADER -->
+		<!-- HEADER -->
 	    <div id="header_wrap" class="outer">
 	        <header class="inner">
 	          <a id="forkme_banner" href="https://github.com/arthur503/blog">View on GitHub</a>
@@ -27,7 +26,22 @@
 	    </div>
 
 
-　　　　{{ content }}
+	  	<!-- MAIN CONTENT -->
+	    <div id="main_content_wrap" class="outer">
+	      <section id="main_content" class="inner">
+
+			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
+
+
+	  		{{ content }}
+	  		<br>
+	  		{{ post.date | date_to_string }}
+
+
+	      </section>
+	    </div>
+
+
 
 　　</body>
 
