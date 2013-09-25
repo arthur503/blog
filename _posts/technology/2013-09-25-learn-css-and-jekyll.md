@@ -9,35 +9,7 @@ title: 使用Github搭建博客——css和jekyll修改
 为什么呢？
 折腾了一晚上，也没有看到jekyll语言对这部分的讲述。后来参考下载下来的点点网的网页，索性不使用相对地址，改用绝对地址，我的css的绝对地址是：http://arthur503.github.io/blog/stylesheets/stylesheet.css。
 这样之后，可以使用了。但复制index.html部分的代码到default.html这个模板下，还是会报错。“Pages not build”这个错误不知道报了多少回。一行一行的看index.html中的代码，不断的删减查找错误出处，最后发现index中的这个代码：
-<pre>
-<!--     为了不被github pages解析，此处代码注释掉。
-	<div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-		<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>{{ page.title }}</h2>
 
-		{{ content }}
-		<br>
-		{{ post.date | date_to_string }} 
-
-	   </section>
-	</div> 
--->
-</pre>
-会导致错误。
-但是没有这一样，又会使所有的content是个超链接。鉴于刚开始看css还不知道怎么修改，至少删删减减。胡乱删了好多次，真是着急。找到最后，发现是错在post.date方法上了。因为在index中是遍历_posts文件夹，每个文件命名为post，代码如下：
-<pre>
-<!--
- 	{% for post in site.posts %}
-		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-	{% endfor %}
-	 -->
-</pre>
-但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
-<pre>
-<!-- 
-{{ page.date | date_to_string }} 
- -->
-</pre>
 效果还不错。
 这种低级错误，以后还是不要犯了。
 另外，如果以后有时间的话，再来搭理下博客吧。这次想要给_posts的文章使用index.html的标准模板的目的达到了。以后的话，还想要加上按照category分类、按照tag搜索等功能。
