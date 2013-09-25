@@ -18,13 +18,7 @@ CODE2:
 
 但是在此处，没有定义post名字，所以报错！应该使用page来代替，改为：
 CODE3:
-	    <div id="main_content_wrap" class="outer">
-	      <section id="main_content" class="inner">
-			<h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>test 1</h2>
-			 test 11
 
-		   </section>
-		</div>
 
 
 		<pre>
