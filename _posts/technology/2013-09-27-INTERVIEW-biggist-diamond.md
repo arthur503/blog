@@ -49,7 +49,7 @@ title: 智力题之秘书算法
 </ul>
 
 我参照秘书问题写了代码，检测下运行结果，看看在这种策略下，有多大的概率选中最优候选人。代码如下：
-<code>
+
 package com.arthur.secretary;
 
 import java.util.Random;
@@ -198,7 +198,7 @@ class Secretary{
 	}
 	
 }
-</code>
+
 运行结果是：
 =====Result=====
 Total Times:10000.
