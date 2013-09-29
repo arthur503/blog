@@ -248,7 +248,7 @@ title: 统计学习方法-1：概论
 总结：这三类问题都包括学习+XX（对应的类名）两个过程。他们常用的统计学习方法又可以归类为生成方法与判别方法。
 
 本章思维导图：
-<img src="http://arthur503.github.io/blog/assets/pic/20130929/statistical-methods-ch1.png">
+<img src="http://arthur503.github.io/blog/assets/pic/20130929/statistical_methods_ch1.png">
 
 
 
