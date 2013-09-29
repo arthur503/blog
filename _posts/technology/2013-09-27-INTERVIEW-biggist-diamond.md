@@ -50,160 +50,160 @@ title: 智力题之秘书算法
 
 我参照秘书问题写了代码，检测下运行结果，看看在这种策略下，有多大的概率选中最优候选人。代码如下：
 
-package com.arthur.secretary;
+	package com.arthur.secretary;
 
-import java.util.Random;
+	import java.util.Random;
 
-public class SecretaryProblem {
-		
-	public static void main(String[] argv){
+	public class SecretaryProblem {
+			
+		public static void main(String[] argv){
 
-		Interviewer iv = new Interviewer();
-		
-		int TIMES = 10000;
-		int TOP_PERCENT = 30;
-		int bestCounter = 0;
-		int topPercentCounter = 0;
-		for(int i=0;i<TIMES;i++){
-			iv.nextRound();
-			if(iv.isBestChoice()){
-				bestCounter ++;
+			Interviewer iv = new Interviewer();
+			
+			int TIMES = 10000;
+			int TOP_PERCENT = 30;
+			int bestCounter = 0;
+			int topPercentCounter = 0;
+			for(int i=0;i<TIMES;i++){
+				iv.nextRound();
+				if(iv.isBestChoice()){
+					bestCounter ++;
+				}
+				if(iv.isTopPercent(TOP_PERCENT)){
+					topPercentCounter ++;
+				}
 			}
-			if(iv.isTopPercent(TOP_PERCENT)){
-				topPercentCounter ++;
-			}
+			System.out.println("\n=====Result=====");
+			System.out.println("Total Times:"+TIMES+".\nBest Choice Counter is:"+bestCounter+". Ratio is:"+(bestCounter*100/TIMES)+"%.");
+			System.out.println("Top "+TOP_PERCENT+"% Percent Counter is:"+topPercentCounter+". Ratio is:"+(topPercentCounter*100/TIMES)+"%.");
+
 		}
-		System.out.println("\n=====Result=====");
-		System.out.println("Total Times:"+TIMES+".\nBest Choice Counter is:"+bestCounter+". Ratio is:"+(bestCounter*100/TIMES)+"%.");
-		System.out.println("Top "+TOP_PERCENT+"% Percent Counter is:"+topPercentCounter+". Ratio is:"+(topPercentCounter*100/TIMES)+"%.");
-
-	}
-}
-
-class Interviewer{
-
-	private int BACK_UP_NUMBER = 50;
-	private Secretary bu;
-	private boolean isBestChoice = false;
-	private int result;
-	
-	public Interviewer(){
-		bu = new Secretary(BACK_UP_NUMBER);	
-	}
-	
-	public void nextRound(){
-		isBestChoice = false;
-		bu.initial();
-		choose();
 	}
 
-	public void choose(){
-		int k = (int)(BACK_UP_NUMBER/Math.E);
-		System.out.println("Category k is:"+k);
+	class Interviewer{
+
+		private int BACK_UP_NUMBER = 50;
+		private Secretary bu;
+		private boolean isBestChoice = false;
+		private int result;
 		
-		int max_in_k = -1;
-		for(int i=0;i<k;i++){
-			if((bu.getSecretary(i) > max_in_k)){
-				max_in_k = bu.getSecretary(i);
-			}
+		public Interviewer(){
+			bu = new Secretary(BACK_UP_NUMBER);	
 		}
 		
-		result = -1;
-		for(int i=k;i<BACK_UP_NUMBER;i++){
-			if(bu.getSecretary(i) > max_in_k){
-				result = bu.getSecretary(i);
-				break;
-			}
-			if(i == BACK_UP_NUMBER - 1){
-				result = bu.getSecretary(i);
-				System.out.println("Last One!");
-			}
+		public void nextRound(){
+			isBestChoice = false;
+			bu.initial();
+			choose();
 		}
-		if(bu.getBestSecretary() == result){
-			isBestChoice = true;
-		}
-		System.out.println("Choose Secretary is:"+result);
-	}
-	
-	public boolean isBestChoice(){
-		return isBestChoice;
-	}
-	
-	public boolean isTopPercent(int percent){
-		return bu.isTopPercent(result, percent);
-	}
-	
-}
 
-class Secretary{
-	
-	private int number;
-	private int[] array; 
-	
-	/**
-	 * Should Initial before use!
-	 * @param n
-	 */
-	public Secretary(int n){
-		this.number = n;
-		this.array = new int[n];
-	}
-	
-	public boolean isTopPercent(int result, int percent) {
-		// TODO Auto-generated method stub
-		int k = (int) (array.length * (1 - (double)percent/100));
-		System.out.println("Top "+percent+"% percent count is:"+k);
-		int counter = 0;
-		for(int i=0;i<array.length;i++){
-			if(result > array[i]){
-				counter ++;
+		public void choose(){
+			int k = (int)(BACK_UP_NUMBER/Math.E);
+			System.out.println("Category k is:"+k);
+			
+			int max_in_k = -1;
+			for(int i=0;i<k;i++){
+				if((bu.getSecretary(i) > max_in_k)){
+					max_in_k = bu.getSecretary(i);
+				}
 			}
-			if(counter >= k){
-				return true;
+			
+			result = -1;
+			for(int i=k;i<BACK_UP_NUMBER;i++){
+				if(bu.getSecretary(i) > max_in_k){
+					result = bu.getSecretary(i);
+					break;
+				}
+				if(i == BACK_UP_NUMBER - 1){
+					result = bu.getSecretary(i);
+					System.out.println("Last One!");
+				}
 			}
+			if(bu.getBestSecretary() == result){
+				isBestChoice = true;
+			}
+			System.out.println("Choose Secretary is:"+result);
 		}
-		return false;
+		
+		public boolean isBestChoice(){
+			return isBestChoice;
+		}
+		
+		public boolean isTopPercent(int percent){
+			return bu.isTopPercent(result, percent);
+		}
+		
 	}
 
-	public int getBestSecretary() {
-		// TODO Auto-generated method stub
-		int max = 0;
-		for(int i=0;i<array.length;i++){
-			if(array[i] > max){
-				max = array[i];
+	class Secretary{
+		
+		private int number;
+		private int[] array; 
+		
+		/**
+		 * Should Initial before use!
+		 * @param n
+		 */
+		public Secretary(int n){
+			this.number = n;
+			this.array = new int[n];
+		}
+		
+		public boolean isTopPercent(int result, int percent) {
+			// TODO Auto-generated method stub
+			int k = (int) (array.length * (1 - (double)percent/100));
+			System.out.println("Top "+percent+"% percent count is:"+k);
+			int counter = 0;
+			for(int i=0;i<array.length;i++){
+				if(result > array[i]){
+					counter ++;
+				}
+				if(counter >= k){
+					return true;
+				}
 			}
+			return false;
 		}
-		return max;
-	}
 
-	public void initial(){
-		Random random = new Random();
-		for(int i=0;i<number;i++){
-			array[i] = random.nextInt(number);
+		public int getBestSecretary() {
+			// TODO Auto-generated method stub
+			int max = 0;
+			for(int i=0;i<array.length;i++){
+				if(array[i] > max){
+					max = array[i];
+				}
+			}
+			return max;
 		}
-		System.out.println("\nSecretary["+this.number+"] are:" + this.toString());
-		System.out.println("Best Secretary is:" + this.getBestSecretary());	
-	}
-	
-	public int getSecretary(int i){
-		return array[i];
-	}
-	
-	public String toString(){
-		StringBuffer sb = new StringBuffer();
-		for(int i=0;i<array.length;i++){
-			sb.append(array[i]+" ");
+
+		public void initial(){
+			Random random = new Random();
+			for(int i=0;i<number;i++){
+				array[i] = random.nextInt(number);
+			}
+			System.out.println("\nSecretary["+this.number+"] are:" + this.toString());
+			System.out.println("Best Secretary is:" + this.getBestSecretary());	
 		}
-		return sb.substring(0, sb.lastIndexOf(" "));
+		
+		public int getSecretary(int i){
+			return array[i];
+		}
+		
+		public String toString(){
+			StringBuffer sb = new StringBuffer();
+			for(int i=0;i<array.length;i++){
+				sb.append(array[i]+" ");
+			}
+			return sb.substring(0, sb.lastIndexOf(" "));
+		}
+		
 	}
-	
-}
 
 运行结果是：
-=====Result=====
-Total Times:10000.
-Best Choice Counter is:3669. Ratio is:36%.
-Top 30% Percent Counter is:6561. Ratio is:65%.
+	=====Result=====
+	Total Times:10000.
+	Best Choice Counter is:3669. Ratio is:36%.
+	Top 30% Percent Counter is:6561. Ratio is:65%.
 
 也就是说，在此种策略下，有大概1/3多的概率选中最优候选者，有2/3左右的概率选中Top 30%的候选者，还是蛮高的。
 
