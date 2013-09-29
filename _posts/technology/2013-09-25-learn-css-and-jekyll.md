@@ -41,3 +41,9 @@ title: 使用Github搭建博客2：css和jekyll
 5.首页图片（随即变化）
 
 6.搜索功能
+
+------------20130929补充-----------
+
+在.md文件中添加code方法：
+
+直接对所有code都tab一下，Github中jekyll会自动给这部分添加“<pre><code>code</code></pre>”的标签。
