@@ -47,3 +47,5 @@ title: 使用Github搭建博客2：css和jekyll
 在.md文件中添加code方法：
 
 直接对所有code都tab一下，Github中jekyll会自动给这部分添加“<pre><code>code</code></pre>”的标签。
+
+同时，发现了新问题：如果在内容中使用"1.1"、"1.2.1"这样的标题，他会自动添加缩进等。但有时会有混乱。
