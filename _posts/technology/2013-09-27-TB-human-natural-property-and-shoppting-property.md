@@ -10,4 +10,4 @@ title: TB建模：人的属性和购物属性
 
 这次只是初稿，以后还需要往里添加补充。直接上思维导图如下：
 
-<img src="http://arthur503.github.io/blog/assets/pic/2013-09-29-taobao-person-shopping-property.png">
+<img src="http://arthur503.github.io/blog/assets/pic/201309/2013-09-29-taobao-person-shopping-property.png">
