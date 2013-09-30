@@ -138,4 +138,5 @@ Web2.0的搜索引擎技术并非万能，即便Google再怎么提高搜索技�
 参考资料：
 <ol>
 	<li><a href="http://arthur503.github.io/blog/2013/09/21/PM-what-are-people%27s-essential-needs.html">PM：人的需要</a></li>
+	<li><a href="http://zh.wikipedia.org/wiki/%E7%A4%BE%E4%BC%9A">社会</a></li>
 </ol>
