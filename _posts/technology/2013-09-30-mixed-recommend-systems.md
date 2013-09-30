@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 程序员(201310)：深入浅出混合推荐技术
+title: 推荐系统：深入浅出混合推荐技术
 ---
 这是盛大智能推荐团队负责人陈运文在程序员（201310期）上的文章。话说每次买程序员都是因为有推荐系统的文章，不过，全本书也就觉得两三篇有用，其他没什么意思。
 
@@ -32,4 +32,4 @@ title: 程序员(201310)：深入浅出混合推荐技术
 
 最后，放上这篇文章的思维导图，看起来简单明了：
 
-<a href="http://arthur503.github.io/blog/assets/pic/201309/2013-09-30-mixed-recommend-systems.png"></a>
+<img src="http://arthur503.github.io/blog/assets/pic/201309/2013-09-30-mixed-recommend-systems.png">
