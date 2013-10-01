@@ -33,3 +33,8 @@ title: 推荐系统：深入浅出混合推荐技术
 最后，放上这篇文章的思维导图，看起来简单明了：
 
 <img src="http://arthur503.github.io/blog/assets/pic/201309/2013-09-30-mixed-recommend-systems.png">
+
+参考资料：
+<ol>
+	<a href="http://arthur503.github.io/blog/2013/09/30/internet-pm-and-user-demands.html">互联网产品：深入挖掘并重新定义用户需求的满足方式</a>
+</ol>
