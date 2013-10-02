@@ -78,6 +78,7 @@ title: 统计学习方法学习笔记 - 附录：范数
 1-阶范数 = ∑|x<sub>i</sub> - y<sub>i</sub>|
 2-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>2</sup>)<sup>1/2</sup>
 n-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>n</sup>)<sup>1/n</sup>
+
 t 阶范数的极限，即 n 趋向无穷大:
 无穷大阶范数 = <img src="http://upload.wikimedia.org/math/e/2/5/e25f07b37eab73aa02db180e81b38f11.png"> = max|p<sub>i</sub> - q<sub>i</sub>|
 </blockquote>
