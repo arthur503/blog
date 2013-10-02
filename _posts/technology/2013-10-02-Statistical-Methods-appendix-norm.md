@@ -34,6 +34,6 @@ title: 统计学习方法学习笔记 - 附录：范数
 
 算子范数的定义如下：
 <blockquote>
-
+大
 </blockquote>
 
