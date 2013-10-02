@@ -74,9 +74,13 @@ title: 统计学习方法学习笔记 - 附录：范数
 不过，在维基百科<a href="http://zh.wikipedia.org/wiki/%E8%B7%9D%E7%A6%BB">距离</a>的定义中，有讲到范数如下：
 <blockquote>
 设在R<sup>m</sup>空间有两点，p = (p<sub>1</sub>,p<sub>2</sub>,...,p<sub>m</sub>)，q = (q<sub>1</sub>,q<sub>2</sub>,...,q<sub>m</sub>)，不同的范数都是一种距离：
+
 1-阶范数 = ∑|x<sub>i</sub> - y<sub>i</sub>|
+
 2-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>2</sup>)<sup>1/2</sup>
+
 n-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>n</sup>)<sup>1/n</sup>
+
 t 阶范数的极限，即 n 趋向无穷大:
 无穷大阶范数 = <img src="http://upload.wikimedia.org/math/e/2/5/e25f07b37eab73aa02db180e81b38f11.png"> = max|p<sub>i</sub> - q<sub>i</sub>|
 </blockquote>
@@ -94,7 +98,7 @@ t 阶范数的极限，即 n 趋向无穷大:
 
 现在的理解就是这样，如果以后有变化了，再来更新吧。
 
----
+---dada---
 
 参考资料：
 <ol>
