@@ -54,3 +54,5 @@ title: 使用Github搭建博客2：css和jekyll
 在html中，不能直接使用类似“小于号”这样被html定义的符号的，因为这会被解析错误，若提交则github时会报“Page Build Failure"错误。
 
 因此，若要使用小于号，可以用转移字符"&#60;"替代，大于号为"&#62"。其他符号也注意查转义字符。
+
+另外，在"blockquote"块中，不能有空行！否则也会报"Page Build Failure"错误。太恶心了，这也是html的定义？
