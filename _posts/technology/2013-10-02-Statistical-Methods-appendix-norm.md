@@ -57,3 +57,27 @@ title: 统计学习方法学习笔记 - 附录：范数
 </blockquote>
 
 唔，再次表示看不懂！
+
+在查到的资料中，<a href="http://baike.baidu.com/view/2756747.htm">二范数</a>的百度百科中，有如下定义：
+
+<blockquote>
+除了矩阵之外，向量和函数均有范数，其中：
+矩阵范数：矩阵A的2范数就是 A的转置乘以A矩阵特征根 最大值的开根号；
+向量范数：向量x的2范数是x中各个元素平方之和再开根号；
+函数范数：函数f(x)的2范数是x在区间（a,b）上f(x)的平方的积分再开根号。
+</blockquote>
+
+这里的矩阵范数和上面的相同，还是不懂，不过有了矩阵的2范数求值方法；向量的2范数听起来像是之前所说的从原点出发到该元素的向量的长度（也就是原点到改点的欧几里得距离）；函数的2范数也不太懂。
+
+查了半天资料，还是不太懂。
+
+不过，在维基百科<a href="http://zh.wikipedia.org/wiki/%E8%B7%9D%E7%A6%BB">距离</a>的定义中，有讲到范数如下：
+<blockquote>
+设在R<sup>m</sup>空间有两点，p = (p<sub>1</sub>,p<sub>2</sub>,...,p<sub>m</sub>)，q = (q<sub>1</sub>,q<sub>2</sub>,...,q<sub>m</sub>)，不同的范数都是一种距离：
+1-阶范数 = ∑|x<sub>i</sub> - y<sub>i</sub>|
+2-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>2</sup>)<sup>1/2</sup>
+n-阶范数 = (∑|x<sub>i</sub> - y<sub>i</sub>|<sup>n</sup>)<sup>1/n</sup>
+
+t 阶范数的极限，即 n 趋向无穷大:
+无穷大阶范数 = <img src="http://upload.wikimedia.org/math/e/2/5/e25f07b37eab73aa02db180e81b38f11.png"> = max|p<sub>i</sub> - q<sub>i</sub>|
+</blockquote>
