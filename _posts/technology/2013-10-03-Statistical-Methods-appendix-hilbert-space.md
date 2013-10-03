@@ -125,7 +125,7 @@ title: 统计学习方法学习笔记-附录：希尔伯特空间【存疑】
 
 3.1 向量空间
 
-<a href="www.baidu.com">向量空间</a>在维基百科中的描述如下：
+<a href="http://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4">向量空间</a>在维基百科中的描述如下：
 
 
 
