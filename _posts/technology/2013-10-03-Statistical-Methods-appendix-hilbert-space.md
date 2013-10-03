@@ -250,9 +250,9 @@ title: 统计学习方法学习笔记-附录：希尔伯特空间【存疑】
 
 参考资料：
 
-1. [希尔伯特空间](http://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E4%BC%AF%E7%89%B9%E7%A9%BA%E9%97%B4)
-5. [完备性](http://zh.wikipedia.org/wiki/%E5%AE%8C%E5%A4%87)
-3. [收敛](http://zh.wikipedia.org/wiki/%E6%94%B6%E6%95%9B)
+* [希尔伯特空间](http://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E4%BC%AF%E7%89%B9%E7%A9%BA%E9%97%B4)
+* [完备性](http://zh.wikipedia.org/wiki/%E5%AE%8C%E5%A4%87)
+* [收敛](http://zh.wikipedia.org/wiki/%E6%94%B6%E6%95%9B)
 * [度量空间](http://zh.wikipedia.org/wiki/%E5%BA%A6%E9%87%8F%E7%A9%BA%E9%97%B4)
 * [一致空间](http://zh.wikipedia.org/wiki/%E4%B8%80%E8%87%B4%E7%A9%BA%E9%97%B4)
 * [拓扑空间](http://zh.wikipedia.org/wiki/%E6%8B%93%E6%89%91%E7%A9%BA%E9%97%B4)
