@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 统计学习方法学习笔记-附录：希尔伯特空间
+title: 统计学习方法学习笔记-附录：希尔伯特空间【存疑】
 ---
 依然是看《统计学习方法》时看到的概念，貌似很有用的样子。
 
@@ -47,7 +47,14 @@ title: 统计学习方法学习笔记-附录：希尔伯特空间
 >空间的几何性质依赖于所选择的度量，通过使用不同的度量我们可以构造有趣的非欧几里得几何，比如在广义相对论中用到的几何。
 >度量空间还引发拓扑性质如开集和闭集，这导致了对更抽象的拓扑空间的研究。
 
+'test quote'
+
+*test star without space
+
+* test start with space
 
 
+* `lenskit-api` -- the common, public recommender API exposed by LensKit, independent
+  of its actual implementations.
 
 因此，可以将度量空间理解为可以定义元素间距离（即度量）的元素的集合。在欧几里得空间中，表示为两个点之间的距离，也就是他们之间连接直线的长度。度量空间的定义中，包含：1.非负性；2.不可区分者的同一性；3.对称性；4.三角不等式。至于其余的概念，我们先不管。
