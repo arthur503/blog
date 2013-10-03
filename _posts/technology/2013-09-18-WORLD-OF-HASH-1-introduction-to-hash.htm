@@ -1,0 +1,261 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>映射的世界之一：哈希总览_龙珠</title>
+    <meta name="description" content="终于要开始下手写了。今天第一坑。为什么要写哈希呢？在看数据处理方面的文章的时候，哈希用到的很多。最开始的理解只知道是一种映射，但不知道是否是一一映射，也不明白为何哈希相同二者就相同（实际上这样理解是错误的，正确的是：哈希不同二者就不同，但哈希相同二者不一定相同）。哈希的用途很广，HashMap，分文件处理等。看到后来，我觉得：如果编程中用到了思想，那么我认为：除了面向对象之外，哈希也是其中一种：映射…" />
+    <meta name="keywords" content="哈希系列" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=1958d120-2015-11e3-b755-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">映射的世界之一：哈希总览</h2>
+                            <div class="entry rich-content"><p>终于要开始下手写了。今天第一坑。</p>
+<p>为什么要写哈希呢？</p>
+<p>在看数据处理方面的文章的时候，哈希用到的很多。最开始的理解只知道是一种映射，但不知道是否是一一映射，也不明白为何哈希相同二者就相同（实际上这样理解是错误的，正确的是：哈希不同二者就不同，但哈希相同二者不一定相同）。哈希的用途很广，HashMap，分文件处理等。看到后来，我觉得：</p>
+<p><strong>如果编程中用到了思想，那么我认为：除了面向对象之外，哈希也是其中一种：映射的思想。</strong></p>
+<p>哈希最基础的应用是大数据集到小数据集的映射，在此基础上，可以有很多应用，如快速查找、分类、分而治之等。</p>
+<p>一、什么是哈希？</p>
+<p>哈希（也叫散列）从本质上来说是一种映射，从集合A到集合B的映射。百度百科上的解释为：</p>
+<blockquote>
+ <p>Hash，一般翻译做“散列”，也有直接音译为“哈希”的，就是把任意长度的输入（又叫做预映射， pre-image），通过散列算法，变换成固定长度的输出，该输出就是散列值。这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，而不可能从散列值来唯一的确定输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。<br /></p>
+</blockquote>
+<p>一般来讲，哈希是将一个数、一个字符串，甚至是一个对象映射为一个数，这样可以方便的进行数据处理。但是，如果你要想把Object映射为一个字符串（即映射到字符串空间），也没有什么不可以。<br /></p>
+<p>二、哈希是如何实现的？</p>
+<p>既然哈希是一个映射，那么从数据集A到数据集B之间就有一个映射关系。这个映射关系可以自己定义，来实现不同的哈希。</p>
+<p>对于这种映射关系，只需要满足两个要求：</p>
+<p>1.相同的对象哈希结果一定相同；</p>
+<p>2.不同的对象哈希结果尽量不同（注：尽量不同，但并不要求保证不同。一个好的哈希函数都会尽量不同且均匀的散布在映射集合内，除非之后会提到的相似哈希）。</p>
+<p>根据这两点要求，我们可以反过来推哈希的性质，即：</p>
+<p>1.哈希值相同的，对象不一定相同；</p>
+<p>2.哈希值不同的，对象一定不同。</p>
+<p>我们举一个最简单的哈希算法，对一个字符串进行哈希，返回他的哈希值，用int表示。</p>
+<pre config="brush:html;toolbar:false;">public int hashCode(String s) {
+                                
+        return 0;
+                                
+}</pre>
+<p>这算是一个哈希算法。因为他给出了一个映射，即：对于任意字符串，都返回哈希值为0，满足哈希的两个要求。但是请注意，这是一个很糟糕的哈希算法，因为他对所有的字符串都返回相同的哈希值，没有一点区分度，这样毫无意义。如前所说，一般而言，好的哈希算法应该将对象均与地散布在结果集合中，使得不同对象的结果尽量不同。当然，这种“结果尽量不同”在不同的需求环境中也是不一样的。例如：sha1和md5哈希中，需要原始对象中微小的改变也需要尽可能大的再结果中反映出来，因此需要设计的哈希算法中，原始对象有一丁点不同，结果就要相差很大；但是，对于有些应用场景，要求可能是原始对象有不同，需要在结果中反应出来；但是同时，原始对象之间不同的程度，也需要在结果中反应出来。这样就是说，相差程度小的两个对象的哈希结果应该比相差程度大的两个对象的哈希结果差值更小。这时，就需要相似哈希算法。</p>
+<p>这里只是举个小例子，关于常见的哈希具体实现方式，我们后面讲到哈希算法时再说。</p>
+<p>三、为什么要哈希？</p>
+<p>也就是说，将对象哈希后有什么好处呢？</p>
+<p>我们使用哈希，一般而言，是将原始数据集映射到一个更小的集合，即在大多数情况下，哈希是用来将数据集缩小来进行处理（不过，这并不是必须的，如果需要，哈希也可以将原始数据集映射到一个更大的空间）。</p>
+<p>由于哈希后的结果是对象在另一个空间内的表现方式，他在一定程度上体现了对象的性质。</p>
+<p>根据我现在能接触到的资料，我认为哈希最重要的一个作用就是哈希表。我们知道，在寻址时，使用数组的下表寻址是最快捷的，时间复杂度是O(1)。在哈希表中，我们先将对象哈希得到哈希值，然后对结果对数组的长度取模，就可以得到该对象应该存放的地址下表，从而将该对象和该地址中存放的数据进行对比，就知道这个对象是否已经存在于该哈希表中。在这里，哈希相当于进行了一次快速索引。如果没有哈希的话，对于每一个对象的判断，都需要将其与哈希表中的每个对象都进行对比，时间复杂度是O(n)。如果是很大的哈希表的话，快速寻址，高下立现。</p>
+<p>另外，我们可以通过比较哈希结果，来代替比较原始对象。举例来说，常见的字符串比较。在String.java中，哈希函数如下：</p>
+<pre config="brush:html;toolbar:false;">/**
+     * Returns a hash code for this string. The hash code for a
+     * &lt;code&gt;String&lt;/code&gt; object is computed as
+     * &lt;blockquote&gt;&lt;pre&gt;
+     * s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+     * &lt;/pre&gt;&lt;/blockquote&gt;
+     * using &lt;code&gt;int&lt;/code&gt; arithmetic, where &lt;code&gt;s[i]&lt;/code&gt; is the
+     * &lt;i&gt;i&lt;/i&gt;th character of the string, &lt;code&gt;n&lt;/code&gt; is the length of
+     * the string, and &lt;code&gt;^&lt;/code&gt; indicates exponentiation.
+     * (The hash value of the empty string is zero.)
+     *
+     * @return  a hash code value for this object.
+     */
+    public int hashCode() {
+        int h = hash;
+        if (h == 0 &amp;&amp; count &gt; 0) {
+            int off = offset;
+            char val[] = value;
+            int len = count;
+                              
+            for (int i = 0; i &lt; len; i++) {
+                h = 31*h + val[off++];
+            }
+            hash = h;
+        }
+        return h;
+    }</pre>
+<p>通过公式：s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]，我们可以得到字符串的哈希值。如果比较两个字符串的哈希值不同的话，那么就可以认为这两个哈希值不同，从而不需要对字符串进行比较。</p>
+<p>这样虽然表现了使用哈希对两个对象进行比较，但随之而来有两个问题：一是为什么不用原始字符串进行比较，而非要计算哈希值进行比较，岂不是多此一举？二是，如果哈希值相同又该如何，能判断两个字符串相同吗，不能又该怎么办？</p>
+<p>我们先看第一个问题。</p>
+<p>首先，拿字符串进行比较只是举个一个简单的例子。我现在还无法判断出内存的占用情况，但我们可以写程序比较一下二者的效率如何。代码如下：</p>
+<pre config="brush:html;toolbar:false;">public static void main(String[] argv){
+                             
+        String t1;
+        String t2 = &quot;test string.&quot;;
+        boolean b;
+        System.out.println(&quot;Start String Compare...&quot;);
+                                     
+        long startTime = System.currentTimeMillis();
+        long stopTime;
+        for(int i=0;i&lt;Integer.MAX_VALUE;i++){
+            t1 = &quot;String&quot;+i;
+            b = t1.equals(t2);
+        }
+        stopTime = System.currentTimeMillis();
+        System.out.println(&quot;Compare String equals. Cost Time:&quot;+(stopTime - startTime)+&quot; ms.&quot;);
+                                     
+        startTime = stopTime;
+        for(int i=0;i&lt;Integer.MAX_VALUE;i++){
+            t1 = &quot;String&quot;+i;
+            b = (t1.hashCode() == t2.hashCode());
+        }
+        stopTime = System.currentTimeMillis();
+        System.out.println(&quot;Compare String hashCode. Cost Time:&quot;+(stopTime - startTime)+&quot; ms.&quot;);
+                                     
+                                     
+    }</pre>
+<p>运行结果是：<br /></p>
+<pre config="brush:html;toolbar:false;">Start String Compare...
+                            
+Compare String equals. Cost Time:437438 ms.
+                            
+Compare String hashCode. Cost Time:514172 ms.</pre>
+<p>唔，貌似结果出现了一点问题，和预料的有点不一样，哈希的效率反而更慢一点【太不给力了，掩面泪奔。。。】。那就不能认为，哈希结果比直接比较更快，起码对于字符串来说是这样。不过，这并不能保证，对于其他自定义类型，哈希就一定慢。只是不能认为这一定是个优势罢了。</p>
+<p>对于第二个问题，这问到了一个很好的问题，就是碰撞，英文称为collision。两个字符串（或其他对象）的哈希结果相同，是否能判断二者相同呢？根据前面提到的性质，哈希结果相同并不能保证对象相同。那该怎么办？应该如何判断这两个字符串到底相同还是不同？对于碰撞的处理，最直观的办法，是再使用equals方法进行判断二者是否相同。在很多使用到哈希的地方，这也是很多程序员的选择。不过，暴雪公司中有个哈希算法是这样判断的：并不只使用一个哈希算法，而是使用三个哈希算法。在第一个哈希算法判断为相同之后，同时对另外两个哈希算法的值进行判断，如果也都相同，则认为这两个对象相同。</p>
+<p>当然，我们还可以通过相似哈希来判断两个对象之间的差异大小，这也是一种应用。</p>
+<p>四、怎么样去求哈希？常见的哈希算法有那些？</p>
+<p>关于哈希算法，我查到的资料有二三十个。常见的估计也就十个左右。我专门开了一篇常见哈希算法代码文章来保存这些代码，见：<a href="http://ouscn.diandian.com/post/2013-09-20/40052283188" target="_blank" title="映射的世界之四：常见哈希算法">映射的世界之四：常见哈希算法</a>。</p>
+<p>从这些算法中，我们可以看出来，一般哈希需要将对象遍历（或者采样部分而非全部），对每个遍历结果采取如下操作：</p>
+<ol class="edui-filter-decimal">
+ <li><p>循环相乘（一般与质数） *</p></li>
+ <li><p>移位 &lt;&lt; &gt;&gt;</p></li>
+ <li><p>异或 ^</p></li>
+ <li><p>取反 ~</p></li>
+</ol>
+<p>根据其他材料，还有平方、取余等方法。</p>
+<p>这些都是常用的哈希操作方法。可以说，一个常见的哈希算法都是由这些步骤组合而成的。</p>
+<p>具体实现中，采用什么样的哈希操作都没有关系，重要的是要使哈希结果适用需求环境。那么，新的问题产生了：应该怎么构建一个适应需求环境的哈希算法呢？</p>
+<p>在回答这个问题之前，我们先来说一下怎么评价一个哈希算法的好坏。</p>
+<p>五、如何评价一个哈希算法的好坏？</p>
+<p>之前有提到过，一个好的哈希算法，要保证使哈希之后的结果尽量均匀的散布在结果的集合中。</p>
+<p>比如对变化敏感的哈希算法，需要使得在原始对象中微小的不同就产生结果极大的差值。常见的哈希算法如md5、sha1算法就是这样的。他们一般用来检验下载的软件、代码等是否被人篡改，因此，如果软件被人修改过，哪怕1bit的改动，也会在结果中明显的表现出来。所以，很多网站上下载的时候，都会给出软件的md5值，用户下载完毕之后，可以通过md5算法计算，md5值相同，就可以认为软件没有被别人篡改过（理论上并非100%保证，但md5算法保证两个不同的对象md5值相同的概率极小到可以忽略）。</p>
+<p>不过这并不是绝对的。前文也有提到过，有时哈希算法需要计算两个对象之间的差异程度，这时，哈希的结果并非无序的散列在结果集合中，而需要使相近的对象的哈希结果也相近。这就需要相似哈希。</p>
+<p>从我目前了解的资料来看，出了相似哈希之外，其他哈希算法都希望能使哈希结果尽量无序均匀散布在结果集合中。因此，评价一般的哈希算法，就要看他对结果的散列均匀程度。当然，还有另外一个因素不能忽略，哈希是为了提高效率而存在的，因此速度也很关键。</p>
+<p>因此，均匀分布和速度是评价一般哈希算法的两大标准。</p>
+<p>既然有了标准，也有了算法，那么该如何去评价呢？</p>
+<p>首先，从理论上是否可以分析哈希算法的好坏？</p>
+<p>根据查到的资料，目前来看，还是不能的。即便知道了哈希算法的构成，我们也无法计算哈希算法对某类值的哈希结果是否是均匀的分布。如果可以计算，那就代表哈希结果是可以分析和预测的。从查到的资料来看，现在所存在的哈希算法并没有理论依据来证明为什么这样构造而不是那样构造，为什么用这个数而不是用那个数，为什么移这么多位而不是移那么多位。【也许还需要查专业的文献才能回答这个问题】</p>
+<p>其次，既然理论分析不可能，只能通过实践来分析了。在一篇国外文章TODO中，通过使用数据集尝试，测试各个哈希算法结果的分布，使用黑色和红色表示结果区域被覆盖和没有被覆盖。查看各个算法的结果，黑色区域最大最均匀的肯定是效果最好的。我们可以看到在结果图中，TODO。。。算法的效果比较好，TODO。。。算法的效果偏差一些。</p>
+<p>六、如何构建一个所需要的哈希算法？</p>
+<p>说了这么多，其实我最想知道的是这个问题。就是在给定一个已知分布的数据集，如何设计合适的哈希算法，来使得结果均匀分布在结果集合中。</p>
+<p>这个问题是我查阅各种资料的动力，是最初的curiosity。然而，在查阅了这些资料之后，不得不说，现在还没有找到应该如何设计哈希算法的资料。</p>
+<p>我在July前两天在北理举办的第一次算法和面试讲座上也问了这个问题。July没怎么回答，曹鹏博士回答了一些，但是也没有明确的构建方法。只能说设计时，需要考虑数据集的分布。并且，一般而言，取模的哈希算法已经足以满足普通人的哈希需求了。</p>
+<p>对哈希算法的设计，更多的是对产生碰撞的情况的处理。一般的处理是：如果哈希值相同，则比较两个对象是否相同。而在暴雪的算法中，提供了另一种解决思路，即：使用三种哈希算法。若第一种哈希结果相同，使用后两种进行运算，如果都相同，则判别为相同（对象不同而三种哈希值均相同的概率极小到可以忽略）。</p>
+<p>唔，够长了，这一篇就写到这里。之后再分别分析一下Java中的HashMap、HashSet等哈希相关的数据容器（包括碰撞collision是如何处理的），以及几种特殊的哈希算法（如相似哈希、一致性哈希等）。</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://baike.baidu.com/view/20089.htm" target="_blank" title="Hash">Hash</a></p></li>
+ <li><p><a href="http://ouscn.diandian.com/post/2013-09-20/40052283188" target="_blank" title="映射的世界之四：常见哈希算法">映射的世界之四：常见哈希算法</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-18/40053850875#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-18/40053850875">September 18, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-19/40053076383">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-17/40052186352">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=1958d120-2015-11e3-b755-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'231'(Mars:'128')--><!--Host Name: db13.dd.hn-->

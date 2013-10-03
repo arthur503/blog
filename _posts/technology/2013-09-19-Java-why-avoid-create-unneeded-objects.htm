@@ -1,0 +1,201 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：避免创建不必要的对象_龙珠</title>
+    <meta name="description" content="为了保证内存的有效利用，应该尽量重用对象而不是在每次需要的时候就创建一个新的对象。比如，构造器在每次被调用的时候就构建一个新的对象，而静态工厂方法则从来不要求这样做（顺便说一句，如果要求对象只有一个实例，可以使用静态工厂方法；如果对象有多个/不定个参数，可以使用静态Builder方法构建）。举例来说，新建字符串有两种方法：法一： String s = new String( This is a string. );           法二： String s =  This is a Stri…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=3bdd1750-20ed-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：避免创建不必要的对象</h2>
+                            <div class="entry rich-content"><p>为了保证内存的有效利用，应该尽量重用对象而不是在每次需要的时候就创建一个新的对象。</p>
+<p>比如，构造器在每次被调用的时候就构建一个新的对象，而静态工厂方法则从来不要求这样做（顺便说一句，如果要求对象只有一个实例，可以使用静态工厂方法；如果对象有多个/不定个参数，可以使用静态Builder方法构建）。</p>
+<p>举例来说，新建字符串有两种方法：</p>
+<pre config="brush:html;toolbar:false;">法一： String s = new String(&quot;This is a string.&quot;);
+           
+法二： String s = &quot;This is a String&quot;;</pre>
+<p>在法一中，使用构造器强制构建了一个新的对象，不管相同的字符串是否已经存在；</p>
+<p>而在法二中，则会先查看是否已经存在了该String对象，如果存在，则返回已存在String的引用，而不会再新建String对象。</p>
+<p>因此，如果在String已经存在的情况下，法一多创建了一个不必要的String实例。如果这是在一个循环中，则频繁调用会产生成千上万个不必要的String。</p>
+<p>再举一个关于Long和long的例子。对于Long而言，相当于上例的法一，每次需要创建新的实例，而如果对象被定义为long，则相当于法二，对象可以重新使用。代码如下：</p>
+<pre config="brush:html;toolbar:false;">public static void main(String[] argv){
+ 
+        long startTime = System.currentTimeMillis();
+        System.out.println(&quot;Integer.MAX_VALUE:&quot;+Integer.MAX_VALUE);
+         
+        int result = 0;
+        for(long i=0;i&lt;Integer.MAX_VALUE;i++){
+            result += i;
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println(&quot;Int Result:&quot;+result+&quot;. Total Cost Time:&quot;+(endTime - startTime));
+ 
+        startTime = endTime;
+        long sumlong2 = 0L;
+        for(long i=0L;i&lt;Integer.MAX_VALUE;i++){
+            sumlong2 += i;
+        }
+        endTime = System.currentTimeMillis();
+        System.out.println(&quot;long-long Sum:&quot;+sumlong2+&quot;. Total Cost Time:&quot;+(endTime - startTime));
+     
+        startTime = endTime;
+        long sumlong = 0L;
+        for(Long i=0L;i&lt;Integer.MAX_VALUE;i++){
+            sumlong += i;
+        }
+        endTime = System.currentTimeMillis();
+        System.out.println(&quot;long-Long Sum:&quot;+sumlong+&quot;. Total Cost Time:&quot;+(endTime - startTime));
+ 
+        startTime = endTime;
+        Long sumLong1 = 0L;
+        for(long i=0L;i&lt;Integer.MAX_VALUE;i++){
+            sumLong1 += i;
+        }       
+        endTime = System.currentTimeMillis();
+        System.out.println(&quot;Long-long Sum:&quot;+sumLong1+&quot;. Total Cost Time:&quot;+(endTime - startTime));
+     
+        startTime = endTime;
+        Long sumLong = 0L;
+        for(Long i=0L;i&lt;Integer.MAX_VALUE;i++){
+            sumLong += i;
+        }       
+        endTime = System.currentTimeMillis();
+        System.out.println(&quot;Long-Long Sum:&quot;+sumLong+&quot;. Total Cost Time:&quot;+(endTime - startTime));
+    }</pre>
+<p>在代码中，分别对sum和i使用Long和long来实现，查看最后耗费时间的区别（单位：ms）。另外，由于最后结果超过int，我们把int结果作为参照。<br /></p>
+<p>代码结果如下：</p>
+<pre config="brush:html;toolbar:false;">Integer.MAX_VALUE:2147483647
+        
+Int Result:1073741825. Total Cost Time:8172
+        
+long-long Sum:2305843005992468481. Total Cost Time:8687
+        
+long-Long Sum:2305843005992468481. Total Cost Time:59188
+        
+Long-long Sum:2305843005992468481. Total Cost Time:49000
+        
+Long-Long Sum:2305843005992468481. Total Cost Time:96500</pre>
+<p>可以看到，在sum和i均为long的时候，耗费时间是最小的，8600ms左右。i单独为Long比sum单独为Long耗费时间要多一些（为什么？猜测是对i的操作比对sum的操作多一些。不过除去创建耗时之外，消耗时间和操作次数是成正比的吗？）。而毫无争议的，sum和i都为Long的情况最耗时，约为100s。因此可以看出，将变量声明为long而非Long，可以有效的节省时间。<br /></p>
+<p>因此，要优先使用基本类型而不是装箱类型，要当心无意识的自动装箱。</p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p>Effective Java 中文版<br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-19/40053076383#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-19/40053076383">September 19, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-20/40052091669">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-18/40053850875">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=3bdd1750-20ed-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'186'(Mars:'126')--><!--Host Name: db13.dd.hn-->

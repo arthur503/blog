@@ -1,0 +1,293 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>浏览器是如何工作的？——How Browsers Work:Behind the Scenes of Modern Web Browsers_龙珠</title>
+    <meta name="description" content="浏览器是如何工作的？——How Browsers Work:Behind the Scenes of Modern Web Browsers——Arthur &nbsp; &nbsp; 2011.11.12实验室例会讲Paper，上周让我做的Presentation，题目就是这篇文章：How Browsers Work:Behind the Scenes of Modern Web Browsers &nbsp; （http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/）网页看起来不算很多，但打印下来足有40+页。纯英文，开头部分看着还行，逻辑还比较清晰，但越看到后…" />
+    <meta name="keywords" content="浏览器,html5,webkit,gecko,iit" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=7211fb20-0d3e-11e1-a802-782bcb383994"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">浏览器是如何工作的？——How Browsers Work:Behind the Scenes of Modern Web Browsers</h2>
+                            <div class="entry rich-content"><p><span><span>浏览器是如何工作的？——How Browsers Work:Behind the Scenes of Modern Web Browsers</span></span></p>
+<p class="edui-filter-align-right"><span>——Arthur &nbsp; &nbsp; 2011.11.12</span></p>
+<p><span><br /></span></p>
+<p><span>实验室例会讲Paper，上周让我做的Presentation，题目就是这篇文章：How Browsers Work:Behind the Scenes of Modern Web Browsers &nbsp; （<a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/</a>）</span></p>
+<p><span>网页看起来不算很多，但打印下来足有40+页。纯英文，开头部分看着还行，逻辑还比较清晰，但越看到后面越觉得混乱。强迫自己做了一下Paper的框架，将主干结构列出，同时加入讲时需要添加的小例子。不充满血肉，只列出骨架。做完这件事之后，顿觉清爽无比。整篇文章就可以像鱼提起来，抖一下，骨骼就显露出来。对帮助理解文章非常有效果。</span></p>
+<p><span><br /></span></p>
+<p><span><span>本想做成思维导图的，但虽说列框架，自己在本子上也写了大概六大页，图不好做，做了贴出来也看不清，所以还是只把框架贴上来。竖向分类时的表现力有些不足，但</span></span><span>结构还算很清晰</span><span>。</span></p>
+<p><span><span><br /></span></span></p>
+<p><span><span>有人翻译了原文，本次框架里的中文很多是从翻译中copy过来的，有些拿不准的部分再去翻原文看。译文地址：</span></span><a href="http://blog.csdn.net/zzzaquarius/article/details/6532299">http://blog.csdn.net/zzzaquarius/article/details/6532299</a></p>
+<p>HTML5 Rocks</p>
+<p>How Browsers Work:Behind the Scenes of Modern Web Browsers</p>
+<p><strong>CH 1 简介</strong></p>
+<p>&nbsp; &nbsp; &nbsp;涉及浏览器：Firefox Chrome Safari（partly open source）</p>
+<p>&nbsp; &nbsp; &nbsp;主要功能：展现网页资源 HTML CSS标准 &nbsp;（W3C维护）</p>
+<p>&nbsp; &nbsp; &nbsp;UI：地址栏、前进后退、书签、刷新、停止、主页</p>
+<p>&nbsp; &nbsp; &nbsp;High Level Structure</p>
+<p><strong>CH2 渲染引擎 Rendering Engine</strong></p>
+<p>&nbsp; &nbsp; &nbsp;Gecko：Firefox</p>
+<p>&nbsp; &nbsp; &nbsp;Webkit：Chrome Safari</p>
+<p>&nbsp; &nbsp; &nbsp;Main Flow：先构建DOM Tree→在构建渲染Tree→再据此布局（layout）→绘制（paint）（注：DOM--document object model 文档对象模型）</p>
+<p>&nbsp; &nbsp; &nbsp;Webkit、Gecko的rendering main flow图示见figure 3、4</p>
+<p><strong>CH3 解析 Parsing</strong></p>
+<p>&nbsp; &nbsp; &nbsp;3.1 Parsing-general</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解析文件就是把它翻译成为可理解的代码结构。例：2+3-1</p>
+<p>&nbsp; &nbsp; &nbsp;解析分两个子进程：1.lexical analysis 词汇分析：breaking input into tokens &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.syntax analysis 语法分析</p>
+<p>&nbsp; &nbsp; &nbsp;Document→Lexical Analysis→Syntax Analysis→Parse Tree</p>
+<p>&nbsp; &nbsp; &nbsp;解析过程是迭代循环的。</p>
+<p>&nbsp; &nbsp; &nbsp;翻译/转换：经常在解析完毕后，需要翻译成机器代码文件</p>
+<p>&nbsp; &nbsp; &nbsp;Source Code→Parsing→Parse Tree→Translation→Machine Code</p>
+<p>&nbsp; &nbsp; &nbsp;解析示例：2+3-1</p>
+<p>&nbsp; &nbsp; &nbsp;Parser类型：1.top down parsers 从语法的高层结构开始 &nbsp; &nbsp; 2.bottom up parsers 从语法的底层结构开始</p>
+<p>&nbsp; &nbsp; &nbsp;3.2 Html Parser（HTML解析）</p>
+<p>&nbsp; &nbsp; &nbsp;不是context free grammar（与上下文无关的语法） 更宽容（forgiving），允许犯错（注：这是HTML流行起来的原因，也是后面提到Error Toleracne(出错忍耐)的原因）</p>
+<p>&nbsp; &nbsp; &nbsp;HTML定义：DTD（Document Type Definition）格式。定义元素、属性、层级</p>
+<p>&nbsp; &nbsp;<span>&nbsp;</span><strong>&nbsp;DOM：文档对象模型</strong>（<strong>注：重点部分</strong>）</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 解析树（parse tree）是由DOM元素及属性节点组成。DOM是html文档的对象表示，作为html元素的外部接口供javascript等调用。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DOM和标签基本是一一对应关系。示例图figure 8</p>
+<p>&nbsp; &nbsp; &nbsp;解析算法：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTML不能用一般的top down或bottom up parsers解析（原因3点）</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 因此使用定制的custom parser进行解析。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 其解析规则在HTML5中规定，包含两个部分：符号化（tokenization--即为lexical analysis）、构建树（tree construction）</p>
+<p>&nbsp; &nbsp; &nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp;The tokenization algorithm：略（3.2.6）</p>
+<p>&nbsp; &nbsp; &nbsp;The Tree construction algorithm：略（3.2.7）</p>
+<p>&nbsp; &nbsp; &nbsp;出错忍耐（Error Tolerance）：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 浏览器fix网页中的“无效语法”等错误。（因为HTML语言很forgiving——前有提到）</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; HTML5中规定了需要注意的错误情形，4种。举例：webkit</p>
+<p>3.3 CSS解析</p>
+<p>&nbsp; &nbsp; &nbsp;CSS：Casading Style Sheets 层叠样式表</p>
+<p>&nbsp; &nbsp; &nbsp;context free grammar &nbsp;与上下文无关的语法，是一种将表示样式应用到标记的系统</p>
+<p>&nbsp; &nbsp; &nbsp;定义了lexical grammar（defined by regular expressions--正则表达式）和syntax grammar（Described in BNF--Backus-Naur Form 巴科斯-诺克范式）</p>
+<p>&nbsp; &nbsp; &nbsp;举例：webkit CSS解析图 figure 12</p>
+<p>3.4 处理脚本（Script）和样式表（Style Sheets）的顺序</p>
+<p>&nbsp; &nbsp; &nbsp;Web的模式是同步的。</p>
+<p>&nbsp; &nbsp; &nbsp;Webkit和Firefox做了优化，进行预解析脚本。</p>
+<p><strong>CH4 构造渲染树 Render Tree Construction</strong></p>
+<p>&nbsp; &nbsp; &nbsp;DOM树构建完成后，浏览器开始构建渲染树（Render tree）</p>
+<p>&nbsp; &nbsp; &nbsp;渲染树按照显示顺序包含视觉元素，是文档的视觉表示。</p>
+<p>&nbsp; &nbsp; &nbsp;构建渲染树的目的是以正确的顺序绘制（Painting）内容。</p>
+<p>&nbsp; &nbsp; &nbsp;Firefox中叫渲染树中元素为“Frame”（帧）。</p>
+<p>&nbsp; &nbsp; &nbsp;Webkit中叫渲染树中元素为“Render”或“Render Object”。（一个Render知道怎样布局（layout）和绘制（paint）它自己和其子节点）</p>
+<p>&nbsp; &nbsp;<span>&nbsp;</span><strong>&nbsp;Render Tree和DOM Tree的关系：</strong>（<strong>注：重点部分</strong>）</p>
+<p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对应，但非一一对应。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 不可见的DOM元素不会被插入渲染树。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 一些DOM元素对应几个可见对象。如select元素对应显示区域、下拉列表和按钮三个对象。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 一些渲染对象和所对应的DOM接电不在树上相同的位置。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图示对应关系：</p>
+<p>&nbsp; &nbsp; &nbsp;构建树的流程：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Firefox：registered as a listener for DOM updates</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Webkit：teh process fo resolving the style and creating a render is called &quot;attachment&quot;</p>
+<p>&nbsp; &nbsp; &nbsp;样式计算 Style Computation</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 构建渲染树需计算每一个渲染对象的视觉属性。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 计算样式的困难，3点：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1.样式数据过大</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2.寻找元素对应规则易引起性能问题（若不优化的话）</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3.应用规则设计复杂的级联</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span>&nbsp;</span><strong>浏览器怎么处理这些问题：（注：以下这几个部分很长）</strong></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;共享样式数据--4.3.1</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Firefox规则树--4.3.2</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;结构化</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;使用规则树计算样式上下文</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;对规则进行处理以简化匹配流程--4.3.3</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;以正确的级联顺序应用规则--4.3.4</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;样式表的级联顺序</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Spectify</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;对规则排序</p>
+<p>&nbsp; &nbsp; &nbsp;逐步处理：Webkit</p>
+<p><strong>CH5 布局 Layout</strong></p>
+<p>&nbsp; &nbsp; &nbsp;计算渲染器的位置、大小等信息，称为Layout（布局--Webkit）或Reflow（回流--Gecko）。</p>
+<p>&nbsp; &nbsp; &nbsp;布局一般按照从左到右、从上到下的顺序。有例外：html tables</p>
+<p>&nbsp; &nbsp; &nbsp;布局是迭代过程，从根渲染器（Root Render）开始。根渲染器位置为（0，0），大小为浏览器窗口的可见部分。</p>
+<p>&nbsp; &nbsp; &nbsp;Dirty Bit系统</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 避免为每个小变化而全部重新布局</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 将变动的renderer和其children标记为dirty：需要重新布局</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 有两个标识：1.dirty &nbsp; &nbsp; 2.Children are dirty：render本身可能OK，但至少有一个孩子（children）需要重新布局</p>
+<p>&nbsp; &nbsp; &nbsp;全局和增量布局</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 全局：1.全局样式变动，如字号改变。 &nbsp; &nbsp; 2.窗口resize。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 增量：仅dirty renderer重新布局。是异步触发。</p>
+<p>&nbsp; &nbsp; &nbsp;异步和同步布局</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 同步：1.全局layout一般均为同步触发。 &nbsp; &nbsp; 2.脚本请求信息时，如“offsetHeight”</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 异步：增量layout</p>
+<p>&nbsp; &nbsp; &nbsp;优化 &nbsp; &nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当layout因resize或者渲染位置改变（而非大小改变）触发时，渲染对象大小会从缓存中读取，而不会重新计算。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 若子树改变，则layout并不从根开始。如：将文本插入文本域。</p>
+<p>&nbsp; &nbsp; &nbsp;Layout过程</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Layout一般有以下四个部分。（略）</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;宽度计算</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 渲染对象的宽度使用容器的宽度、渲染对象样式中的宽度、margin和borders等进行计算。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 举例：Webkit中：&lt;div class= &quot;Width:30%&quot; /&gt; &nbsp; &nbsp;&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.容器宽度是容器的可用宽度和0中的最大值，即：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;contentWidth = clientWidth() - paddingLeft() - paddingRight()</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中，clientWidth表示对象内部大小，不含border和scrollbar。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.元素的宽度是指样式属性Width的值（本例中Width为30%）；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.加上水平方向上的borders和paddings（填充区域）。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 经此3步之后，得到的是“prefered width”，还要与maximum width和minimum width比较，以保证最终宽度结果在二者之间。</p>
+<p>&nbsp; &nbsp; &nbsp;折行&nbsp;Line Breaking&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp;折行时layout创建额外的渲染对象并调用他们的layout。</p>
+<p><strong>CH6 绘制 Painting</strong></p>
+<p>&nbsp; &nbsp; &nbsp;和布局一样，绘制也分为全局和增量：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 全局：略</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 增量：部分渲染对象改变，但不影响整个树，仅使其在屏幕上对应的矩形区域无效。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使OS将其视作“dirty region”，并产生新的“paint event”。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chrome中，由于renderer并非在主线程中，由Chrome模仿OS产生“paint event”</p>
+<p>&nbsp; &nbsp; &nbsp;绘制顺序</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 和元素在栈中的存储顺序相同</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 背景颜色→背景图片→border→children→outline</p>
+<p>&nbsp; &nbsp; &nbsp;重绘时的优化</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Firefox显示列表：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Firefox读取渲染树并为绘制矩形创建了一个显示列表，该表以正确绘制顺序包含着矩形相关的渲染对象。这样，重绘时可只需查找一次树，不需多次查找。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Firefox优化：不添加会被隐藏的元素。如元素完全在其他不透明元素下。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Webkit矩形存储：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;重绘前，webkit讲旧的矩形保存为位图（bitmap），然后只画新旧矩形的差集。</p>
+<p><strong>CH7 动态变化 Dynamic Changes</strong></p>
+<p>&nbsp; &nbsp; &nbsp;浏览器总是试着以最小的动作响应一个变化。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 一个元素颜色变化 &nbsp; &nbsp; → &nbsp; &nbsp; 该元素重绘；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 一个元素位置变化 &nbsp; &nbsp; → &nbsp; &nbsp; 该元素、子元素和相关元素重绘；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 添加DOM数 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; → &nbsp; &nbsp; 该节点和相关节点重绘；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 主要变化（字号改变等） &nbsp; &nbsp; → &nbsp; &nbsp; 整体的布局和重绘</p>
+<p><strong>CH8 渲染引擎的线程 The Rendering Engine's Threads</strong></p>
+<p>&nbsp; &nbsp; &nbsp;渲染引擎是单线程的。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Firefox Safari：浏览器主线程</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Chrome：tab主线程</p>
+<p>&nbsp; &nbsp; &nbsp;事件循环：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 浏览器主线程是一个事件循环。它被设计为无限循环以保持执行过程的可用，等待时间（如Layout或Paint事件）并执行它们。&nbsp;例：Firefox主要事件循环代码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><span>while</span></span><span><span>(!</span></span><span><span>mExiting</span></span><span><span>)</span></span><span><span>NS_ProcessNextEvent</span></span><span><span>(</span></span><span><span>thread</span></span><span><span>);</span></span></p>
+<p><span><span><br /></span></span></p>
+<p><span><span><span><strong>CH9 CSS2可视模型</strong></span></span></span></p>
+<p><span><span><span>&nbsp; &nbsp; &nbsp;画布（Canvas）：</span></span></span></p>
+<p><span><span><span>&nbsp; &nbsp; &nbsp;CSS2规定Canvas用来描述格式化的结构所渲染的空间——浏览器绘制内容的地方。</span></span></span></p>
+<p><span><span><span>&nbsp; &nbsp; &nbsp;CSS盒模型：</span></span></span></p>
+<p><span><span><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 包括：内容区域（必有。如图片、文本等）及可选的四周的padding、border和margin区域。如图：</span></span></span></p>
+<p>&nbsp; &nbsp; &nbsp;Box布局的方式由：box类型、大小、定位策略和扩展信息（如图片大小或屏幕尺寸）决定。</p>
+<p>&nbsp; &nbsp; &nbsp;定位策略，三种：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; normal：与DOM树，渲染树中的位置一致；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; float：先正常布局，再尽可能向左或右移动；</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; absolute：与DOM树中位置无关。</p>
+<p>&nbsp; &nbsp; &nbsp;Box类型：</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.Block Box</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.Inline Box</p>
+<p>&nbsp; &nbsp; &nbsp;定位（Positioning）</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.Relative</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.Floats</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.Absolute或Fixed</p>
+<p>&nbsp; &nbsp; &nbsp;层级显示 Layered Representation</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 由CSS属性当中的z-index指定，即在z轴上的位置。z值越大，越靠前显示。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2011-11-12/6703925#notes" class="notes">9 热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2011-11-12/6703925">November 12, 2011</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2011-11-17/6875006">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2011-11-07/6574634">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=7211fb20-0d3e-11e1-a802-782bcb383994&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'289'(Mars:'126')--><!--Host Name: hy-10-0-0-86.dd.hn-->

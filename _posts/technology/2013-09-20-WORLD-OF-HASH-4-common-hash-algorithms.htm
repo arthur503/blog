@@ -1,0 +1,337 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>映射的世界之四：常见哈希算法_龙珠</title>
+    <meta name="description" content="在网上找到的General Purpose Hash Function Algorithms Library 中，包含了常见的11种哈希算法。代码如下：/* ************************************************************************** *                                                                        * *          General Purpose Hash Function Algorithms Library              * *                                                                        * * Author: Arash Partow - 2002                …" />
+    <meta name="keywords" content="哈希系列" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=680b1e90-21a0-11e3-aee6-782bcb42b082"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">映射的世界之四：常见哈希算法</h2>
+                            <div class="entry rich-content"><p>在网上找到的General Purpose Hash Function Algorithms Library 中，包含了常见的11种哈希算法。代码如下：</p>
+<pre config="brush:html;toolbar:false;">/*
+ **************************************************************************
+ *                                                                        *
+ *          General Purpose Hash Function Algorithms Library              *
+ *                                                                        *
+ * Author: Arash Partow - 2002                                            *
+ * URL: http://www.partow.net                                             *
+ * URL: http://www.partow.net/programming/hashfunctions/index.html        *
+ *                                                                        *
+ * Copyright notice:                                                      *
+ * Free use of the General Purpose Hash Function Algorithms Library is    *
+ * permitted under the guidelines and in accordance with the most current *
+ * version of the Common Public License.                                  *
+ * http://www.opensource.org/licenses/cpl1.0.php                          *
+ *                                                                        *
+ **************************************************************************
+*/
+     
+     
+class GeneralHashFunctionLibrary
+{
+     
+     
+   public long RSHash(String str)
+   {
+      int b     = 378551;
+      int a     = 63689;
+      long hash = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = hash * a + str.charAt(i);
+         a    = a * b;
+      }
+     
+      return hash;
+   }
+   /* End Of RS Hash Function */
+     
+     
+   public long JSHash(String str)
+   {
+      long hash = 1315423911;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash ^= ((hash &lt;&lt; 5) + str.charAt(i) + (hash &gt;&gt; 2));
+      }
+     
+      return hash;
+   }
+   /* End Of JS Hash Function */
+     
+     
+   public long PJWHash(String str)
+   {
+      long BitsInUnsignedInt = (long)(4 * 8);
+      long ThreeQuarters     = (long)((BitsInUnsignedInt  * 3) / 4);
+      long OneEighth         = (long)(BitsInUnsignedInt / 8);
+      long HighBits          = (long)(0xFFFFFFFF) &lt;&lt; (BitsInUnsignedInt - OneEighth);
+      long hash              = 0;
+      long test              = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = (hash &lt;&lt; OneEighth) + str.charAt(i);
+     
+         if((test = hash &amp; HighBits)  != 0)
+         {
+            hash = (( hash ^ (test &gt;&gt; ThreeQuarters)) &amp; (~HighBits));
+         }
+      }
+     
+      return hash;
+   }
+   /* End Of  P. J. Weinberger Hash Function */
+     
+     
+   public long ELFHash(String str)
+   {
+      long hash = 0;
+      long x    = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = (hash &lt;&lt; 4) + str.charAt(i);
+     
+         if((x = hash &amp; 0xF0000000L) != 0)
+         {
+            hash ^= (x &gt;&gt; 24);
+         }
+         hash &amp;= ~x;
+      }
+     
+      return hash;
+   }
+   /* End Of ELF Hash Function */
+     
+     
+   public long BKDRHash(String str)
+   {
+      long seed = 131; // 31 131 1313 13131 131313 etc..
+      long hash = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = (hash * seed) + str.charAt(i);
+      }
+     
+      return hash;
+   }
+   /* End Of BKDR Hash Function */
+     
+     
+   public long SDBMHash(String str)
+   {
+      long hash = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = str.charAt(i) + (hash &lt;&lt; 6) + (hash &lt;&lt; 16) - hash;
+      }
+     
+      return hash;
+   }
+   /* End Of SDBM Hash Function */
+     
+     
+   public long DJBHash(String str)
+   {
+      long hash = 5381;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = ((hash &lt;&lt; 5) + hash) + str.charAt(i);
+      }
+     
+      return hash;
+   }
+   /* End Of DJB Hash Function */
+     
+     
+   public long DEKHash(String str)
+   {
+      long hash = str.length();
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = ((hash &lt;&lt; 5) ^ (hash &gt;&gt; 27)) ^ str.charAt(i);
+      }
+     
+      return hash;
+   }
+   /* End Of DEK Hash Function */
+     
+     
+   public long BPHash(String str)
+   {
+      long hash = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         hash = hash &lt;&lt; 7 ^ str.charAt(i);
+      }
+     
+      return hash;
+   }
+   /* End Of BP Hash Function */
+     
+     
+   public long FNVHash(String str)
+   {
+      long fnv_prime = 0x811C9DC5;
+      long hash = 0;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+      hash *= fnv_prime;
+      hash ^= str.charAt(i);
+      }
+     
+      return hash;
+   }
+   /* End Of FNV Hash Function */
+     
+     
+   public long APHash(String str)
+   {
+      long hash = 0xAAAAAAAA;
+     
+      for(int i = 0; i &lt; str.length(); i++)
+      {
+         if ((i &amp; 1) == 0)
+         {
+            hash ^= ((hash &lt;&lt; 7) ^ str.charAt(i) * (hash &gt;&gt; 3));
+         }
+         else
+         {
+            hash ^= (~((hash &lt;&lt; 11) + str.charAt(i) ^ (hash &gt;&gt; 5)));
+         }
+      }
+     
+      return hash;
+   }
+   /* End Of AP Hash Function */
+     
+}</pre>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<p>//TODO。待补充。</p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-20/40052283188#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-20/40052283188">September 20, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-20/40053450850">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=680b1e90-21a0-11e3-aee6-782bcb42b082&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'194'(Mars:'126')--><!--Host Name: hy-10-0-0-86.dd.hn-->

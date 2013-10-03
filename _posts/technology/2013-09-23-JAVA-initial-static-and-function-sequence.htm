@@ -1,0 +1,213 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：构造块和静态块初始化顺序_龙珠</title>
+    <meta name="description" content="昨天阿里笔试题中有一道考static和构造块的初始化顺序的，当时没做出来，对static的了解还是不够，今天调试了下题目代码（有略微修改，不影响）如下：package test;                       public class TestStatic {    static{        print( 静态块【1】 );    }    public static int k=0;    public static TestStatic t1 = new TestStatic( t1 );    public static TestStatic t2 = new TestStatic( t2 );                           public static int i=print( i );    pub…" />
+    <meta name="keywords" content="Java" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=bbdfe7a0-2400-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：构造块和静态块初始化顺序</h2>
+                            <div class="entry rich-content"><p>昨天阿里笔试题中有一道考static和构造块的初始化顺序的，当时没做出来，对static的了解还是不够，今天调试了下题目代码（有略微修改，不影响）如下：</p>
+<pre config="brush:html;toolbar:false;">package test;
+                       
+public class TestStatic {
+    static{
+        print(&quot;静态块【1】&quot;);
+    }
+    public static int k=0;
+    public static TestStatic t1 = new TestStatic(&quot;t1&quot;);
+    public static TestStatic t2 = new TestStatic(&quot;t2&quot;);
+                       
+    public static int i=print(&quot;i&quot;);
+    public static int n=99;
+    public int c = print(&quot;c&quot;);
+    public int j=print(&quot;j&quot;);
+    {
+        print(&quot;构造块&quot;);
+    }
+                           
+    static{
+        print(&quot;静态块【2】&quot;);
+    }
+                           
+    public TestStatic(String str){
+        System.out.println((++k)+&quot;:&quot;+str+&quot;    i=&quot;+i+&quot;    n=&quot;+n);
+        ++i;
+        ++n;
+    }
+                           
+    public static int print(String str){
+        System.out.println((++k)+&quot;:&quot;+str+&quot;    i=&quot;+i+&quot;    n=&quot;+n);
+        ++i;
+        return ++n;     
+    }
+    public static void main(String[] strings){
+        System.out.println(&quot;Begin to init...&quot;);
+        TestStatic t = new TestStatic(&quot;init&quot;);
+        System.out.println(&quot;Init Done.&quot;);
+    }
+                           
+                       
+}</pre>
+<p>求输出的结果。</p>
+<p>在初始化过程中，有以下几个原则：</p>
+<ol class="edui-filter-decimal">
+ <li><p>静态static变量优先初始化，且只执行一次！另外，static变量之间是顺序执行；之后才执行main函数。</p></li>
+ <li><p>new一个新的对象的时候，先对非static的变量和构造块进行初始化，之后再执行对象内的执行语句。这是每次new一个新对象时均对其内部的非static变量进行初始化。</p></li>
+ <li><p>若使用到的某变量是在后面语句中才赋值，则先使用系统默认值（如代码中n最开始使用0，直至执行到赋值为99的语句）。</p></li>
+</ol>
+<p>有了这些原则，我们可以写出执行结果：</p>
+<p>一、先顺序执行static语句（原则1）</p>
+<ol class="edui-filter-decimal">
+ <li><p>运行第5行“静态块【1】”（原则1），输出k=1（！！注意：此时第7行代码还未执行，k还没有初始化，因此采用默认值为0），i=0（原则3），n=0（原则3）；</p></li>
+ <li><p>运行第7行，无输出（注意！第5行中已经使用++k，之后k为1。但在此处k重新复制为0，虽然无输出，但之后的k是从新由0算起的）；</p></li>
+ <li><p>运行第8行，new一个t1（原则2）：先初始化t1内部的非static变量，包括13~17行的c、j和构造块。分别输出“c”、“j”和“构造块”；之后，执行构造函数内的语句，输出“t1”。此处，k、i、n均逐次加1；</p></li>
+ <li><p>运行第9行，new一个t2（原则2）：同上。分别输出“c&quot;、“j”、“构造块”和“t2”；</p></li>
+ <li><p>运行第11行，输出“i”。</p></li>
+ <li><p>运行第12行，n的值改为99（之前输出的n初始为0，之后输出的n才是为99）；</p></li>
+ <li><p>第13~18行只有在new新对象的时候才输出，此处无输出。</p></li>
+ <li><p>运行第20行，输出“静态块【2】”；</p></li>
+</ol>
+<p>之后无static变量代码，对static变量的初始化结束。</p>
+<p>二、执行main函数</p>
+<ol class="edui-filter-decimal">
+ <li><p>main函数中先输出“Begin to init...”；</p></li>
+ <li><p>之后，new一个新的对象（原则2）。先输出“c”、“j”、“构造块”，在输出“init”；</p></li>
+ <li><p>最后输出“Init Done.”</p></li>
+</ol>
+<p>执行完毕。最后运行代码结果如下：</p>
+<pre config="brush:html;toolbar:false;">1:静态块【1】    i=0    n=0
+1:c    i=1    n=1
+2:j    i=2    n=2
+3:构造块    i=3    n=3
+4:t1    i=4    n=4
+5:c    i=5    n=5
+6:j    i=6    n=6
+7:构造块    i=7    n=7
+8:t2    i=8    n=8
+9:i    i=9    n=9
+10:静态块【2】    i=10    n=99
+Begin to init...
+11:c    i=11    n=100
+12:j    i=12    n=101
+13:构造块    i=13    n=102
+14:init    i=14    n=103
+Init Done.</pre>
+<p>（对k的初始赋值请注意第1行和第2行k的位置输出均为1.）</p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-23/40052521862#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-23/40052521862">September 23, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-22/40052431513">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=bbdfe7a0-2400-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'182'(Mars:'126')--><!--Host Name: hy-10-0-0-92.dd.hn-->

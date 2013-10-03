@@ -1,0 +1,163 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>bz2:Java中读取bz2文件数据_龙珠</title>
+    <meta name="description" content="下载的数据中很多是.bz2格式的，里面包含一个文本文件，一个个解压出来耗时间耗空间（我400M的bz2文件解压后2.5G），也麻烦。在网上查找如何在Java中解压缩bz2文件，国内资料有用的基本没有，百度和谷歌搜索结果第一条都是这个：在java语言中如何读取bz2文件中的数据。ZipInputStream可以读取zip文件，构造的参数是FileInputStream等 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----getNextEntry() ：可以得到zip文件中的一个子文件，再次调用得到下一个子文…" />
+    <meta name="keywords" content="Java,bz2" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=9e980560-1712-11e3-8fb1-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">bz2:Java中读取bz2文件数据</h2>
+                            <div class="entry rich-content"><p>下载的数据中很多是.bz2格式的，里面包含一个文本文件，一个个解压出来耗时间耗空间（我400M的bz2文件解压后2.5G），也麻烦。</p>
+<p>在网上查找如何在Java中解压缩bz2文件，国内资料有用的基本没有，百度和谷歌搜索结果第一条都是这个：<a href="http://zhidao.baidu.com/question/298893305.html" target="_blank" title="在java语言中如何读取bz2文件中的数据。">在java语言中如何读取bz2文件中的数据。</a></p>
+<blockquote>
+ <p>ZipInputStream可以读取zip文件，构造的参数是FileInputStream等</p>
+ <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----getNextEntry() ：可以得到zip文件中的一个子文件，再次调用得到下一个子文件</p>
+ <p>ZipEntry类中的getName()：可以得到子文件的文件名</p>
+</blockquote>
+<p>但其中给出的是解压缩zip文件的，bz2不能用。</p>
+<p>还是stackoverflow网站好，搜英文就有答案。在<a href="http://stackoverflow.com/questions/2322944/uncompress-bzip2-archive" target="_blank" title="Uncompress BZIP2 archive">Uncompress BZIP2 archive</a>和<a href="http://stackoverflow.com/questions/4834721/java-read-bz2-file-and-uncompress-parse-on-the-fly" target="_blank" title="Java - Read BZ2 file and uncompress/parse on the fly">Java - Read BZ2 file and uncompress/parse on the fly</a>。</p>
+<p>不过我使用第二篇中的org.apache.tools.bzip2.CBZip2InputStream并没有效果，会出现nullPointerException，查了一下，有人说是jar包内文件需要修改。</p>
+<p>最后使用第一篇中的BZip2CompressorInputStream 实现，需要去官网<a href="http://stackoverflow.com/questions/4834721/java-read-bz2-file-and-uncompress-parse-on-the-fly" target="_blank" title="Java - Read BZ2 file and uncompress/parse on the fly"></a><a href="http://commons.apache.org/proper/commons-compress/download_compress.cgi"></a><a href="http://commons.apache.org/proper/commons-compress/download_compress.cgi" target="_blank" title="Apache Commons Compress">Apache Commons Compress</a>下载jar包，官网给的例子是：</p>
+<blockquote>
+ <p>FileInputStream fin = new FileInputStream(&quot;archive.tar.bz2&quot;);</p>
+ <p>BufferedInputStream in = new BufferedInputStream(fin);</p>
+ <p>FileOutputStream out = new FileOutputStream(&quot;archive.tar&quot;);</p>
+ <p>BZip2CompressorInputStream bzIn = new BZip2CompressorInputStream(in);</p>
+ <p>final byte[] buffer = new byte[buffersize];</p>
+ <p>int n = 0;</p>
+ <p>while (-1 != (n = bzIn.read(buffer))) {</p>
+ <p> &nbsp;&nbsp;&nbsp;out.write(buffer, 0, n);</p>
+ <p>}</p>
+ <p>out.close();</p>
+ <p>bzIn.close();</p>
+</blockquote>
+<p>需要注意的是，由于BZipCompressorOutputStream 很占内存，因此在不需要的时候一定要及时close掉。</p>
+<blockquote>
+ <p>“Note that BZipCompressorOutputStream keeps hold of some big data structures in memory. While it is true recommended for any stream that you close it as soon as you no longer needed, this is even more important for BZipCompressorOutputStream.”</p>
+</blockquote>
+<p>参考资料：<br /></p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://zhidao.baidu.com/question/298893305.html" target="_blank" title="在java语言中如何读取bz2文件中的数据。">在java语言中如何读取bz2文件中的数据。</a></p></li>
+ <li><p><a href="http://stackoverflow.com/questions/2322944/uncompress-bzip2-archive" target="_blank" title="Uncompress BZIP2 archive">Uncompress BZIP2 archive</a></p></li>
+ <li><p><a href="http://stackoverflow.com/questions/4834721/java-read-bz2-file-and-uncompress-parse-on-the-fly" target="_blank" title="Java - Read BZ2 file and uncompress/parse on the fly">Java - Read BZ2 file and uncompress/parse on the fly</a></p></li>
+ <li><p><a href="http://commons.apache.org/proper/commons-compress/download_compress.cgi"></a><a href="http://commons.apache.org/proper/commons-compress/download_compress.cgi" target="_blank" title="Apache Commons Compress">Apache Commons Compress</a></p><p>&nbsp;</p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-07/40053564598#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-07/40053564598">September 07, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-09-10/40053267239">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-06/40053641450">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=9e980560-1712-11e3-8fb1-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'224'(Mars:'128')--><!--Host Name: hy-10-0-0-92.dd.hn-->

@@ -1,0 +1,174 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>搭建Github博客_龙珠</title>
+    <meta name="description" content="Github提供了Github Pages功能，可以支持Jekyll静态网页博客，可以在上面搭建博客。主要参考了使用Github Pages建独立博客和搭建一个免费的，无限流量的Blog----github Pages和Jekyll入门这两篇文章，以及官网Github Pages帮助文档Github Pages Help。1. Github Pages的博客推荐建立在gh-pages分支上（还没有试过master分支是否可以）。建立该分支有两种方法：a. 在Github上新建repo，如blog。之后选择页面右侧的 Settings 选项…" />
+    <meta name="keywords" content="Github,搭建博客" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=5177dd30-1ee9-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">搭建Github博客</h2>
+                            <div class="entry rich-content"><p>Github提供了Github Pages功能，可以支持Jekyll静态网页博客，可以在上面搭建博客。</p>
+<p>主要参考了<a href="http://beiyuu.com/github-pages/" target="_blank" title="使用Github Pages建独立博客">使用Github Pages建独立博客</a>和<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html" target="_blank" title="搭建一个免费的，无限流量的Blog----github Pages和Jekyll入门">搭建一个免费的，无限流量的Blog----github Pages和Jekyll入门</a>这两篇文章，以及官网<a href="http://pages.github.com/" target="_blank" title="Github Pages">Github Pages</a>帮助文档<a href="https://help.github.com/categories/20/articles" target="_blank" title="Github Pages Help">Github Pages Help</a>。</p>
+<p>1. Github Pages的博客推荐建立在gh-pages分支上（还没有试过master分支是否可以）。建立该分支有两种方法：</p>
+<p>a. 在Github上新建repo，如blog。之后选择页面右侧的&quot;Settings&quot;选项，选择”Github Pages“中”Automatic Page Generator“，之后会让选择一个模板，确认即可。这样可以自动建立一个gh-pages分支。</p>
+<p>b. 如参考文章2中，在本地文件夹init之后，使用命令：<span>$ git checkout --orphan gh-pages，强制建立gh-pages分支。这样可以省去上面的步骤。</span></p>
+<p>2. Github支持的Jekyll基本结构如参考1中所说：</p>
+<pre config="brush:html;toolbar:false;">|-- _config.yml
+|-- _includes
+|-- _layouts
+|   |-- default.html
+|   `-- post.html
+|-- _posts
+|   |-- 2007-10-29-why-every-programmer-should-play-nethack.textile
+|   `-- 2009-04-26-barcamp-boston-4-roundup.textile
+|-- _site
+`-- index.html</pre>
+<p>简化的话，只需要按照参考文章2中所述添加文件即可。包括：<span>_config.yml <span>index.html <span>_layouts <span>_posts及后二者文件夹内的文件。</span></span></span></span></p>
+<p><span>基本流程就是这样，可以按照参考文章中来做。不过过程中，因为不熟悉导致很多问题，现记录如下：</span></p>
+<p><span>1.是否一定需要建立在名为<span>username.github.io</span>的repo上？</span></p>
+<p><span>我建立了这个repo，但最后博客可以搭建在其他工程，如blogname上，这样最后地址是<span>username.github.io/blogname，</span>所有文档也是存在blogname的repo下。至于<span>username.github.io</span>这个并没有用到。至于是否必须建立该repo，嗯，官网要求建立。还需要换个账号看看不建立该repo是否可以。</span></p>
+<p><span>2.设置origin的url</span></p>
+<p><span>教程中的代码：</span></p>
+<pre config="brush:java;toolbar:false;">git remote add origin https://github.com/arthur503/arthur503.github.com.git
+git push -u origin master</pre>
+<p><span>其中origin是自己定义的项目名。第一次的时候使用remote add添加，若需要修改，使用：</span></p>
+<p><span></span></p>
+<pre config="brush:java;toolbar:false;">git remote set-url origin git@github.com:ACCOUNT/REPO.git</pre>
+<p><span>可以重新设置origin对应的git地址。</span></p>
+<p><span>3.</span><span>_yml语言特性</span></p>
+<p><span>在参数名和参数之间的冒号后面有空格！否则会报错。</span></p>
+<p><span>是“参数“+”:“+&quot; &quot;(空格不能省！而且不能用TAB)+”blurblur“，所以标准版是：</span></p>
+<p><span>title: &nbsp;&nbsp;&nbsp;Ouscn</span></p>
+<p><span>4._posts文件夹下保存html需要是“UTF-8 无BOM格式编码”。</span></p>
+<p><span>5.</span><span>出现“Page build failure&quot;的原因有哪些？</span></p>
+<p><span>1.编码错误。如问题4.</span></p>
+<p><span>2.某个文件新建、复制、删除后还原等原因，都可能改变编码，一定要把所有相关的都查一下。</span></p>
+<p><span>3.纯html文件的话，必须是完整的文件，不能只是”CONTENT&quot;！</span></p>
+<p><span>4.文件名必须是以“-”间隔，不能空格（猜测按照“-”来split字符串），不能包含中文，否则出错。文件名可以包含大写字母。</span></p>
+<p><span>5.jekyll中的yml语言错误，如问题3中描述。对于title，标头必须定义后再使用；标头和冒号后，参数前一定有空格！</span></p>
+<p>&nbsp;</p>
+<p>参考资料：<br /></p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://beiyuu.com/github-pages/" target="_blank" title="使用Github Pages建独立博客">使用Github Pages建独立博客</a></p></li>
+ <li><p><a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html" target="_blank" title="搭建一个免费的，无限流量的Blog----github Pages和Jekyll入门">搭建一个免费的，无限流量的Blog----github Pages和Jekyll入门</a></p></li>
+ <li><p><span>帮助文档</span><a href="https://help.github.com/categories/20/articles" target="_blank" title="Github Pages Help">Github Pages Help</a><br /></p></li>
+</ol>
+<p><span></span></p>
+<p><span></span></p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-17/40052899490#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-17/40052899490">September 17, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-10/40053267239">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=5177dd30-1ee9-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'197'(Mars:'125')--><!--Host Name: hy-10-0-0-86.dd.hn-->

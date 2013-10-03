@@ -1,0 +1,299 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：finalize方法介绍和为什么不要使用它？【存疑】_龙珠</title>
+    <meta name="description" content="如果查看Java中的Object.java文件，其中可以重写的有5个方法：clone(), equals(), hashcode(), finalize(), toString()。我们已经讲过了equals()和hashcode()方法，toString()方法很容易理解，而这次来看finalize()方法（clone()方法以后再讲吧）。finalize方法是Java中在对象结束之前进行清除工作的方法。那么在Java中，是如何在对象结束之前进行消除呢？我们先来看一下。一、Java中如何对对象结束进行清除处理？finalize()方法的文档如下：…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=70b742c0-219c-11e3-aee6-782bcb42b082"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：finalize方法介绍和为什么不要使用它？【存疑】</h2>
+                            <div class="entry rich-content"><p><span>如果查看Java中的Object.java文件，其中可以重写的有5个方法：clone(), equals(), hashcode(), finalize(), toString()。我们已经讲过了equals()和hashcode()方法，toString()方法很容易理解，而这次来看finalize()方法（clone()方法以后再讲吧）。</span><br /></p>
+<p><span>finalize方法是Java中在对象结束之前进行清除工作的方法。<span>那么在Java中，是如何在对象结束之前进行消除呢？</span>我们先来看一下。</span></p>
+<p>一、Java中如何对对象结束进行清除处理？</p>
+<p>finalize()方法的文档如下：</p>
+<pre config="brush:html;toolbar:false;">/**
+     * Called by the garbage collector on an object when garbage collection
+     * determines that there are no more references to the object.
+     * A subclass overrides the {@code finalize} method to dispose of
+     * system resources or to perform other cleanup.
+     * &lt;p&gt;
+     * The general contract of {@code finalize} is that it is invoked
+     * if and when the Java&lt;font size=&quot;-2&quot;&gt;&lt;sup&gt;TM&lt;/sup&gt;&lt;/font&gt; virtual
+     * machine has determined that there is no longer any
+     * means by which this object can be accessed by any thread that has
+     * not yet died, except as a result of an action taken by the
+     * finalization of some other object or class which is ready to be
+     * finalized. The {@code finalize} method may take any action, including
+     * making this object available again to other threads; the usual purpose
+     * of {@code finalize}, however, is to perform cleanup actions before
+     * the object is irrevocably discarded. For example, the finalize method
+     * for an object that represents an input/output connection might perform
+     * explicit I/O transactions to break the connection before the object is
+     * permanently discarded.
+     * &lt;p&gt;
+     * The {@code finalize} method of class {@code Object} performs no
+     * special action; it simply returns normally. Subclasses of
+     * {@code Object} may override this definition.
+     * &lt;p&gt;
+     * The Java programming language does not guarantee which thread will
+     * invoke the {@code finalize} method for any given object. It is
+     * guaranteed, however, that the thread that invokes finalize will not
+     * be holding any user-visible synchronization locks when finalize is
+     * invoked. If an uncaught exception is thrown by the finalize method,
+     * the exception is ignored and finalization of that object terminates.
+     * &lt;p&gt;
+     * After the {@code finalize} method has been invoked for an object, no
+     * further action is taken until the Java virtual machine has again
+     * determined that there is no longer any means by which this object can
+     * be accessed by any thread that has not yet died, including possible
+     * actions by other objects or classes which are ready to be finalized,
+     * at which point the object may be discarded.
+     * &lt;p&gt;
+     * The {@code finalize} method is never invoked more than once by a Java
+     * virtual machine for any given object.
+     * &lt;p&gt;
+     * Any exception thrown by the {@code finalize} method causes
+     * the finalization of this object to be halted, but is otherwise
+     * ignored.
+     *
+     * @throws Throwable the {@code Exception} raised by this method
+     *</pre>
+<p>可以看出，finalize()方法是由Java中的垃圾收集器来调用的。当GC认为没有其他引用指向该对象时，则调用对象的finalize()方法，进行垃圾回收前的清理工作，如：显式的关闭I/O连接等。</p>
+<p>另外，指的注意的是，内存的回收并不是在调用finalize()方法之后立即进行的。实际情况是：一旦垃圾回收器准备好释放对象占用的空间，将首先调用其finalize()方法，并且在<strong>下一次垃圾回收</strong>的动作发生之时，才会真正的回收对象所占用的内存。<strong>因此，finalize()方法的意义是，在JVM垃圾回收时刻做一些重要的清理工作。</strong></p>
+<p>Java语言并不保证由哪个线程调用该方法，但可以保证的是，在调用该方法前，调用的线程不会持有任何用户可见的同步锁。如果在调用finalize()方法期间出现异常，该异常会被忽略，同时该对象的finalize()方法会终止。并且，对于任何对象而言，finalize()方法最多只能被JVM调用一次。</p>
+<p>我们知道，System.gc()是建议JVM进行垃圾清除工作（但JVM并不保证一定执行），从而强行进行终结动作。那么我们测试下代码看看finalize()方法是如何工作的，代码如下：</p>
+<pre config="brush:html;toolbar:false;">package com.arthur.test;
+                                                                                                                                                                                                 
+public class Test {
+                                                                                                                                                                                                     
+    public static void main(String[] argv){
+        TestFinalize tf = new TestFinalize();      
+        System.gc();
+        System.out.println(&quot;GC1&quot;); 
+                                                                                                                                                                                                         
+        tf = null;
+        System.gc();
+        System.out.println(&quot;GC2&quot;);
+    }
+}
+                                                                                                                                                                                                 
+class TestFinalize{
+                                                                                                                                                                                                     
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO Auto-generated method stub
+        System.out.println(&quot;Invoke TestFinalize finalize method.&quot;);
+    }
+                                                                                                                                                                                                 
+    public TestFinalize(){
+        System.out.println(&quot;Create a new TestFinalize.&quot;);
+    }
+}</pre>
+<p>输出结果 为：</p>
+<pre config="brush:html;toolbar:false;">Create a new TestFinalize.
+GC1
+GC2
+Invoke TestFinalize finalize method.</pre>
+<p>在tf不为null时，使用GC1并没有效果；在将tf置为null之后，调用GC2，JVM调用finalize()方法，从而输出“Invoke TestFinalize finalize method.”。</p>
+<p>讲完了finalize方法，那为什么不要使用它呢？</p>
+<p>在Effective Java中有谈到：</p>
+<blockquote>
+ <p>终结方法（finalize）通常是不可预测的，也是很危险的，一般情况下是不必要的。</p>
+</blockquote>
+<p>finalize方法的<span>缺点：总结起来就有几点：</span><br /></p>
+<ol class="edui-filter-decimal">
+ <li><p><span>不保证及时执行：因为终结方法线程的优先级比其他线程要低得多，所以对象的终结速度赶不上其他线程进入队列的速度。</span></p><p><span></span></p></li>
+ <li><p><span>不保证是否执行：当一个程序终止的时候，某些已经无法访问的对象上的终结方法却根本没有被执行，这是完全有可能的。</span></p><p><span></span></p></li>
+ <li><p><span>如果未被捕获的异常在终结过程中被抛出来，那么这种异常可以被忽略，并且该对象的终结过程也会终止。未被捕获的异常会使对象处于破坏的状态，如果另一个线程企图使用这种被破坏的对象，则可能发生任何不确定的行为。而且，在终结方法中未被捕获的异常不会打印出stacktrace，甚至连警告都不会打印出来。不易发现和调试bug。</span></p><p><span></span></p></li>
+ <li><p><span>使用终结方法会有非常严重的性能损失。Effective Java中提到，作者创建和销毁一个简单对象只需要5.4ns，而增加了终结方法之后，增加到2400ns。性能损失了400多倍。</span></p></li>
+</ol>
+<p><span>因此，不应该以来终结方法来更新重要的持久状态。</span></p>
+<p><span>我对缺点3和4写代码测试了下。对缺点3的测试代码如下：</span></p>
+<p><span></span></p>
+<pre config="brush:html;toolbar:false;">class TestFinalize{
+             
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO Auto-generated method stub
+        System.out.println(&quot;Invoke TestFinalize finalize method.&quot;);
+        throw new IllegalArgumentException(&quot;test throw exception. Arthur&quot;);
+    }
+         
+    public TestFinalize(){
+        System.out.println(&quot;Create a new TestFinalize.&quot;);
+    }
+         
+         
+    public static void main(String[] argv){
+                 
+        TestFinalize tf = new TestFinalize();
+        System.gc();
+                 
+    }
+}</pre>
+<p><span>运行结果如下：</span><br /></p>
+<pre config="brush:html;toolbar:false;">Create a new TestFinalize.</pre>
+<p><span>可以看出，并没有throw IllegalArgumentException。</span><br /></p>
+<p><span>对于缺点4的测试代码如下：</span><br /></p>
+<pre config="brush:html;toolbar:false;">class TestFinalize{
+       
+    public static void main(String[] argv){
+               
+        long startTime = System.nanoTime();
+        TestFinalize tf = new TestFinalize(5);
+        tf = null;
+        long endTime = System.nanoTime();
+        System.out.println(&quot;Cost nanoTime: &quot;+(endTime - startTime)+&quot;ns&quot;);
+    }
+           
+    private int age;
+    public TestFinalize(int age){
+        this.age = age;
+        System.out.println(&quot;Create a new TestFinalize. Age:&quot;+this.age);
+    }
+           
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO Auto-generated method stub
+        System.out.println(&quot;Invoke TestFinalize finalize method.&quot;);
+        throw new IllegalArgumentException(&quot;test throw exception. Arthur&quot;);
+    }
+           
+}</pre>
+<p><span>不过运行代码，在分别对finalize方法进行注释前后，运行结果均和如下差不多：</span></p>
+<pre config="brush:html;toolbar:false;">Create a new TestFinalize. Age:5
+      
+Cost nanoTime: 387059ns</pre>
+<p><span></span></p>
+<p><span>也就是说，注释与否，创建和消除TestFinalize对象消耗的ns数在30w~50w ns之间，偶尔会升到80w左右。因此，此处和书中表述的有出入。书中说是对“简单对象”的创建和消除，难道不是指的这个？【此处存疑】</span></p>
+<p><span>既然finalize方法无法确定回收资源，那么应该怎么办呢？</span><br /></p>
+<p><span>对于这个问题解决办法是：</span></p>
+<p><span>1.对于资源的回收工作放到try-finally块中进行。</span></p>
+<p><span>2.显式地定义结束的方法，如InputStream中的close()方法。</span></p>
+<p><span>不过有个疑问，既然finalize方法这么不好，为什么还要有它呢？其实还是有一定好处的。</span></p>
+<p><span>finalize方法的好处：</span><br /></p>
+<p><span>1.当对象的所有者忘记调用前面建议的显式终止方法时，终结方法（finalize）可以充当“安全网（safety net）”。虽然finalize方法并不保证及时执行，但是迟点总比没有好。即便最后没有执行，情况也不会更坏。</span></p>
+<p><span>2.终结方法的第二种合理用途与对象的本地对等体（native peer）有关。【唔，这个现在还不懂】</span></p>
+<p><span>另外，指的注意的一点是，“终结方法链（finalizer chaining）”并不会被自动执行。如果类（不是Object）有终结方法，子类覆盖了终结方法，子类的终结方法就必须手工调用超类的终结方法。</span></p>
+<p><span>参考资料：</span></p>
+<ol class="edui-filter-decimal">
+ <li><p><span>《Effective Java》</span></p></li>
+ <li><p><span>《Java编程思想》</span></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-20/40053450850#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-20/40053450850">September 20, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-20/40052091669">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=70b742c0-219c-11e3-aee6-782bcb42b082&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'220'(Mars:'128')--><!--Host Name: hy-10-0-0-86.dd.hn-->

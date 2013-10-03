@@ -1,0 +1,165 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>zipf分布、pareto分布和幂律分布_龙珠</title>
+    <meta name="description" content="看文章的时候看到互联网上有些部分符合zipf分布，挺都没听说过，于是查下。查了些资料，发现是哈佛的语言学家zipf在研究语料库的时候发现的，所以也叫齐普夫定律，按照单词在语料库中出现的次数排序，则该单词的排序数与其在语料库中出现频数成反比，或者说，二者乘积为一个常数。其公式为：P(r) = C / r^α这里 r 表示一个单词的出现频率的排名，P(r)表示排名为r的单词的出现频率。单词频率分布中 C约等于0.1, α约等于1。这说明在…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=2c849b50-607e-11e2-b9d3-782bcb32ff27"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">zipf分布、pareto分布和幂律分布</h2>
+                            <div class="entry rich-content"><p>看文章的时候看到互联网上有些部分符合zipf分布，挺都没听说过，于是查下。</p>
+<p>查了些资料，发现是哈佛的语言学家zipf在研究语料库的时候发现的，所以也叫齐普夫定律，按照单词在语料库中出现的次数排序，则该单词的排序数与其在语料库中出现频数成反比，或者说，二者乘积为一个常数。</p>
+<p>其公式为：P(r) = C / r^α</p>
+<p><span>这里 r 表示一个单词的出现频率的排名，P(r)表示排名为r的单词的出现频率。</span><span>单词频率分布中 C约等于0.1, </span>α<span>约等于1。</span></p>
+<p><span>这说明在英语单词中，只有极少部分的词被经常使用，而绝大部分词很少被使用。</span></p>
+<p><span>如果按照出现频率排序，则第二常见的单词出现频率是第一常见单词出现频率的1/2，第三常见单词为第一常见单词出现频率的1/3，第三常见单词为第一常见单词出现频率的1/n。</span></p>
+<blockquote>
+ <p><span>比如，在 Brown 语料库中，“the”是最常见的单词，它在这个语料库中出现了大约7%（100万单词中出现69971次）。正如齐夫定律中所描述的一样，出现次数为第二位的单词“of”占了整个语料库中的3.5%（36411次），之后的是“and”（28852次）。仅仅135个字汇就占了Brown 语料库的一半。</span></p>
+</blockquote>
+<p><span>这样延伸出来，就是常见的“80/20法则”。80%的资源掌握在20%的人手里。前20%的单词出现频率占所有单词的80%。</span></p>
+<p><span>查资料发现，<strong>长尾分布就是齐普夫定律</strong>。</span></p>
+<p>长尾分布在生活中应用的例子太多，比如，下载网络音乐，热门歌曲占据了绝大部分的下载量，冷门歌曲下载虽少，但下载曲线并不是迅速下降为零，而是比较稳定的维持在一定的水平上。也就是说，长尾虽然小，但稳定、持久、并不为零，这样下来，其销量（曲线轮廓所包围的面积）并不小。长尾理论也是利用这样的特性而提出的。</p>
+<p>这样有两个问题，一是什么样的分布是迅速降为零的？二是，长尾分布什么时候会出现。</p>
+<p>问题一比较好回答，在zipf分布中，提高α即可使分布迅速降低为零。或者有其他方法构造分布函数也可以。</p>
+<p>对于问题二而言，查到的文章里大部分只讲了分布是什么、公式是什么、应用到什么情景（如歌曲或软件的下载、语料库中的统计、国家GDP或个人收入分布），但对于所应用的情景却没有抽象出一个共同的特点。</p>
+<p>不过在文章<a href="http://wenku.baidu.com/view/0ff42125a5e9856a561260c8.html" target="_blank" title="长尾分布、幂律的产生机制和西蒙模型">长尾分布、幂律的产生机制和西蒙模型</a>中提到：<br /></p>
+<blockquote>
+ <p>长尾分布是由选择来源的丰富性（如大量供下载的曲目）造成的。一旦多样性选择需求不再因为来源匮乏而受到限制，长尾现象便会自然发生。<br /></p>
+</blockquote>
+<p><span>也就是说，必须来源丰富到所有需求不因来源匮乏而不被满足，这时就符合长尾分布。即：<strong>人得需求是符合长尾分布的</strong>（对热门东西的需求占据大部分，但还有持续不为零的小众需求），但这种需求，在资源不够丰富、匮乏时会受到限制，从而使长尾曲线受到遏制。直到来源丰富，选择被放开，才会将长尾分布的需求表现出来。</span></p>
+<p><span>另外，上面提到的“80/20法则”是<span>Pareto提出来的，也有以他名字命名的分布。</span></span></p>
+<blockquote>
+ <p><span>19世纪的意大利经济学家Pareto研究了个人收入的统计分布，发现少数人的收入要远多于大多数人的收入，提出了著名的80/20法则，即20%的人口占据了80%的社会财富。个人收入X不小于某个特定值x的概率与x的常数次幂亦存在简单的反比关系：P[X≥k]～x^(-k)，上式即为Pareto定律。<br /></span></p>
+</blockquote>
+<p><span>在我看来，这就是zipf分布的推广，相当于对zipf分布曲线面积进行积分。<br /></span></p>
+<p><span>而zipf分布和pareto分布，两者又都是幂律分布。</span></p>
+<blockquote>
+ <p><span>Zipf定律与Pareto定律都是简单的幂函数，我们称之为幂律分布；还有其它形式的幂律分布，像名次——规模分布、规模——概率分布，其通式可写成y=c*x^(-r)，其中x，y是正的随机变量，c，r均为大于零的常数。这种分布的共性是绝大多数事件的规模很小，而只有少数事件的规模相当大。</span></p>
+ <p><span>对上式两边取对数，可知lny与lnx满足线性关系，也即在双对数坐标下，幂律分布表现为一条斜率为幂指数的负数的直线，这一线性关系是判断给定的实例中随机变量是否满足幂律的依据。<br /></span></p>
+</blockquote>
+<p><span><br /></span></p>
+<p><span>参考资料：</span></p>
+<p><span>1. <a href="http://www.360doc.com/content/10/0811/00/84590_45147637.shtml#" target="_blank" title="幂律分布和Zipf定律">幂律分布和Zipf定律</a><span></span><br /></span></p>
+<p><span><span>2. <a href="http://wenku.baidu.com/view/0ff42125a5e9856a561260c8.html" target="_blank" title="长尾分布、幂律的产生机制和西蒙模型">长尾分布、幂律的产生机制和西蒙模型</a></span></span></p>
+<p><span><span>3. <a href="http://blog.sina.com.cn/s/blog_5caa94a001014x42.html" target="_blank" title="常见的数据分布（正态分布，ZIPF分布，偏态分布）">常见的数据分布（正态分布，ZIPF分布，偏态分布）</a></span></span></p>
+<p><span><span>4. <a href="http://zh.wikipedia.org/wiki/%E9%BD%8A%E5%A4%AB%E5%AE%9A%E5%BE%8B" target="_blank" title="齐夫定律">齐夫定律</a><span></span></span></span></p>
+<p><span><span><span>5. <a href="http://baike.baidu.com/view/1519158.htm" target="_blank" title="Zipf定律">Zipf定律</a></span></span></span></p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-01-17/40047432501#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-01-17/40047432501">January 17, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-01-19/40047733081">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-01-16/40047970563">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=2c849b50-607e-11e2-b9d3-782bcb32ff27&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'247'(Mars:'126')--><!--Host Name: db13.dd.hn-->

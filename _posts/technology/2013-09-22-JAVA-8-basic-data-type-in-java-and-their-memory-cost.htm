@@ -1,0 +1,243 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>Java：8种基本数据类型及其所占内存字节数_龙珠</title>
+    <meta name="description" content="内存中最基本的是二进制位，也就是比特（bit）。一个基本的数据单位是字节（byte），1byte = 8bit。注意：字节是内存最小寻址单位！Java中有8种基本的数据类型，分别是：逻辑：boolean；整数：byte、short、int、long；字符：char；浮点：float、double。八种数据类型所占用的内存大小（字节）分别为：逻辑：boolean；整数：byte-1、short-2、int-4、long-8；字符：char-2；浮点：float-4、double-8。咦，可以看出来，只有boolean是…" />
+    <meta name="keywords" content="Java" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=07514ad0-232f-11e3-897f-d4ae52a7bec4"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">Java：8种基本数据类型及其所占内存字节数</h2>
+                            <div class="entry rich-content"><p>内存中最基本的是二进制位，也就是<span>比特（</span>bit）。一个基本的数据单位是字节（byte），1byte = 8bit。注意：字节是内存最小寻址单位！</p>
+<p>Java中有8种基本的数据类型，分别是：</p>
+<p>逻辑：boolean；</p>
+<p>整数：byte、short、int、long；</p>
+<p>字符：char；</p>
+<p>浮点：float、double。</p>
+<p>八种数据类型所占用的内存大小（字节）分别为：</p>
+<p>逻辑：boolean；</p>
+<p>整数：byte-1、short-2、int-4、long-8；</p>
+<p>字符：char-2；</p>
+<p>浮点：float-4、double-8。</p>
+<p>咦，可以看出来，只有boolean是没有说明的。那boolean是有多大呢？</p>
+<p>查了一下，貌似这个问题还是个坑。在<a href="http://bbs.csdn.net/topics/190122943" target="_blank" title="java中的 boolean 在内存中占多少字节？">java中的 boolean 在内存中占多少字节？</a>中讨论跟帖了好多。</p>
+<p>boolean用true或false表示的是1bit的信息，这一点想必是没有问题的。</p>
+<p>对于1bit的信息，理论上只需要占用1个bit位就可以表示了。但是，实际中是否真的占用1个bit位呢？之前的贴子里有说占1byte（8bit）的，使用最低位表示，其余为0；有说用int表示的。还有或用1bit表示的（这个应该就不对了，Java中字节是最小内存寻址单位）。</p>
+<p>在Java的官方文档<a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" target="_blank" title="Primitive Data Types">Primitive Data Types</a>里，对boolean的描述如下：</p>
+<blockquote>
+ <p>boolean: The boolean data type has only two possible values: true and false. Use this data type for simple flags that track true/false conditions. This data type represents one bit of information, but its &quot;size&quot; isn't something that's precisely defined.<br /></p>
+</blockquote>
+<p>可以看出，文中对int、char等的描述中都说明了占用字节数，唯独对boolean的描述中只是说，代表1bit的信息，但（内存）“大小”并没有精确定义。</p>
+<p>猜测这是需要JVM自己定义优化 。</p>
+<p>在stackoverflow上也有讨论的帖子<a href="http://stackoverflow.com/questions/383551/what-is-the-size-of-a-boolean-variable-in-java" target="_blank" title="What is the size of a boolean variable in java?">What is the size of a boolean variable in java?</a>，排在第一位的答案就一句话：</p>
+<blockquote>
+ <p>Its virtual machine dependent.<br /></p>
+</blockquote>
+<p>另一个投票很多的答案写了代码来测试，如下：</p>
+<pre config="brush:html;toolbar:false;">class LotsOfBooleans
+{
+    boolean a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, aa, ab, ac, ad, ae, af;
+    boolean b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bb, bc, bd, be, bf;
+    boolean c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, ca, cb, cc, cd, ce, cf;
+    boolean d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, da, db, dc, dd, de, df;
+    boolean e0, e1, e2, e3, e4, e5, e6, e7, e8, e9, ea, eb, ec, ed, ee, ef;
+}
+                                           
+class LotsOfInts
+{
+    int a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, aa, ab, ac, ad, ae, af;
+    int b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, ba, bb, bc, bd, be, bf;
+    int c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, ca, cb, cc, cd, ce, cf;
+    int d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, da, db, dc, dd, de, df;
+    int e0, e1, e2, e3, e4, e5, e6, e7, e8, e9, ea, eb, ec, ed, ee, ef;
+}
+                                           
+                                           
+public class Test
+{
+    private static final int SIZE = 1000000;
+                                           
+    public static void main(String[] args) throws Exception
+    {        
+        LotsOfBooleans[] first = new LotsOfBooleans[SIZE];
+        LotsOfInts[] second = new LotsOfInts[SIZE];
+                                           
+        System.gc();
+        long startMem = getMemory();
+                                           
+        for (int i=0; i &lt; SIZE; i++)
+        {
+            first[i] = new LotsOfBooleans();
+        }
+                                           
+        System.gc();
+        long endMem = getMemory();
+                                           
+        System.out.println (&quot;Size for LotsOfBooleans: &quot; + (endMem-startMem));
+        System.out.println (&quot;Average size: &quot; + ((endMem-startMem) / ((double)SIZE)));
+                                           
+        System.gc();
+        startMem = getMemory();
+        for (int i=0; i &lt; SIZE; i++)
+        {
+            second[i] = new LotsOfInts();
+        }
+        System.gc();
+        endMem = getMemory();
+                                           
+        System.out.println (&quot;Size for LotsOfInts: &quot; + (endMem-startMem));
+        System.out.println (&quot;Average size: &quot; + ((endMem-startMem) / ((double)SIZE)));
+                                           
+        // Make sure nothing gets collected
+        long total = 0;
+        for (int i=0; i &lt; SIZE; i++)
+        {
+            total += (first[i].a0 ? 1 : 0) + second[i].a0;
+        }
+        System.out.println(total);
+    }
+                                           
+    private static long getMemory()
+    {
+        Runtime runtime = Runtime.getRuntime();
+        return runtime.totalMemory() - runtime.freeMemory();
+    }
+}</pre>
+<p>运行结果是：</p>
+<pre config="brush:html;toolbar:false;">Size for LotsOfBooleans: 87978576
+Average size: 87.978576
+Size for LotsOfInts: 328000000
+Average size: 328.0</pre>
+<p>我之前使用过runtime.totalMemory() - runtime.freeMemory()来计算内存，不过感觉不太靠谱。因为分配的mem是根据需要变动的。不过看这个结果，在大量数据的时候还是可以的。</p>
+<p>代码中的数组是80个，所以平均下来Boolean是1byte，Int是4byte。</p>
+<p>不过也有人说在JVM中，boolean和boolean[]的处理是不一样的。正好有本《Java虚拟机规范（Java SE 7）》，查阅了下boolean章节如下：</p>
+<blockquote>
+ <p>虽然Java虚拟机定义了boolean这种数据类型， 只对它提供了非常有限的支持。在Java虚拟机中没有任何提供boolean值专用的字节码指令，在Java语言之中设及到boolean类型值的运算，在编译之后都使用Java虚拟机中的int数据类型来代替。</p>
+ <p>Java虚拟机直接支持boolean类型的数组，虚拟机的newarray指令可以创建这种数组。boolean的数组类型的访问与修改公用byte类型数组的baload和bastore指令。</p>
+</blockquote>
+<p>这样一来，就比较明确了：</p>
+<p><strong>JVM中，对boolean的支持有限，所以是按照int处理的；对boolean数组是直接支持的，按照byte数组处理。</strong></p>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://blog.csdn.net/tianmeng126/article/details/7889134" target="_blank" title="JAVA 8种基本类型所占内存分析">JAVA 8种基本类型所占内存分析</a><br /></p></li>
+ <li><p><a href="http://bbs.csdn.net/topics/190122943" target="_blank" title="java中的 boolean 在内存中占多少字节？">java中的 boolean 在内存中占多少字节？</a></p></li>
+ <li><p><a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html" target="_blank" title="Primitive Data Types">Primitive Data Types</a></p></li>
+ <li><p><a href="http://stackoverflow.com/questions/383551/what-is-the-size-of-a-boolean-variable-in-java" target="_blank" title="What is the size of a boolean variable in java?">What is the size of a boolean variable in java?</a></p></li>
+ <li><p><span>《Java虚拟机规范（Java SE 7）》</span></p><p><span></span></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-09-22/40053863587#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-09-22/40053863587">September 22, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-09-21/40053511172">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=07514ad0-232f-11e3-897f-d4ae52a7bec4&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'189'(Mars:'65')--><!--Host Name: web01.dd.hn-->

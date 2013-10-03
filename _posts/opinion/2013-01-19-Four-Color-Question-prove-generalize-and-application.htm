@@ -1,0 +1,154 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>四色问题：证明、推广和应用_龙珠</title>
+    <meta name="description" content="查六度空间理论资料的时候，总看到说和四色问题很相似，但后者可以在数学上证明。之前也只知道结论，顺便查下，看看数学上是怎么证明的，同时也弄明白几个疑问。地图四色定理(Four color theorem)最先是由一位叫古德里（Francis Guthrie）的英国大学生提出来的。四色问题的内容是：“任何一张地图只用四种颜色就能使具有共同边界的国家着上不同的颜色。”百科上介绍，为了解决这个问题，刺激了图论和拓扑学的发展。这个问题还是很…" />
+    <meta name="keywords" content="文字" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=9b74c170-621d-11e2-b0f7-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">四色问题：证明、推广和应用</h2>
+                            <div class="entry rich-content"><p>查六度空间理论资料的时候，总看到说和四色问题很相似，但后者可以在数学上证明。之前也只知道结论，顺便查下，看看数学上是怎么证明的，同时也弄明白几个疑问。</p>
+<blockquote>
+ <p>地图四色定理(Four color theorem)最先是由一位叫古德里（Francis Guthrie）的英国大学生提出来的。四色问题的内容是：“任何一张地图只用四种颜色就能使具有共同边界的国家着上不同的颜色。”<br /></p>
+</blockquote>
+<p>百科上介绍，为了解决这个问题，刺激了图论和拓扑学的发展。这个问题还是很牛的，可即便如此，到如今还<strong>只有哈肯与阿佩尔在计算机上证明，而没有简洁的书面证明</strong>。</p>
+<p><a href="http://baike.baidu.com/view/41881.htm" target="_blank" title="拓扑学">拓扑学</a>的百度百科中有简易的四色定理证明，但并不严密。</p>
+<ul class="edui-filter-disc">
+ <li><p>“二维组合”中，只有证明至少需要四种颜色，而四色定理应该还包括“只需要四种颜色”。</p></li>
+ <li><p>不过，在“三位扩展”中，有提到“在三维空间上，根据七色环面 ，可以构造一个空间的划分，使得至少需要七种颜色才可以完全分割。”<br /></p></li>
+</ul>
+<p>Matrix67在<a href="http://www.matrix67.com/blog/archives/890" target="_blank" title="经典证明：环面上的七色定理">经典证明：环面上的七色定理</a>中有七色定理的证明，是四色定理从<strong>二维空间</strong>推广到<strong>环面</strong>上。</p>
+<p>那将推广到<strong>三维空间</strong>中呢？</p>
+<p>应该是无解的。因为在三维空间中，任意N个点是可以两两相连的。<a href="http://zhidao.baidu.com/question/213522083.html" target="_blank" title="四色定理拓展到三维的话是几色？">四色定理拓展到三维的话是几色？</a>里面用章鱼解释的很形象。</p>
+<p>更高维度也是如此。</p>
+<p>对于四色定理的应用，有效地设计航空班机日程表，设计计算机的编码程序上都起到了推动作用。而对于互联网，目前还没想到有什么可以应用的地方。不过，排课程表的时候可以用到吗？貌似不是很相关，除非要给课程表的框框里涂色。。</p>
+<p>四色定理也有局限性。</p>
+<blockquote>
+ <p>虽然四色定理证明了任何地图可以只用四个颜色着色，但是这个结论对于现实上的应用却相当有限。现实中的地图常会出现飞地，即两个不连通的区域属于同一个国家的情况（例如美国的阿拉斯加州），而制作地图时我们仍会要求这两个区域被涂上同样的颜色，在这种情况下，四个颜色将会是不够用的。</p>
+</blockquote>
+<p>参考资料：</p>
+<ol class="edui-filter-decimal">
+ <li><p><a href="http://baike.baidu.com/view/6807.htm" target="_blank" title="四色定理">四色定理</a></p></li>
+ <li><p><a href="http://baike.baidu.com/view/41881.htm" target="_blank" title="拓扑学">拓扑学</a></p></li>
+ <li><p><a href="http://baike.baidu.com/view/79350.htm" target="_blank" title="图论">图论</a></p></li>
+ <li><p><a href="http://www.matrix67.com/blog/archives/890" target="_blank" title="经典证明：环面上的七色定理">经典证明：环面上的七色定理</a><br /></p></li>
+</ol></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-01-19/40047523894#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-01-19/40047523894">January 19, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-02-13/40049408288">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-01-19/40047733081">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=9b74c170-621d-11e2-b0f7-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'164'(Mars:'63')--><!--Host Name: hy-10-0-0-92.dd.hn-->

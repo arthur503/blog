@@ -1,0 +1,161 @@
+<!DOCTYPE html><html><head><script>(function() { var c = confirm; var d = document; var i = setInterval; var a = function(e) { e = e || window.event; var t = e.target || e.srcElement; if (t.type == 'password') { if (c('警告：请不要在 http://www.diandian.com 以外的地方输入你的点点密码！\x0a\x0a点点是不会要求你从用户博客登录的，这很可能是一个窃取密码的钓鱼表单。\x0a\x0a你确定要继续下去么？')) { a = function() {}; } else { t.value = ""; return false; } } }; i(function() { if (d.addEventListener) { d.addEventListener('keypress', a, false) } else if (d.attachEvent) { d.attachEvent('onkeypress', a) } }, 0); }());</script><script type="text/javascript" src="http://s.libdd.com/package/theme/tools.$6918.js"></script>
+    <meta charset="utf-8" />
+    <title>对“什么叫产品级别的问题”的回答【存疑】_龙珠</title>
+    <meta name="description" content="前两天分享的“什么叫产品级别的问题”，不忘来着，这两天先查一两篇资料看。原文如下：什么叫产品级别的问题来源： 黎竹岩的日志上大学时受环境影响，只管研究算法研究数据结构叫“做技术”，出门了发现大把的研发类问题光靠技术根本撬不动，因为想要给出答案不光得懂怎么实现，还得知道要实现成什么样、为什么得是这样；举几个例子，谁能告诉我为什么：1.为什么google.com的搜索结果点完了之后在当前页面打开，baidu.com点完…" />
+    <meta name="keywords" content="产品经理" />
+    <link href="http://ouscn.diandian.com/rss" rel="alternate" title="订阅龙珠" type="application/rss+xml" />
+    <link rel="shortcut icon" type="image/jpeg" href="http://m3.img.libdd.com/farm3/105/A6894D41DC9437349388295974940969_16_16.jpg" />
+    <link rel="apple-touch-icon" href="http://m2.img.libdd.com/farm3/4/DF8EEBA1B450DE8F288BA821E67D8904_128_128.jpg" />
+    <link rel="stylesheet" href="http://t.libdd.com/css/base/rich-content.css" />
+    <link rel="stylesheet" href="http://x.libdd.com/farm1/90ecce/caa101be/4ABED.css" />
+    <style type="text/css">
+        
+        
+        
+        .container {
+            width:500px;
+        }
+        
+
+        
+    </style>
+    <link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shCore.css?v=1" rel="stylesheet" type="text/css" /><link href="http://t.libdd.com/js/libs/syntaxhighlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://t.libdd.com/js/libs/syntaxhighlighter/package.js?v=3"></script>
+</head>
+<body><iframe width="630" scrolling="no" height="26" allowtransparency="true" frameborder="0" id="diandian_controls" style="position: fixed; _position: absolute; z-index: 65535; top: 5px; right: 5px; border: 0px none; background-color: transparent; overflow: hidden;" src="http://www.diandian.com/n/common/toolbar2/ouscn?feedId=c7da15e0-fc5e-11e2-9690-90b11c0ed01e"></iframe>
+    <div class="container">
+        <div class="header">
+            <h1 class="title"><a href="http://ouscn.diandian.com">龙珠</a></h1>
+            <div class="description">修炼自己与发现世界</div>
+        </div>
+        
+            <div class="posts">
+            
+                <div class="post post-text">
+                    
+                        
+                        
+                            <h2 class="title">对“什么叫产品级别的问题”的回答【存疑】</h2>
+                            <div class="entry rich-content"><p>前两天分享的“什么叫产品级别的问题”，不忘来着，这两天先查一两篇资料看。</p>
+<p>原文如下：</p>
+<p><strong>什么叫产品级别的问题</strong>来源： <a href="http://blog.renren.com/GetEntry.do?id=502869219&amp;owner=220869988" target="_blank" class="edui-filter-decoration-none">黎竹岩的日志</a></p>
+<p>上大学时受环境影响，只管研究算法研究数据结构叫“做技术”，出门了发现大把的研发类问题光靠技术根本撬不动，因为想要给出答案不光得懂怎么实现，还得知道要实现成什么样、为什么得是这样；举几个例子，谁能告诉我为什么：</p>
+<p>1.为什么google.com的搜索结果点完了之后在当前页面打开，baidu.com点完了在新页面打开；让他们俩换一下行不行？</p>
+<p>2.为什么微博发言字数要限定在140个，100个或者200个行不行？为什么短信发言字数要限定在70个，道理跟微博一样么？</p>
+<p>３.为什么亚洲的搜索引擎通常会在主页上摆不少东西，看起来长的更像个门户？（看看yahoo.co.jp、naver.com）都换成google那样的一个框行不行？</p>
+<p>4.为什么百度搜索框上的tab排序非得是新闻、网页、贴吧、知道、mp3..；把顺序换换行不行？如果你说这是按流量排的序，那你觉着贴吧跟新闻哪个流量大？知道跟图片哪个流量大？</p>
+<p>5.为什么每页搜索结果默认是10条？默认15条、20条会对用户产生什么影响？</p>
+<p>&nbsp;</p>
+<p>别小看这些问题，有经验的研发工程师都在意这些问题，对互联网历史有所了解的人也都知道仅把“digg”从点击两下改成点击一下就促成了这个站点的爆发式增长。我的发言要点在于，希望研究这类问题的人能够再多一点，再多一点。</p>
+<p>==============</p>
+<p>首先感谢马童鞋的解答，如下：</p>
+<p>我假装来说说我的感受哈，整体来说这几个问题都是要经过大量的用户体验和数据支持做出来的。</p>
+<p>1.Google和百度那个，我觉得好像不只是这两家网站，美国的网站大多数都是在原页面上打开，中国的都是新页面。两个各有利弊，原页面打开容易不小心关掉就再也找不到了，新页面打开太多会太乱。</p>
+<p>2.短信的道理显然和微博不一样。短信是要收费的，发多了可以多收钱。就像是发100字的人不想付和发200字的人一样的钱，这也是心理学，让大家都心理平衡一点。其实对电信公司肯定没影响的。微博我觉得大概是做过一点点科学研究，他追求的是短小快速。不过我个人觉得140字太少了。</p>
+<p>3.我觉得还是只摆个框好。</p>
+<p>4.排序这个，我觉得差不多是按搜索排序的，新闻在贴吧前只是一点习惯：庄重一点的在娱乐的前面。少用的都hide掉，蛮好。位置弄好了就尽量不要换，因为用户有习惯性问题，找不到了就是个失败的网站设计。</p>
+<p>5.搜索结果默认10条？这个我觉得和字体大小可读性神马的相关，肯定也做过survey研究的。不过有些网站可以设，有些我设为50条。我觉得这些课程未来会在国内的Computer Science这类专业里面设。</p>
+<p>=================</p>
+<p>能这样交流实在太好了，校内上没有这样有质量的交流才是失去吸引力的主要原因。</p>
+<p>我也来说说我的感受，只说感受，没有数据支持。</p>
+<p>1.现在使用的谷歌.hk是在新页面打开，之前使用.com的时候貌似是在原页面打开，但记不太清了。确实各有利弊，我个人而言，查询结果喜欢一下子打开好几个网页，对比着看。想一下原因，主要在于一般第一项搜索结果满足不了我的搜索需要，所以需要多开几个对比（同时也减少加载页面时间）。再往深究一点，就是还是检索结果不完全满足用户需要，尤其是第一项结果。而这个的原因，个人猜测原因有二：一是搜索技术。由于语法结构、语言歧义性、检索技术等原因，英文检索比中文成熟，检索结果也更精确。所以美国网站搜索结果在原页面打开即可满足用户检索需求。二是公司价值观。谷歌页面有“i'm feeling lucky&quot;按钮直达搜索结果第一条，百度则没有。这是因为谷歌目标在于为用户提供价值，百度的竞价排名系统则需要向用户展现更多的搜索结果才行，如果只展示第一条，那后面的竞价就没有了（身为谷歌脑残粉，欢迎吐槽）。百度后来听说的框计算，有一定这样的性质，但没有改变根本的搜索结果排名，所以作用有限。而所说的”美国网站大多数在原页面打开“，感觉和单纯比较谷歌和百度又不一样，可以讨论到商业合作文化上去。美国商业文化里考虑更多的是win-win合作共赢，搜索引擎就只做搜索，把用户导入到最有价值的网站上去，搜索引擎只做用户和网站之间的道路引导员的作用。其他网站也是一样，做价值，用户自然就会来。而国内的人人都要抓流量，有流量才能投广告，才能变现，所有恨不得把所有用户都留下，所以自然不能轻易把自己的页面关闭。</p>
+<p>2.微博发言140字，这个是跟twitter限制140字符来的。至于twitter限制如何来，查了一下资料，是因为创始人最开始做twitter的时候，希望能使用户可以通过SMS短信来接发twitter。而美国的SMS限制是160字符，twitter保留20个字符用来做用户名，其余用来写twitter。如下：</p>
+<p>We like to keep it short and sweet! It also just so happens that 140 characters is the perfect length for sending status updates via text message.<strong> </strong>The standard text message length in most places is 160 characters per message. We reserve 20 characters for people’s names, and the other 140 are all yours! (via <a href="http://rrurl.cn/4y47nD" target="_blank" class="edui-filter-decoration-none">Twitter FAQ</a>)</p>
+<p>关于短信70字限制，知乎上（<a href="http://rrurl.cn/lzBi5C" class="edui-filter-decoration-none">http://www.zhihu.com/question/19589598</a>）Rio有回答，如下：</p>
+<p>短信是通过移动电话系统的信号控制链路在其空闲的时候传输的，控制连路只允许少量数据进行传输。早期 GSM 标准只允许 128 字节的短信长度，后来这个长度被提升到 140 字节 [1]。<br /><br />常用的简体中文汉字编码（如 GB2312、GBK）每个汉字需要两个字节，因此一条短信中可以容纳 140 &divide; 2 = 70 汉字。如果使用纯英文的 ASCII 编码，每个字符只需要 7 个比特，因此 140 字节可以容纳 160 个 ASCII 字符。</p>
+<p>应该算比较追根溯源了，再往下就要看控制链路部分了。</p>
+<p>3.这个还没有形成观点。国内的网站，最开始做起来的一批如新浪、搜狐一类，应该都是门户类信息网站。而我印象中yahoo这样的国外网站，也是偏重门户，搜索只是其中的一个部分，而不是作为核心功能。貌似google最开始做出来的时候是想要卖个yahoo的，或者是向yahoo提供搜索服务的，之后才单独出来做搜索。网络发展的第一代是门户，第二代是搜索，第三代是社交。个人感觉，是不是亚洲地区没有一个类似google这样的革命性的公司来做第一代和第二代的明显的分界线，因此从用户习惯考虑还需要门户和搜索结合不分离。都换成一个框，google可以，因为他只做搜索业务，yahoo这样的就不行，因为他的核心不是搜索，或者不止是搜索。</p>
+<p>4.这个确实不知道为何这样排序。从中国web信息博物馆查到百度之前的网页页面快照（http://www.infomall.cn/cgi-bin/arcv/*/http://www.baidu.com/），可以看出，从2003年底，“新闻、网页、贴吧、知道、mp3...”这几项排序就基本定型了（当时百度知道还没有），之后虽然偶有修改，但基本不变。这个只能从用户习惯上来解释，但说服力并不是特别足够。而且，从最开始就有个情况：“新闻”排序第一，但默认项为“网页”。为何不把“网页”排第一？<strong>疑惑。</strong></p>
+<p>5.搜索结果显示越多，并不见得越准确。结果太少，会导致搜索结果不全，用户需要不断点击下一页翻找搜索信息，降低用户体验。而结果太多易导致：1.加载慢，耗服务器资源大。2.用户觉得页面纷乱，太长。这个数目的设计，要考虑到：1.用户在想要查找搜索结果的前提下，向下滑动几屏之后，易失去耐心。（想到前一段时间，非你莫属上某淘宝卖家应聘，质问聚美优品的屏幕数的视频）；2.统计用户搜索时点击前n条结果的概率。超过某一阈值即可。其实，如果搜索能更智能，更精准的话（如加入用户自身信息（年龄，性别，身高，情感状况等）、用户位置信息（LBS）、用户之前的搜索信息（如之前搜“电脑 淘宝”，则之后搜“键盘”的时候，可以把“淘宝”作为隐形关键词加权提高排名）等），则需要的n的数目可以更少。不过，鉴于语言的多义性和用户表达不完整，这个n肯定不会一直减少，会有一个大于一的值来做无限接近。至于是多少，就需要考虑信息论来量化了。</p>
+<p><br /></p>
+<p>以上想法猜测为主，例证也没有确认核实，欢迎吐槽，更欢迎讨论。</p></div>
+                        
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="bottom-meta clearfix">
+                        
+                        <a href="http://arthur503.diandian.com" target="_blank">果果</a> / 
+                        <a href="http://ouscn.diandian.com/post/2013-08-04/40052731836#notes" class="notes">热度</a> /
+                        <a href="http://ouscn.diandian.com/post/2013-08-04/40052731836">August 04, 2013</a>
+                    </div>
+                </div>
+                
+                    
+                        
+                        <div class="author clearfix">
+                            <a href="http://arthur503.diandian.com" class="avatar" target="_blank"><img src="http://m3.img.libdd.com/farm3/14/51DAB38A906F235A6BCCB1ACA027A30E_64_64.jpg" alt="果果" /></a>
+                            <h4 class="name"><a href="http://arthur503.diandian.com" target="_blank">果果</a></h4>
+                            <div class="description"></div>
+                        </div>
+                        
+                    
+                
+            
+            </div>
+            
+                <div class="pagination clearfix">
+                    
+                        <a class="prev" href="http://ouscn.diandian.com/post/2013-08-10/40053450235">&laquo; 上一篇</a>
+                    
+                    
+                        <a class="next" href="http://ouscn.diandian.com/post/2013-08-03/40053239165">下一篇 &raquo;</a>
+                    
+                </div>
+            
+            
+                
+                    
+                        
+                            
+                        
+                        
+                        <div class="notes" id="notes"><iframe id="diandian_comments" frameborder="0" scrolling="no" allowtransparency="true" height="0" width="500" src="http://www.diandian.com/n/common/comment?feedId=c7da15e0-fc5e-11e2-9690-90b11c0ed01e&amp;notesTextColor=&amp;notesLinkColor=&amp;notesBlockQuoteColor=&amp;notesBlockBgColor=&amp;notesBlockBorderColor=&amp;notesBlockBgOpacity=&amp;notesOperationLinkColor=&amp;notesEnableBorderRadius=&amp;notesIframeId="></iframe></div>
+                    
+                
+            
+        
+        
+
+        
+        
+
+        <div class="links">
+            <a href="http://ouscn.diandian.com/inbox">私信</a> / 
+            
+            <a href="http://ouscn.diandian.com/archive">存档</a>
+            
+        </div>
+
+        <div class="footer">
+            &copy; <a href="http://ouscn.diandian.com">龙珠</a>. Powered by <a href="http://www.diandian.com" target="_blank">点点</a>. Designed by <a href="http://zhaolei.diandian.com" target="_blank">Lei</a>
+        </div>
+    </div>
+
+<iframe src="http://acl.a.libdd.com/acl.html?2" width="0" height="0" frameborder="0"></iframe><script type="text/javascript">
+
+  var _ddgaq = _ddgaq || [];
+  _ddgaq.push(['DDGAT._setAccount', 'UA-30555696-1']);
+  _ddgaq.push(['DDGAT._setDomainName', '.diandian.com']);
+
+_ddgaq.push(['DDGAT._setAllowLinker', true]);
+  _ddgaq.push(['DDGAT._addOrganic', 'baidu', 'word']);
+  _ddgaq.push(['DDGAT._addOrganic', 'soso', 'w']);
+  _ddgaq.push(['DDGAT._addOrganic', 'youdao', 'q']);
+  _ddgaq.push(['DDGAT._addOrganic', 'sogou', 'query']);
+  _ddgaq.push(['DDGAT._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://s.libdd.com/js/base/ga.$5928.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body></html><!--RenderTime:'229'(Mars:'127')--><!--Host Name: web01.dd.hn-->
