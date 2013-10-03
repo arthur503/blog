@@ -42,9 +42,12 @@ Java基础问题，subString方法，很简单，但用错了好几次，能说�
 	            new String(offset + beginIndex, endIndex - beginIndex, value);
 	    }
 
-源码中，写的很明白，substring(int beginIndex, int endIndex)方法返回的子字符串的起始位置为beginIndex，结束位置为endIndex-1（注意：不是endIndex！）。也就是说，对于一个String，其下角标范围是[0, string.length()-1]，但是如果想要返回整个字符串作为子串，那么使用subString方法应为：subString(0, string.length())，而不是subString(0, string.length()-1)！
+源码中，写的很明白，substring(int beginIndex, int endIndex)方法返回的子字符串的起始位置为beginIndex，结束位置为endIndex-1（注意：不是endIndex！）。
 
-因此，使用substring(int beginIndex, int endIndex)方法*返回子字符串的默认下角标范围为[beginIndex, endIndex-1]*，这样，子字符串长度即为：endIndex - beginIndex。
+也就是说，对于一个String，其下角标范围是\[0, string.length()-1\]，但是如果想要返回整个字符串作为子串，那么使用subString方法应为：subString(0, string.length())，而不是subString(0, string.length()-1)！
+
+因此，使用substring(int beginIndex, int endIndex)方法返回子字符串的默认下角标范围为\[beginIndex, endIndex-1\]，这样，子字符串长度即为：endIndex - beginIndex。
 
 参考资料：
-* JDK 1.6 - String.java
+
+*	JDK 1.6 - String.java
