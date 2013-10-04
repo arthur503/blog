@@ -26,7 +26,7 @@ title: 统计学习方法学习笔记-CH2：感知机【存疑】
 
 1. 原始形式
 
-感知机学习算法是误分类驱动的，具体采用的是梯度下降法。首先选取任一个超平面w<sub>0</sub>,b<sub>0</sub>，然后用梯度下降法不断的极小化损失函数。极小化过程中，不是一次使M中所有误分类点的梯度下降，而是一次随即选取一个误分类点使其梯度下降。
+感知机学习算法是误分类驱动的，具体采用的是梯度下降法。首先选取任一个超平面w<sub>0</sub>,b<sub>0</sub>，然后用梯度下降法不断的极小化损失函数。极小化过程中，不是一次使M中所有误分类点的梯度下降，而是一次随机选取一个误分类点使其梯度下降。
 
 算法步骤：
 
@@ -64,7 +64,7 @@ title: 统计学习方法学习笔记-CH2：感知机【存疑】
 
 
 五、思维导图
-<img src="arthur503.github.io/blog/assets/pic/201310/2013-10-04-Statistical-Methods-ch2-perceptron.png">
+<img src="http://arthur503.github.io/blog/assets/pic/201310/2013-10-04-Statistical-Methods-ch2-perceptron.png">
 
 参考资料：
 

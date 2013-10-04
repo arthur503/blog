@@ -153,7 +153,7 @@ title: 统计学习方法学习笔记-附录：最优化方法、线性规划和
 与线性规划相比，非线性规划还没有适用于各种问题的一般算法，各种算法都有自己特定的适用范围。唔，竟然是还没有通用解法，还是有待学习啊。
 
 最后，附上思维导图：
-<img src="arthur503.github.io/blog/assets/pic/201310/2013-10-04-Statistical-Methods-appendix-optimization-problem.png">
+<img src="http://arthur503.github.io/blog/assets/pic/201310/2013-10-04-Statistical-Methods-appendix-optimization-problem.png">
 
 参考资料：
 
