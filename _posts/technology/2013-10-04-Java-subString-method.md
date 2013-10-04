@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Java：subString方法
+title: Java基础：subString方法
 ---
 Java基础问题，subString方法，很简单，但用错了好几次，能说第一次TB面试的时候这么简单的题都做错了么（T_T!）。问题主要是在于endIndex的处理上，对endIndex的位置把握不对。
 
