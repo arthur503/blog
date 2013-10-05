@@ -6,3 +6,7 @@ title: 统计学习方法学习笔记-附录：梯度下降法
 
 
 
+
+需查阅的参考资料：
+http://www.zhihu.com/question/20822481
+http://www.zhihu.com/question/19723347
