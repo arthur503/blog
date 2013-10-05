@@ -1,4 +1,4 @@
 ---
 layout: default
-title: 排序算法分析
+title: 算法：排序算法分析
 ---

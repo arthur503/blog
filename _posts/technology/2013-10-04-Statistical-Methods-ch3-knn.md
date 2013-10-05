@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 统计学习方法学习笔记-CH3：K近邻法(knn)【存疑】
+title: 统计学习方法BR-CH3：K近邻法(knn)【存疑】
 ---
 一、原理
 
@@ -119,7 +119,7 @@ kd树是二叉树，表示对k维空间的一个划分。构造kd树就是使用
 本章的思维导图如下：
 <img src="http://arthur503.github.io/blog/assets/pic/201310/2013-10-04-Statistical-Methods-ch3-knn.png">
 
-五、存疑
+五、【存疑】
 
 最后，放几个存疑的问题，等到之后再来查。
 
