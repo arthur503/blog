@@ -64,6 +64,8 @@ title: 使用Github搭建博客3：本地安装jekyll serve
 
 不过，每次需要注意先把_config.yml中的baseurl修改才能运行serve，运行完毕之后还要还原回来（这应该是Github上建立Pages的区别，因为我在github上建立的并非原装的NAME.github.io网站，而是NAME.github.io/blog作为博客网址）。
 
+注：我想，由于在本地测试jekyll serve的时候需要baseurl为空，但在github端需要baseurl为"/blog"，那可不可以把_config.yml放入到.ignore文件中，这样github端的_config.yml文件就不变了，本地的也保持baseurl为空，每次运行serve的时候，就可以不用在修改了。
+
 参考资料：
 * [Running Jekyll on Windows](http://www.madhur.co.in/blog/2011/09/01/runningjekyllwindows.html)
 * [windows下git bash中执行jekyll --server出错，编码问题](http://www.oschina.net/question/129471_37163)
