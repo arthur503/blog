@@ -39,7 +39,14 @@ title: 使用Github搭建博客3：本地安装jekyll serve
 
 这是又要升级jekyll的节奏？结果我查了一下，我用的是1.2.1的版本。但是还尼玛存在这个问题啊！
 
-不过不知道在那看到的，是说url链接错误。在blog的_config.yml文件中，定义了：
+不过网页上的报错信息是：
+
+	Not Found
+
+	`/' not found.
+	WEBrick/1.3.1 (Ruby/1.9.3/2013-06-27) at localhost:4000
+
+我猜是说url链接错误。在github的blog中的_config.yml文件中，定义了：
 	
 	baseurl: /blog
 
