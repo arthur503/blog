@@ -1,6 +1,6 @@
 ---
 layout:  default
-title: 使用Github搭建博客3：本地安装jekyll serve
+title: 使用Github搭建博客-3：本地安装jekyll serve
 ---
 经常性的提交md文件导致github报错：page build failed。被折腾疯了。之前安装过jekyll，但总报错。今天想重新装一下jekyll，看看怎么在本地跑起来，这样每次提交之前先在本地看看能否通过再说。
 

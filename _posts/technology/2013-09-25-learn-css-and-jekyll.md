@@ -1,6 +1,6 @@
 ---
 layout:  default
-title: 使用Github搭建博客2：css和jekyll
+title: 使用Github搭建博客-2：css和jekyll
 ---
 之前搭建完了Github博客，基本的框架起来了。但是对于_posts文件夹下的post文件，却不知道如何像主文件夹下的index.html一样使用css效果。
 
