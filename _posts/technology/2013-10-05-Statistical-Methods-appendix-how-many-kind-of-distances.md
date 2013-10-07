@@ -367,7 +367,10 @@ Bhattacharyya系数是两个统计样本之间的重叠量的近似测量，可�
 <li>衡量分布的混乱程度或分散程度：熵。</li>
 </ol>
 
-好了，这些作为备用资料参考，收工。
+思维导图：
+<img src="http://arthur503.github.io/blog/assets/pic/201310/2013-10-05-Statistical-Methods-appendix-how-many-kind-of-distances.png">
+
+好了，这些作为备用资料参考，以后有新的材料再来补充，收工。
 
 
 参考资料：
