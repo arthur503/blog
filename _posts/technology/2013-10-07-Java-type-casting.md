@@ -223,8 +223,8 @@ orange本身是无法直接强制转换为String的，编译器不通过。但�
 		Apple ap2 = new Orange();
 		System.out.println("Name:"+ap2.name());
 		System.out.println("id:"+ap2.id());
-//		System.out.println("counter:"+ap2.counter());
-//		System.out.println("familyName:"+ap2.familyName);
+	//	System.out.println("counter:"+ap2.counter());
+	//	System.out.println("familyName:"+ap2.familyName);
 		System.out.println();
 		
 		System.out.println("Change apple2 to Orange...");
