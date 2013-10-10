@@ -45,7 +45,7 @@ title: Java基础：序列化
 
 1. transient关键字
 
-当某个字段被声明为transient后，默认序列化机制就会忽略该字段。
+	当某个字段被声明为transient后，默认序列化机制就会忽略该字段。
 
 2. writeObject()方法与readObject()方法
 
