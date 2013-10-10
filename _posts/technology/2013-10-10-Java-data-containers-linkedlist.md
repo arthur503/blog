@@ -11,7 +11,7 @@ title: Java基础：数据容器源码分析之LinkedList
 * Node是以静态方法声明的，在LinkedList加载时就自动加载了；
 * remove(int i)的实现有个技巧，先判断i是在前半部分还是后半部分，然后在从header开始往前或往后找；
 
-在LinkedList中，基本操作包括：构建、查找、获取和设置、添加（追加和插入）和删除（特定内容元素和特定位置元素）。表征位置的变量包括：first、last、prev、next。
+在LinkedList中，基本操作包括：创建、查找、获取和设置、添加（追加和插入）和删除（特定内容元素和特定位置元素）。在源代码中，表征位置的变量包括：first、last、prev、next。
 
 一、概述
 
@@ -33,7 +33,7 @@ LinkedList本身是一个双向链表结构，包含的元素为Node。Node的�
 
 LinkedList中的双向链表为环状结构。在为空时，header的前后引用均为本身。在按照元素位置进行查找或添加元素时，可以利用这一点来提高效率。
 
-LinkedList继承自AbstractSequentialList，实现的接口包括：List, Deque, Cloneable, java.io.Serializable。其中，AbstractSequentialList继承自AbstractList，已经实现了List接口，放在此处只是更加明了。
+LinkedList继承自AbstractSequentialList（继承自AbstractList），实现的接口包括：List, Deque, Cloneable, java.io.Serializable。其中，AbstractSequentialList继承自AbstractList，已经实现了List接口，放在此处只是更加明了。
 
 LinkedList本身不是线程安全的，因此，在多线程中使用时必须使用外部方法同步。
 
@@ -101,7 +101,7 @@ LinkedList中，查找某元素有两种形式：通过index查找和通过内�
 
 四、获取和设置
 
-获取和设置操作都依赖于查找操作，包括get()、set()方法。代码如下：
+获取和设置操作包括get()、set()方法，他们都依赖于查找操作，因此时间复杂度为O(n)。代码如下：
 
     public E get(int index) {
         checkElementIndex(index);
