@@ -116,7 +116,7 @@ LinkedList中，查找某元素有两种形式：通过index查找和通过内�
         return oldVal;
     }
 
-四、添加和删除
+五、添加和删除
 
 LinkedList中添加元素操作有两类：追加和插入。
 
