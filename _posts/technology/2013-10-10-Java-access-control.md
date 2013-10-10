@@ -39,7 +39,7 @@ Java中有四种访问权限修饰符，public、protected、friendly、private�
 
 1. 子类与父类在同一个包中
 
-	只有声明为private的变量与方法不可以被继承(访问)，而public、protected、friendly都可以被继承。
+    只有声明为private的变量与方法不可以被继承(访问)，而public、protected、friendly都可以被继承。
 
 2. 子类和父类不在同一包中
 
@@ -55,6 +55,7 @@ friendly和protected都表示包内的访问权限（如果可以使用的话）
 #### 修饰成员变量和方法：
 
 1. 无继承时：修饰成员变量和方法的时候没有区别，都是包内访问权限；
+
 2. 有继承时：
 
 2.1 子类和父类在同一个包内：protected和friendly都可以被继承；
