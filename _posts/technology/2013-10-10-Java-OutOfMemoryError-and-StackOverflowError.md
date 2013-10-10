@@ -27,7 +27,25 @@ title: Java基础：OutOfMemoryError和StackOverflowError
 > JVM stack的大小是可以调节的, sun的windows jvm6 x64,jvm栈默认大小为1024k.可以通过-Xss1024k来调节.
 http://www.oracle.com/technetwork/java/hotspotfaq-138619.html#threads_oom
 
-我写了下无限递归代码测试：
+另外，在oracle的docs[Chapter 2. The Structure of the Java Virtual Machine](http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.5.2)中，有如下解释：
+
+> 2.5.2. Java Virtual Machine Stacks
+> 
+> The following exceptional conditions are associated with Java Virtual Machine stacks:
+> 
+> * If the computation in a thread requires a larger Java Virtual Machine stack than is permitted, the Java Virtual Machine throws a StackOverflowError.
+> 
+> * If Java Virtual Machine stacks can be dynamically expanded, and expansion is attempted but insufficient memory can be made available to effect the expansion, or if insufficient memory can be made available to create the initial Java Virtual Machine stack for a new thread, the Java Virtual Machine throws an OutOfMemoryError.
+> 
+> 2.5.3. Heap
+> 
+> The following exceptional condition is associated with the heap:
+> 
+> * If a computation requires more heap than can be made available by the automatic storage management system, the Java Virtual Machine throws an OutOfMemoryError.
+
+也就是说，对于堆栈stack(或heap)来说，如果线程需要的空间大于允许值，则为StackOverflowError；如果stack空间可以动态增加，但最后内存还是不够，则为OutOfMemoryError。
+
+我写了下无限递归代码进行测试：
 
 	public static void main(String[] argv){
 		int i = getInt(2);
@@ -63,3 +81,4 @@ http://www.oracle.com/technetwork/java/hotspotfaq-138619.html#threads_oom
 参考资料：
 
 * [java产生StackOverflowError的原因是什么?](http://www.dewen.org/q/6488)
+* [Chapter 2. The Structure of the Java Virtual Machine](http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.5.2)
