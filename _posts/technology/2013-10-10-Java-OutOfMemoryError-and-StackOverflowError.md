@@ -25,7 +25,7 @@ title: Java基础：OutOfMemoryError和StackOverflowError
 > http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.5.2
 > 
 > JVM stack的大小是可以调节的, sun的windows jvm6 x64,jvm栈默认大小为1024k.可以通过-Xss1024k来调节.
-http://www.oracle.com/technetwork/java/hotspotfaq-138619.html#threads_oom
+> http://www.oracle.com/technetwork/java/hotspotfaq-138619.html#threads_oom
 
 另外，在oracle的docs[Chapter 2. The Structure of the Java Virtual Machine](http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.5.2)中，有如下解释：
 
