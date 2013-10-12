@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Java容器：数据容器源码分析之ArrayList
+title: Java基础：数据容器源码分析之ArrayList
 ---
 先列一下之前主要迷惑的问题，包括：
 

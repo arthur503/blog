@@ -3,3 +3,7 @@
 ◆
 @课程图谱
 #今日开课# Coursera上“Model Thinking（模型思维)”再次开课，mooc大神 @wzyer 同学给这门课程很详细的评价：这门课的内容很杂，从种族隔离到排兵布阵，你都能在这里找到合适的模型。而课程的内容又全围绕着模型与思维这个主题，数学工具的使用被降低到了可以忽略的程度。http://t.cn/zTswn1c
+
+
+编辑距离的一种快速实现code：
+http://www.codeproject.com/Articles/13525/Fast-memory-efficient-Levenshtein-algorithm
