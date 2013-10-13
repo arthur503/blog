@@ -189,10 +189,20 @@ pre code {
 }
 
 blockquote {
-  color: #666;
+  color: #ffffff;
+
   margin-bottom: 20px;
   padding: 0 0 0 20px;
   border-left: 3px solid #bbb;
+
+  /*same as pre.code*/
+  background-color: #808080;
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  font-size: 14px;
+
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
 }
 
 ul, ol, dl {
