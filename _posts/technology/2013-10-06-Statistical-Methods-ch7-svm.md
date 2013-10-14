@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 统计学习方法BR-CH7：支持向量机
+title: 统计学习方法BR-CH7：支持向量机（SVM）
 ---
 ### 一、支持向量机总览
 
