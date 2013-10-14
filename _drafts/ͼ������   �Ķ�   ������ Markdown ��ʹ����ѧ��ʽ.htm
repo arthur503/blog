@@ -1,0 +1,989 @@
+
+
+
+
+
+ 
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7, IE=9" />
+	<title>图灵社区 : 阅读 : 怎样在 Markdown 中使用数学公式</title>
+
+<link href="/Content/2012/css/style?v=0EAQ_XOLvMkr4D-XN-sUslEuAQV-NvWL60R1FJc2-pA1" rel="stylesheet"/>
+
+
+
+<!--[if IE 6]>
+<link href="/Content/2012/css/ie6.min.css" rel="stylesheet">
+<![endif]--> 
+
+<script src="/js/frontend?v=WrwLFUrDgS45U5wI2E2GN6NKxBmZFQ9vbPlz1WOeRbw1"></script>
+
+
+
+<!--Le HTML5 shim, for IE6-8 support of HTML5 elements-->
+<!--[if lt IE 9]>
+<script src="/Content/2012/js/html5.js"></script>
+<![endif]-->
+<!--[if IE 6]>
+<script src="/Content/2012/js/ie6.min.js"></script>
+<![endif]-->
+<!--Le fav and touch icons-->
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Content/2012/img/icon-touch-114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Content/2012/img/icon-touch-72.png">
+<link rel="apple-touch-icon-precomposed" href="/Content/2012/img/icon-touch-57.png">
+
+</head>
+<body>
+	<div id="topnav"><div class="page">
+
+	
+        <!--Donut#8FC9AD0722B68FA82955CDE21C7D06513078407E96AB43DFE2543D90D8E839129C9BCB2258ABD53B98D758D28759B9475B4B7A6A1689073C184DAD66B5916D4324DEFCE9949F8F4003BBA2138C7A5385EA92DD973206E1F84FBA9EB735E9DB435CC464D8DE238FA6B9688177FF8E2EAE40B419A957BC81C5799E9F731128FE82847BDF802467239A915D8EE3AF4169FC283C7A7C86B0596D6BC80F10B747600BBA7D2224E4B808697F2CF84ADA67AE172E3D5C5E0F4FB4794515FE29D9890AC59AB058F23B2C087FB6A64EAC772B5A545588BAD1E581BAE460A3EF78E05099D23C68E073D77A28D407CE3649C5D345919421DF485A6F0BAB3B12E6FA9DA7D056C08E037DE666EC4BDC171B1CAE929414F988B0D537DB6C1CC82DBEF13FF29E9F4B31895C0B5EC2F0BDBAA701AB2876D5D78128BDAF516646550744954BA789F79BE140F4B907753ECBB4947204670A7074C82FC9C619AD48D5019DBEEBA6F84FD5209EDDF73C9C2AB02C66CA5AE807305AFE740DB25927B0B2487370DC01EC09AD1CB1185E343845ED6D9309FB419A3B#-->	<ul id="usermenu">
+		<li>你好！</li>
+
+
+		<li><a href="/account/register">新会员注册</a></li>
+		<li><a href="/account/logon">登录</a></li>
+
+	</ul>
+<!--EndDonut-->
+    
+
+	</div></div>
+	<div class="page">
+		<div id="header">
+			<a href="/" id="title" title="图灵社区 首页">◁ 首页</a>
+			<div id="menucontainer">
+				<ul id="menu" class="article" >
+					
+					<form id="nav-search" class="form-search" action="/search" method="get">
+					  <input type="search" id="q" name="q" />
+					  <input type="hidden" id="type" name="type" />
+					  <input type="submit" id="search-btn" value="搜索" />
+					</form>
+
+					<li><a class="ebooks" href="/book/ebook?sort=updated">电子书</a></li>
+					<li><a class="book" href="/book">图 书</a></li>
+					<li><a class="article" href="/article?sort=newest">文 章</a></li>
+					<li><a class="users" href="/users">会 员</a></li>
+					<li><a class="write" href="/users/mywriting">写 作</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main" class="clearfix">
+			
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+    
+    function onCloneSuccess(data) {
+        alert(data);
+    }
+
+    function onDonateSuccess(data) {
+        alert(data);
+
+        if (data.substring(0, 4) != "赠银失败") {
+            $("#donate_btn").remove();
+            $("#donate_info").show();
+        }
+            
+    }
+</script>
+
+<div class="row">
+    <div class="span9">
+        <div id="question-header">
+            <h1>
+                <a href="/article/32403">怎样在 Markdown 中使用数学公式</a> 
+            </h1>
+        </div>
+
+        <div class="row">
+            <div class="span1 votecell">
+                <div id="votediv" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-32403&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv" href="/article/vote/32403" id="vote-32403">推荐</a>
+    <strong>17</strong>
+
+    <a data-ajax="true" data-ajax-begin="$(&#39;#fav-32403&#39;).html(&#39;取消收藏&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv" href="/article/vote/32403?isFave=True" id="fav-32403">收藏</a>
+
+</div>
+
+
+
+
+
+
+            </div>
+            <div class="span8">
+                <div class="post-text">
+<p>如果需要在 Markdown 中使用数学公式，有以下几种方法：</p>
+
+<p>第一，直接在网上找一幅图片（当然也可以自己上传一幅图片），如下面这个公式就是维基百科网站上的：</p>
+
+<p><img src="http://upload.wikimedia.org/math/c/a/a/caaf05280ec5e0465b648f2e570f1c0a.png" alt="pi1"/></p>
+
+<p>第二，自己写个 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/> 公式，由七十二松等网站解析，如下面的公式：</p>
+
+<p><img src="http://tex.72pines.com/latex.php?latex=%24\frac{1}{\pi}=\frac{2\sqrt{2}}{9801}\sum_{k=0}^\infty\frac{%284k%29!%281103%2B26390k%29}{%28k!%29^4396^{4k}}%24" alt="pi2"/></p>
+
+<p>七十二松网站的 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/> 服务接口格式如下所示：</p>
+
+<blockquote>
+  <p><a href="http://tex.72pines.com/latex.php?latex=">http://tex.72pines.com/latex.php?latex=</a>$LaTeX公式代码$</p>
+</blockquote>
+
+<p>注意公式代码中的加号要替换为&quot;%2B&quot;，空格要替换为“%20”。这个公式的 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/> 代码是：</p>
+
+<blockquote>
+  <p>\frac{1}{\pi}=\frac{2\sqrt{2}}{9801}\sum_{k=0}^\infty\frac{(4k)!(1103+26390k)}{(k!)^4396^{4k}}</p>
+</blockquote>
+
+<p>这个公式解释如下：</p>
+
+<ol>
+<li>\pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：<a href="http://www.math.harvard.edu/texman/node21.html">Special Symbols</a> 。</li>
+<li>\frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。</li>
+<li>\sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。</li>
+<li>\sum_{下标}^{上标} 表示求和符号。另外，\prod 表示乘积符号，\int 表示积分符号。</li>
+<li>_{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。</li>
+<li>此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。</li>
+<li>还有：\pm：±、\times：×、\div：÷ 。</li>
+</ol>
+
+<p>上面这些已经可以处理大多部分数学公式了。还可以通过<a href="http://book.douban.com/subject/1159694/">《LaTeX2e及常用宏包使用指南》</a>这本书来学习 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/>。也可找一些在线教程来学习，例如： <a href="http://www.ctex.org/documents/latex/latex2e-html">Hypertext Help with LaTeX</a> 。有一个很好用的在线 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/> 公式编辑器：<a href="http://www.codecogs.com/latex/eqneditor.php">Online LaTex Equation Editor</a> 。</p>
+
+<h2>行内公式</h2>
+
+<p>行内公式示例：<img src="http://tex.72pines.com/latex.php?latex=\textstyle\zeta%28s%29=\sum_{n=1}^{\infty}n^{-s}" alt="Riemann_zeta"/>，这个公式就是黎曼 <img src="http://tex.72pines.com/latex.php?latex=\textstyle\zeta" alt="zeta"/> 函数（Riemann zeta function）。再来一个公式：<img src="http://tex.72pines.com/latex.php?latex=\textstyle\frac{\pi}{4}=4\arctan\frac{1}{5}-\arctan\frac{1}{239}" alt="pi/4"/>，这个公式是 John Machin 于 1706 年发现的。要注意的是，这三个行内公式（前面的单个希腊字母 ζ 也是行内公式）都在公式的最开头使用了 \textstyle 命令，使得公式按照文本行公式中的字体大小来排版，同时也改变了公式中求和限的排版方式。</p>
+
+<h2>长度</h2>
+
+<p>在 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/> 中经常要用到长度的概念。最简单的长度就是一个十进制数（可带小数点，可正可负）加上一个长度单位。下面列出常用的一些长度单位。</p>
+
+<ul>
+<li>mm 毫米  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1mm%5d{%20}" alt="mm"/></li>
+<li>cm 厘米 = 10 毫米 <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1cm%5d{%20}" alt="cm"/></li>
+<li>in 英寸   = 25.4 毫米 <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1in%5d{%20}" alt="in"/></li>
+<li>pt 点      = 1/72.27 英寸  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1pt%5d{%20}" alt="pt"/></li>
+<li>bp 大点  = 1/72 英寸  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1bp%5d{%20}" alt="bp"/></li>
+<li>pc pico   = 12 点  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1pc%5d{%20}" alt="pc"/></li>
+<li>em 相当于当前字体的大写字母 M 的宽度  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1em%5d{%20}" alt="em"/></li>
+<li>ex  相当于当前字体的小写字母 x 的高度  <img src="http://tex.72pines.com/latex.php?latex=\framebox%5b1ex%5d{%20}" alt="ex"/></li>
+</ul>
+
+<p>在 <img src="http://tex.72pines.com/latex.php?latex=\LaTeX" alt="latex"/>  中可以用 \hspace{length} 命令来改变水平方向的空白距离，其中 length 是空白距离的长度。例如 \hspace{1.5em} 。</p>
+
+<h2>定界符的尺寸</h2>
+
+<p>要使定界符的尺寸随着其中内容的大小而变，可以：</p>
+
+<ul>
+<li>在左定界符的前面加上命令 \left，在右定界符的前面加上 \right 。</li>
+<li>使用命令 \big，\Big，\bigg 和 \Bigg 。这些命令用于定界符的前面，将定界符尺寸逐渐增大。</li>
+<li>另外，这几条命令还有变体，如 \bigl 和 \bigr 分别用于左定界符和右定界符的前面。</li>
+</ul>
+
+<hr/>
+
+<p><img src="http://img3.douban.com/lpic/s1333985.jpg" alt="LaTeX2e"/></p>
+                </div>
+
+                <div class="copyright-announce">
+                             本文仅用于学习和交流目的，不代表图灵社区观点。非商业转载请注明作译者、出处，并保留本文的原始链接。
+                </div>
+                <div class="post-taglist">
+
+                         <a class="post-tag" href="/article/tagged/214" tagid="214">markdown</a>
+                         <a class="post-tag" href="/article/tagged/1079" tagid="1079">latex</a>
+                                                            <!-- JiaThis Button BEGIN -->
+                        <div id="ckepop">
+                            
+
+                            <a class="jiathis_cwb" target="_blank" href="/article/share/32403">分享长微博</a>
+                            
+                            <span class="jiathis_txt"></span><a class="jiathis_button_tsina"></a><a class="jiathis_button_douban"></a><a class="jiathis_button_tqq"></a><a class="jiathis_button_linkedin"></a><a href="http://www.jiathis.com/share?uid=891559" target="_blank" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis"></a><a class="jiathis_counter_style"></a>
+                        </div>
+                    <!-- JiaThis Button END -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span9">
+                <div class="well">
+
+                    <div class="btn-admins pull-right">
+
+
+
+
+
+                    </div>
+                    <div class="user-info clearfix">
+                         <a href="/users/98916">
+                             <img class="avatar show-user-card" userid="98916"  src="/Users/GetAvatar/98916?size=Middle" />黄志斌
+                         </a> <br />
+                         <span class="status-date">发表于 03-04 11:21
+                         </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <div id="wumii">
+                <script type="text/javascript" id="wumiiRelatedItems"></script>
+            </div>
+<script type="text/javascript">
+    var wumiiPermaLink = "http://www.ituring.com.cn/article/32403"; //请用代码生成文章永久的链接
+    var wumiiTitle = "怎样在 Markdown 中使用数学公式"; //请用代码生成文章标题
+    var wumiiTags = "markdown,latex"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiSitePrefix = "http://www.ituring.com.cn/";
+    var wumiiParams = "&num=6&mode=2&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+            <a name="firstcomment"></a>
+            <div id="CommentList">
+                
+    <div class="subheader">
+        <h1>
+            评论</h1>
+        <div id="tabs">
+            <a class="" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#CommentList" href="/articlecomment/index/32403?sort=newest">时间</a>
+            <a class="youarehere" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#CommentList" href="/articlecomment/index/32403?sort=vote">推荐</a>
+        </div>
+    </div>
+
+
+
+    <div class="row reply-item" id="comment-12650">
+    <div             class="firstcomment"
+>
+        <div class="span1 votecell">
+            <div id="votediv12650" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12650&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12650" href="/ArticleComment/vote/12650" id="vote-12650">推荐</a>
+    <strong>2</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            如果图灵社区也能提供自己的 LaTeX 服务接口：<br/>http://www.ituring.com.cn/latex.php?latex=$LaTeX公式代码$<br/>那该多好啊；杨帆老师所担心的“网站挂掉的风险”也就不存在了，呵呵。
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="99767" src="/Users/GetAvatar/99767?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/99767" userid="99767">空军</a><br />
+                <span class="status-date"> 03-04 19:46 </span>
+            </div>
+
+            <div class="replies" id="replies-12650">
+        <div id="reply-17449">
+        <div class="reply"
+          >
+            <span class="comment-copy">如果有的话，建议服务接口为：
+http://tex.ituring.com.cn/tex=LaTeX公式代码</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-04 19:49</span>
+        </div>
+        </div>        <div id="reply-17634">
+        <div class="reply"
+          >
+            <span class="comment-copy">太好了，我们试试</span> –&nbsp;
+            <a class="show-user-card" userid="82554"  href="/users/info/82554" class="reply-user">杨帆</a>
+            <span class="status-date">03-07 13:55</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12642">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12642" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12642&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12642" href="/ArticleComment/vote/12642" id="vote-12642">推荐</a>
+    <strong>2</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            好实用啊，解决问题了
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="82554" src="/Users/GetAvatar/82554?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/82554" userid="82554">杨帆</a><br />
+                <span class="status-date"> 03-04 16:13 </span>
+            </div>
+
+            <div class="replies" id="replies-12642">
+        <div id="reply-17436">
+        <div class="reply"
+          >
+            <span class="comment-copy">但用latex写公式，也有门槛啊</span> –&nbsp;
+            <a class="show-user-card" userid="82554"  href="/users/info/82554" class="reply-user">杨帆</a>
+            <span class="status-date">03-04 16:14</span>
+        </div>
+        </div>        <div id="reply-17437">
+        <div class="reply"
+          >
+            <span class="comment-copy">写 LaTeX 公式的门槛其实不高，正文中提到的五条基本上可以处理大部分数学公式了。并且正文最后给出的在线 LaTeX 公式编辑器也非常好用，能够有效降低 LaTeX 公式的门槛。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-04 16:28</span>
+        </div>
+        </div>        <div id="reply-17440">
+        <div class="reply"
+          >
+            <span class="comment-copy">不错，有些数学书可以试着这么处理看看</span> –&nbsp;
+            <a class="show-user-card" userid="82554"  href="/users/info/82554" class="reply-user">杨帆</a>
+            <span class="status-date">03-04 16:45</span>
+        </div>
+        </div>        <div id="reply-17441">
+        <div class="reply"
+          >
+            <span class="comment-copy">但是这种解析的接口稳定吗，会不会有网站挂掉的风险</span> –&nbsp;
+            <a class="show-user-card" userid="82554"  href="/users/info/82554" class="reply-user">杨帆</a>
+            <span class="status-date">03-04 16:46</span>
+        </div>
+        </div>        <div id="reply-17443">
+        <div class="reply"
+          >
+            <span class="comment-copy">我在博客园写的博客文章中数学公式大部分都是用七十二松的 LaTeX 服务接口显示的，已经用了很多年了，目前还没有发现一次挂掉的现象。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-04 17:21</span>
+        </div>
+        </div>        <div id="reply-19481">
+        <div class="reply"
+          >
+            <span class="comment-copy">http://www.marooned.org.uk/~arno/cvm/inlinetest.html 可供参考。</span> –&nbsp;
+            <a class="show-user-card" userid="85510"  href="/users/info/85510" class="reply-user">fango</a>
+            <span class="status-date">04-21 16:22</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12641">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12641" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12641&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12641" href="/ArticleComment/vote/12641" id="vote-12641">推荐</a>
+    <strong>2</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            谷歌也有 LaTeX 公式服务，其接口格式如下所示：<br/>http://chart.apis.google.com/chart?cht=tx&amp;chl=LaTeX公式
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="98916" src="/Users/GetAvatar/98916?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/98916" userid="98916">黄志斌</a><br />
+                <span class="status-date"> 03-04 16:02 </span>
+            </div>
+
+            <div class="replies" id="replies-12641">
+            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12742">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12742" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12742&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12742" href="/ArticleComment/vote/12742" id="vote-12742">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            LATEX2e及常用【达】宏包使用指南
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="60522" src="/Users/GetAvatar/60522?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/60522" userid="60522">学徒1</a><br />
+                <span class="status-date"> 03-05 22:34 </span>
+            </div>
+
+            <div class="replies" id="replies-12742">
+        <div id="reply-17602">
+        <div class="reply"
+          >
+            <span class="comment-copy">谢谢你的指正。已在正文中修改。 :)</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 22:51</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12694">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12694" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12694&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12694" href="/ArticleComment/vote/12694" id="vote-12694">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            非常实用，谢谢楼主分享！<br/><br/>先收藏，再学习~<br/><br/><br/>同楼上说的，作为懒人非常希望社区也能支持。
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="95933" src="/Users/GetAvatar/95933?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/95933" userid="95933">董苗苗</a><br />
+                <span class="status-date"> 03-05 08:51 </span>
+            </div>
+
+            <div class="replies" id="replies-12694">
+        <div id="reply-17545">
+        <div class="reply"
+          >
+            <span class="comment-copy">正如我对劳佳评论的回复中说的，内嵌支持固然好，但其实也不比现在的使用外链支持省事多少。如果能够内嵌支持，更多的是减少外键支持的网站挂掉的风险。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 09:08</span>
+        </div>
+        </div>        <div id="reply-17552">
+        <div class="reply"
+          >
+            <span class="comment-copy">我说的内嵌支持是加一个 shortcode，比如类似 wordpress 写一个 [latex] [/latex] 这种，调什么显示引擎倒是次要。这样文档比较可维护，要导出排版什么的也好操作。</span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-05 09:30</span>
+        </div>
+        </div>        <div id="reply-17553">
+        <div class="reply"
+          >
+            <span class="comment-copy">添加这种内嵌支持应该是非常容易的，只要把 [latex alt=&quot;Describe&quot;]LaTeX_Code[/latex] 翻译为：![Describe](http://tex.72pines.com/latex.php?latex=$LaTeX_Code$) 就行了。还可以对 LaTeX_Code 进行 URL 转换，比如把加号替换为 %2B 、空格替换为 %20 等。更大的好处是可以根据需要替换显示引擎。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 09:38</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12678">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12678" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12678&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12678" href="/ArticleComment/vote/12678" id="vote-12678">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            这个还是要内嵌支持比较好，否则就得本地替换好了再贴上来
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="90286" src="/Users/GetAvatar/90286?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/90286" userid="90286">劳佳</a><br />
+                <span class="status-date"> 03-05 00:07 </span>
+            </div>
+
+            <div class="replies" id="replies-12678">
+        <div id="reply-17528">
+        <div class="reply"
+          >
+            <span class="comment-copy">内嵌支持固然比较好，但是正文中的第二种方法也是直接在 Markdown 中使用 LaTeX 公式，没有进行本地替换。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 08:01</span>
+        </div>
+        </div>        <div id="reply-17529">
+        <div class="reply"
+          >
+            <span class="comment-copy">比如说，正文中的最后一个公式的 Markdown 代码就是：![pi/4](http://tex.72pines.com/latex.php?latex=$\textstyle\frac{\pi}{4}=4\arctan\frac{1}{5}-\arctan\frac{1}{239}$)</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 08:03</span>
+        </div>
+        </div>        <div id="reply-17550">
+        <div class="reply"
+          >
+            <span class="comment-copy">不是说直接用不行，但你有一两个公式还可以，真有几十个公式光前面那一堆前缀就要麻烦死了</span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-05 09:27</span>
+        </div>
+        </div>        <div id="reply-17554">
+        <div class="reply"
+          >
+            <span class="comment-copy">搞一个我在董苗苗的评论的三楼的回复中说的内嵌支持如何？</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 09:41</span>
+        </div>
+        </div>        <div id="reply-17555">
+        <div class="reply"
+          >
+            <span class="comment-copy">可以啊，这个应该是很容易搞定的事情</span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-05 09:44</span>
+        </div>
+        </div>        <div id="reply-17605">
+        <div class="reply"
+          >
+            <span class="comment-copy">更简单的做法是直接挂上 Mathjax，然后什么都不用做就好了。</span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-06 09:07</span>
+        </div>
+        </div>        <div id="reply-17612">
+        <div class="reply"
+          >
+            <span class="comment-copy">直接挂上 MathJax 的确是个好方案。建议图灵社区的 BOSS 采用。http://www.mathjax.org/</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-06 11:29</span>
+        </div>
+        </div>        <div id="reply-17613">
+        <div class="reply"
+          >
+            <span class="comment-copy">在“怎样提交社区改进建议”（ http://www.ituring.com.cn/article/17095 ）的评论中，李鑫说：“能不能在markdown编辑器中加入MathJax引擎，好方便地书写数学公式呢？”，而大胖回复说：“mathjax我在项目中用过，速度慢，甚至蓝屏，最后忍痛去掉了。完美的代码变公式方案目前还没发现。”。</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-06 11:33</span>
+        </div>
+        </div>        <div id="reply-17614">
+        <div class="reply"
+          >
+            <span class="comment-copy">“蓝屏”是神马情况...?! </span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-06 11:45</span>
+        </div>
+        </div>        <div id="reply-17617">
+        <div class="reply"
+          >
+            <span class="comment-copy">我觉得现在最新版本的 Mathjax，几十个公式的页面已经基本上看不到多少延迟了。。。。</span> –&nbsp;
+            <a class="show-user-card" userid="90286"  href="/users/info/90286" class="reply-user">劳佳</a>
+            <span class="status-date">03-06 11:55</span>
+        </div>
+        </div>        <div id="reply-21486">
+        <div class="reply"
+          >
+            <span class="comment-copy">建议使用MathJaX,只用添加几行代码就可以实现了.</span> –&nbsp;
+            <a class="show-user-card" userid="103211"  href="/users/info/103211" class="reply-user">叶卢庆</a>
+            <span class="status-date">07-10 17:29</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12676">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12676" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12676&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12676" href="/ArticleComment/vote/12676" id="vote-12676">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            赞
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="91216" src="/Users/GetAvatar/91216?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/91216" userid="91216">Martin Wang</a><br />
+                <span class="status-date"> 03-04 23:47 </span>
+            </div>
+
+            <div class="replies" id="replies-12676">
+            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12664">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12664" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12664&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12664" href="/ArticleComment/vote/12664" id="vote-12664">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            建议LZ可以把“这个公式就是黎曼 ζ 函数”这句话中的“ζ”改用行内公式看看效果如何。<br/>
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="99767" src="/Users/GetAvatar/99767?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/99767" userid="99767">空军</a><br />
+                <span class="status-date"> 03-04 22:16 </span>
+            </div>
+
+            <div class="replies" id="replies-12664">
+        <div id="reply-17530">
+        <div class="reply"
+          >
+            <span class="comment-copy">已经将 ζ 改用行内公式。你看看效果如何？</span> –&nbsp;
+            <a class="show-user-card" userid="98916"  href="/users/info/98916" class="reply-user">黄志斌</a>
+            <span class="status-date">03-05 08:19</span>
+        </div>
+        </div>            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12661">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12661" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12661&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12661" href="/ArticleComment/vote/12661" id="vote-12661">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            Google Chart API 比较靠谱。没有互联网时建议直接粘贴 MathML，比较新的浏览器都能直接显示。
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="2657" src="/Users/GetAvatar/2657?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/2657" userid="2657">xslidian</a><br />
+                <span class="status-date"> 03-04 21:29 </span>
+            </div>
+
+            <div class="replies" id="replies-12661">
+            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+    <div class="row reply-item" id="comment-12657">
+    <div >
+        <div class="span1 votecell">
+            <div id="votediv12657" class="vote">
+    
+<a data-ajax="true" data-ajax-begin="$(&#39;#vote-12657&#39;).html(&#39;取消推荐&#39;)" data-ajax-mode="replace" data-ajax-update="#votediv12657" href="/ArticleComment/vote/12657" id="vote-12657">推荐</a>
+    <strong>1</strong>
+
+</div>
+
+
+
+        </div>
+        <div class="span8 postcell">
+            <div class="post-text">
+            Evernote里面又多了一篇好文档。<br/><br/>
+            </div>
+            <div class="user-info clearfix pull-right user-comment">
+                <img class="avatar show-user-card" userid="38123" src="/Users/GetAvatar/38123?size=Small" width="32" height="32" /><a class="show-user-card" href="/users/38123" userid="38123">2gua</a><br />
+                <span class="status-date"> 03-04 20:49 </span>
+            </div>
+
+            <div class="replies" id="replies-12657">
+            </div>
+            <div class="btn-replies">
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr />
+<div class="PagedList-pager"><ul><li class="PagedList-disabled PagedList-currentPage PagedList-skipToPage"><a>1</a></li><li class="PagedList-skipToPage"><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#CommentList" href="/ArticleComment/index/32403?sort=vote&amp;page=1">2</a></li><li class="PagedList-skipToNext"><a data-ajax="true" data-ajax-mode="replace" data-ajax-update="#CommentList" href="/ArticleComment/index/32403?sort=vote&amp;page=1">下一页</a></li></ul></div>
+
+        <h3>我要评论</h3>
+
+    <div id="CommentForm">
+            <div id="logon-div">
+    
+
+
+<form action="/account/_logon/32403?Length=7" class="well form-inline" data-ajax="true" data-ajax-failure="onLogonFail" data-ajax-success="onLogonSuccess" id="form0" method="post"><legend>需要登录后才能发言</legend>
+<input data-val="true" data-val-required="请填写用户名" id="UserName" name="UserName" type="text" value="" />     
+<input data-val="true" data-val-required="请填写密码" id="Password" name="Password" type="password" />     
+<input data-val="true" data-val-required="The 记住我 field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true" /><input name="RememberMe" type="hidden" value="false" />     
+<label for="RememberMe">记住我</label>     
+    <input type="submit" value=" 登录 " class="btn btn-primary" />
+</form>
+<div class="validation-summary-valid" data-valmsg-summary="true"><span>登录未成功，请修改提交。</span>
+<ul><li style="display:none"></li>
+</ul></div>
+
+
+        <script type="text/javascript">
+
+            function onLogonSuccess() {
+                 $.get("/articlecomment/add/32403?isErrata=False", function (data) {
+                    $("#CommentForm").html(data);
+                    $.get("/account/_logonpartial", function(logdata) {
+                        $("#logindisplay").html(logdata);
+                    });
+                });
+            }
+
+            function onLogonFail(jqXHR) {
+                $("#logon-div").html(jqXHR.responseText);
+            }  
+
+        </script>
+
+
+    </div>
+
+    </div>
+
+
+
+<div id="reply-form" class="hide">
+
+<form action="/reply/add" data-ajax="true" data-ajax-begin="window.disableCalmer" data-ajax-failure="onReplyFailure" data-ajax-mode="after" data-ajax-success="onReplySuccess" data-ajax-update="#placeholder" id="form1" method="post">        <input type="hidden" name="" />
+        <textarea name="body" style="width: 95%">
+        </textarea>
+        <br />
+<input type="submit" value=" 提交 " class="btn btn-primary calmer" /> <input type="button" id="cancel" value=" 取消 " class="btn" /> <span id="reply-error" style="color: #c33"></span>
+</form>
+</div>
+
+<script type="text/javascript">
+
+    function onReplySuccess() {
+        $(".add-reply").parent().show();
+        $("#reply-form").hide();
+        window.enableCalmer();
+    }
+
+    function onReplyFailure(jqXHR) {
+        $("#reply-error").text(jqXHR.responseText);
+        window.enableCalmer();
+    }
+
+
+    $(function () {
+
+        $("#cancel").click(function () {
+            $("#reply-form").hide();
+            $(".add-reply").parent().show();
+        });
+
+        $(".add-reply").click(function () {
+            var replyForm = $("#reply-form");
+            replyForm.find("form").attr("data-ajax-update", "#replies-" + $(this).attr("target-id"))
+            replyForm.find("input[type=hidden]").attr("name", $(this).attr("target-name"));
+            replyForm.find("input[type=hidden]").val($(this).attr("target-id"));
+            replyForm.find("textarea").val("");
+
+            replyForm.show().appendTo($("#reply-form-" + $(this).attr("target-id")));
+            $("#reply-error").text("");
+
+            $(this).parent().hide();
+            return false;
+        });
+
+    });
+</script>
+
+            </div>
+
+    </div>
+    <div class="span3 side-right">
+
+        <div class="module">
+<form action="/Article" method="post">            <div class="input-append">
+            <input class="span2" id="keyword" name="keyword" type="text" value="" /><input type="submit" class="btn" value="搜索" />
+            </div>
+</form>        </div>
+
+
+
+                         
+
+                         
+
+
+    <div id="related-tags" class="module">
+        <h4 id="h-related-tags">
+            本文标签</h4>
+
+             <a class="post-tag" href="/article/tagged/214" tagid="214">markdown</a>
+            <span class="item-multiplier">×&nbsp;36</span>
+            <br/>
+             <a class="post-tag" href="/article/tagged/1079" tagid="1079">latex</a>
+            <span class="item-multiplier">×&nbsp;3</span>
+            <br/>
+
+    </div>
+
+
+
+
+
+    <div class="module">
+        <h4 id="h-related-tags">
+            推荐会员</h4>
+            <a href="/users/47" >
+                <img class="side-avatar show-user-card" userid="47" class="side-avatar" src="/Users/GetAvatar/47?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/82554" >
+                <img class="side-avatar show-user-card" userid="82554" class="side-avatar" src="/Users/GetAvatar/82554?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/38123" >
+                <img class="side-avatar show-user-card" userid="38123" class="side-avatar" src="/Users/GetAvatar/38123?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/99767" >
+                <img class="side-avatar show-user-card" userid="99767" class="side-avatar" src="/Users/GetAvatar/99767?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/4570" >
+                <img class="side-avatar show-user-card" userid="4570" class="side-avatar" src="/Users/GetAvatar/4570?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/81970" >
+                <img class="side-avatar show-user-card" userid="81970" class="side-avatar" src="/Users/GetAvatar/81970?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/95933" >
+                <img class="side-avatar show-user-card" userid="95933" class="side-avatar" src="/Users/GetAvatar/95933?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/54091" >
+                <img class="side-avatar show-user-card" userid="54091" class="side-avatar" src="/Users/GetAvatar/54091?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/74" >
+                <img class="side-avatar show-user-card" userid="74" class="side-avatar" src="/Users/GetAvatar/74?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/82033" >
+                <img class="side-avatar show-user-card" userid="82033" class="side-avatar" src="/Users/GetAvatar/82033?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/87796" >
+                <img class="side-avatar show-user-card" userid="87796" class="side-avatar" src="/Users/GetAvatar/87796?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/60522" >
+                <img class="side-avatar show-user-card" userid="60522" class="side-avatar" src="/Users/GetAvatar/60522?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/84005" >
+                <img class="side-avatar show-user-card" userid="84005" class="side-avatar" src="/Users/GetAvatar/84005?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/97829" >
+                <img class="side-avatar show-user-card" userid="97829" class="side-avatar" src="/Users/GetAvatar/97829?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/31" >
+                <img class="side-avatar show-user-card" userid="31" class="side-avatar" src="/Users/GetAvatar/31?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/97368" >
+                <img class="side-avatar show-user-card" userid="97368" class="side-avatar" src="/Users/GetAvatar/97368?size=Small" width="32" height="32" />
+            </a>
+            <a href="/users/54137" >
+                <img class="side-avatar show-user-card" userid="54137" class="side-avatar" src="/Users/GetAvatar/54137?size=Small" width="32" height="32" />
+            </a>
+        <div style="clear:both"></div>
+    </div>
+
+    <div class="module">
+        <h4 id="h-related-tags">
+            相关标签</h4>
+
+
+
+    </div>
+
+
+
+    </div>
+</div>
+
+		</div>
+		
+	</div>
+	<div id="footer">
+	  <div class="container">
+		<ul id="footmenu">
+			<li class="first"><a href="/users/guaguacode">刮刮卡</a></li>
+			<li><a href="/article/36242">联系我们</a></li>
+			<li><a href="/article/7751">常见问题</a></li>
+			<li><a href="/article/17095">建议改进</a></li>
+		</ul>
+		<p>
+		  2005-2013 &copy; 北京图灵文化发展有限公司 · All Rights Reserved
+		</p>
+		<p class="muted">
+		  京ICP备11039595号
+		</p>
+
+	  </div>
+	</div>
+<div id="toTop">
+<a href="#">▲</a>
+<a href="#footer">▼</a>
+</div>
+		<div id="popup"><div class="user-card" id="tagcard"></div><p class="corner"></p></div>
+
+
+
+<div class="modal fade hide" id="wModal">
+  <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">×</button>
+	<h4>modalMsg</h4>
+  </div>
+  <form action="" data-ajax="true" data-ajax-failure="modalMsgError" data-ajax-success="modalMsgSuccess" data-ajax-begin="window.disableCalmer" id="formModalMsg" method="post">
+  <div class="modal-body">
+	<textarea cols="20" id="msgBody" name="Body" rows="2" style="width:97%;height:80px;"></textarea>
+	<input id="ReceiverUserName" name="ReceiverUserName" type="hidden" value="">
+	<span id="error-span" style="color:red"></span>
+	<span id="success-span" style="color:#080"></span>
+  </div>
+  <div class="modal-footer">
+	<input type="button" class="btn" data-dismiss="modal" value="取消">
+	<input type="submit" id="submitMsg" class="btn btn-message calmer" value=" 发 送 ">
+  </div>
+  </form>
+</div>
+		</body>
+
+
+
+</html>

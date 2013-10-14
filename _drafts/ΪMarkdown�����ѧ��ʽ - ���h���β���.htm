@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>伯遠君の部屋</title>
+
+  <meta name="author" content="ScorpioHW">
+  
+  <meta name="description" content="为Markdown添加数学公式 Jan 29th, 2013 如何在Markdown语言中加入数学公式。这个问题是我这两天一直在考虑的。通过Google搜索，以及自己分析研究。我确定了以下四个解决方案。他们都可以完美支持中文和数学公式。其中第四个方案，我个人认为是最方便的。 下面说说我的初衷吧。 &hellip;">
+  
+  
+
+  <link rel="canonical" href="http://scorpiohw.github.com/blog/2013/01/29/wei-markdowntian-jia-shu-xue-gong-shi">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="伯遠君の部屋" type="application/atom+xml">
+</head>
+  
+<body class="default">
+  <div id="wrapper">
+    <div id="header">
+  <h1><a href="/">伯遠君の部屋</a></h1>
+  
+    <p>行走在旅途。</p>
+  
+</div>
+<ul id="social-links">
+  
+    <li><a class="feed" href="/atom.xml" title="RSS">RSS</a></li>
+  
+  
+  
+    <li> <a class="github" href="https://github.com/scorpiohw" title="GitHub">GitHub</a> </li>
+  
+  
+    <li> <a class="weibo" href="http://weibo.com/takihiko" title="Weibo">Weibo</a> </li>
+  
+</ul>
+<div class="clear"></div>
+<ul id="nav">
+  
+    <li> <a href="/">blog</a> </li>
+  
+
+  
+    <li><a href="/blog/archives">archives</a></li>
+  
+
+  
+    <li><a href="/about">about</a></li>
+  
+</ul>
+
+    <div id="main"> <div class="post-header">
+  
+    <h1 class="post-title">为Markdown添加数学公式</h1>
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-29T14:49:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
+</div>
+
+<div class="post-content"><p>如何在<code>Markdown</code>语言中加入数学公式。这个问题是我这两天一直在考虑的。通过<code>Google</code>搜索，以及自己分析研究。我确定了以下四个解决方案。他们都可以完美支持中文和数学公式。其中第四个方案，我个人认为是最方便的。</p>
+
+<p>下面说说我的初衷吧。我是一个狂热的<code>Markdown</code>拥趸。同时也是<code>nvALT</code>的重度使用者。我希望我所有的文章都可以存储在<code>nvALT</code>里面。前一阵子刚刚解决了<code>nvALT</code>加入图片的问题。现在突发奇想是不是也应该实现数学公式的问题？虽然目前没有需求，但是可以为过一段开始的研究生生活做一些技术储备嘛！呵呵。</p>
+
+<p><strong>NOTE!</strong> 看起来博客现实数学公式的功能还没实现…T T</p>
+
+<h2>方案1 没问题=)</h2>
+
+<p>第一个方案是通过<code>pandoc</code>这款程序来实现的。通过对于md的超集来解决。</p>
+
+<p>只需要在<code>markdown</code>文件中加入tex公式即可。
+<code>$\sum_i=a_i$</code> 就可以编译出来。在终端中使用如下代码。</p>
+
+<pre><code>pandoc thisfile.md -o anyName.pdf
+</code></pre>
+
+<p>就出来结果了。</p>
+
+<p>但是因为<code>latex</code>的一些原因，不支持中文 T T</p>
+
+<p><del>需要先编译成tex文件，然后进行一些修改，才能编译中文。（中文还没有办法）</del></p>
+
+<pre><code>pandoc -s thisfile.md -o anyName.tex
+修改一些参数
+xelatex anyName.tex -o anyName.pdf
+</code></pre>
+
+<p><del>就可以了。</del></p>
+
+<p>因为本人<code>latex</code>造诣有限，目前还没有找到解决方案。。。T T</p>
+
+<p><strong>Pandoc最好的选择是转换成HTML格式。可以完美支持中文，同时可以很好的显示数学代码。不过从使用的角度来说还是Marked的效果最好。</strong></p>
+
+<h2>方案2 支持中文</h2>
+
+<pre><code>&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>看到没在上面添加这个脚本链接就可以了。这回支持中文了。：）</p>
+
+<pre><code>(E=mc^2)，$$x_{1,2} = \frac{-b \pm \sqrt{b^2-4ac}}{2b}.$$
+</code></pre>
+
+<p>不过需要网络哦！</p>
+
+<p>注意的一点事，这个公式的<code>$</code>个数和<code>latex</code>标准不太一样哦！是两个啦！不支持行内公式。</p>
+
+<h2>方案3 支持中文</h2>
+
+<p>就是直接在这里写，但是可以通过<code>Marked</code>进行查看。因为Marked支持<code>MathJax</code>的渲染。<del>不过好像需要联网才行。</del></p>
+
+<p><code>nvALT</code>是可以使用外部编辑器的。所以通过<code>Marked</code>这款专门用来看<code>Markdown</code>语言的工具来进行实时浏览很方便。</p>
+
+<h2>方案4 最佳方案</h2>
+
+<p><code>Mou</code>竟然支持数学表达式！！！XD 只需要在两个<code>$$敲击代码$$</code>之间敲击代码即可。支持<code>Latex</code>的代码方式哦！！太好用了啦！！</p>
+
+<pre><code>$$\sum_{i\to 2}^i$$
+</code></pre>
+
+<p>是不是很酷呀！！</p>
+</div>
+
+
+<div class="post-single">
+  <div class="post-meta">
+    
+
+<span class="categories">
+  Categories:
+  
+    <a class='category' href='/blog/categories/markdown/'>Markdown</a>, <a class='category' href='/blog/categories/技术/'>技术</a>
+  
+</span>
+
+
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+  </div>
+  <div class="clear"></div>
+
+  
+    <div id="comments">
+      <h2>Comments</h1>
+      <div id="disqus_thread" aria-live="polite"></div>
+    </div>
+  
+</div>
+ </div>
+    <div id="footer">
+ <!--  <div class="panels">
+    <div class="license">
+      <h2>License</h2>
+      <p>如非特别声明，本 Blog 的文章由 ScorpioHW 创作，采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">知识共享署名-非商业性使用-相同方式共享 3.0 Unported 许可协议</a>进行许可。</p>
+    </div>
+
+    <div class="posts">
+      <h2>Recent Posts</h2>
+      <ul>
+        
+          <li>
+            <a href="/blog/2013/05/09/she-ying-de-yi-yi/">摄影的意义</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2013/05/09/mo-huan-zhi-yin/">魔幻之音</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2013/04/16/duan-zan-de-ting-liu/">短暂的停留</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2013/04/04/qing-lu-shi-%5B%3F%5D-chong-wen-hua/">青旅是一种文化</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2013/03/10/zhong-shen-zhi-di/">众神之地</a>
+          </li>
+        
+      </ul>
+    </div>
+
+    <div class="douban">
+      <h2>Reading</h2>
+      
+        <script type="text/javascript" src="http://www.douban.com/service/badge/takihiko/?show=collection&amp;select=favorite&amp;n=8&amp;columns=4&amp;hidelogo=yes&amp;hideself=yes&amp;cat=book" ></script>
+        <a href="http://www.douban.com/people/takihiko" class="view-douban">takihiko on douban.com&raquo;</a>
+      
+    </div>
+  </div> -->
+  <p class="powered">
+    如非特别声明，本 Blog 的文章由 ScorpioHW 创作，采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">知识共享署名-非商业性使用-相同方式共享 3.0 Unported 许可协议</a>进行许可。
+  </p>
+  <p class="powered">
+    Powered by <a href="http://octopress.org">Octopress</a> and <a href="https://github.com/iwinux/compbits">Compbits</a>
+  </p>
+</div>
+
+  </div> <!-- #wrapper end -->
+
+  
+
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'scorpiohw';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://scorpiohw.github.com/blog/2013/01/29/wei-markdowntian-jia-shu-xue-gong-shi/';
+        var disqus_url = 'http://scorpiohw.github.com/blog/2013/01/29/wei-markdowntian-jia-shu-xue-gong-shi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
