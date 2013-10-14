@@ -24,6 +24,14 @@ title: 统计学习方法BR-附录：距离、相似度和熵的度量方法总�
 <li>熵；</li>
 </ol>
 
+---
+
+【20131014日补充】：
+
+编辑距离：也叫Levenshtein距离，用来测量文本之间的距离。具体参见我的博文：[编辑距离：我和你到底有多远？（一）](http://arthur503.github.io/blog/2013/09/05/edit-distance-how-faraway-are-we-1.html)
+
+---
+
 #### 1. 欧氏距离（Euclidean distance）
 
 1.1 描述
@@ -385,3 +393,4 @@ Bhattacharyya系数是两个统计样本之间的重叠量的近似测量，可�
 * [Mahalanobis distance](http://en.wikipedia.org/wiki/Mahalanobis_distance)
 * [编辑距离：我和你到底有多远？（一）](http://arthur503.github.io/blog/2013/09/05/edit-distance-how-faraway-are-we-1.html)
 * [吴军. 数学之美 系列 12 - 余弦定理和新闻的分类](http://www.google.com.hk/ggblog/googlechinablog/2006/07/12_4010.html)
+* [编辑距离：我和你到底有多远？（一）](http://arthur503.github.io/blog/2013/09/05/edit-distance-how-faraway-are-we-1.html)

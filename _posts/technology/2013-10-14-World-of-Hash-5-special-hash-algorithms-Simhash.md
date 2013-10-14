@@ -35,6 +35,8 @@ title: 映射的世界之五：特殊哈希算法之相似哈希（SimHash）
 3. 使用32位二进制作为哈希指纹（即：用int存储）；
 4. 使用汉明距离来计算哈希值间距；
 
+关于汉明距离的介绍见我的博文：[统计学习方法BR-附录：距离、相似度和熵的度量方法总结](http://arthur503.github.io/blog/2013/10/05/Statistical-Methods-appendix-how-many-kind-of-distances.html)
+
 我的SimHash的项目地址见：[SimHash](https://github.com/arthur503/SimHash)
 
 main.java
@@ -189,3 +191,4 @@ SimHash.java
 
 * 《数学之美》- 吴军
 * [SimHash](https://github.com/arthur503/SimHash)
+* [统计学习方法BR-附录：距离、相似度和熵的度量方法总结](http://arthur503.github.io/blog/2013/10/05/Statistical-Methods-appendix-how-many-kind-of-distances.html)
