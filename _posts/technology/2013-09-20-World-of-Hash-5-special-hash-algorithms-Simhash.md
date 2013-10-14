@@ -35,12 +35,13 @@ title: 映射的世界之五：特殊哈希算法之相似哈希（SimHash）
 3. 使用32位二进制作为哈希指纹（即：用int存储）；
 4. 使用汉明距离来计算哈希值间距；
 
+我的SimHash的项目地址见：[SimHash](https://github.com/arthur503/SimHash)
+
 main.java
 
 	package com.arthur.simhash;
 
 	public class Main {
-
 		
 		public static void main(String[] argv){
 			String str1 = "this is string1";
@@ -52,13 +53,9 @@ main.java
 			System.out.println();
 			
 			//compare str1 and str2 for test.
-			sim.compareString(str1, str2);
-			
+			sim.compareString(str1, str2);			
 			
 		}
-
-
-		
 		
 	}
 
@@ -76,6 +73,8 @@ SimHash.java
 		 * In this method, use int(32 bits) to store hashcode.
 		 * use 1 as all words weight for simple reason.
 		 * use Hamming distance as hashcode distance.
+		 * 
+	 	 * @author arthur503
 		 */
 		public SimHash(){
 			
@@ -191,3 +190,4 @@ SimHash.java
 参考资料：
 
 * 《数学之美》- 吴军
+* [SimHash](https://github.com/arthur503/SimHash)
