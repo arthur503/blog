@@ -11,42 +11,6 @@ title: 统计学习方法BR-CH7：支持向量机
 2. 近似线性可分数据集：线性支持向量机
 3. 线性不可分数据集：非线性支持向量机
 
-```java
-	dka
-	dsakdjas
-	dksajk
-		dkads
-		dasjkds
-	djask
-```
-
-	dka
-	dsakdjas
-	dksajk
-		dkads
-		dasjkds
-	djask
-
-```Java
-dksa
-dsakd
-kdjska
-```
-
-```Java
-dksa
-dsakd
-kdjska
-```
-
-	test block
-	dksa
-	dsakd
-	kdjska
-
-
-
-
 
 
 二、线性可分支持向量机
