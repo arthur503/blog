@@ -4,7 +4,7 @@ title: Java基础：数据容器源码分析之BitSet
 ---
 之前在写布隆过滤器的时候，就想要一个管理位的class，当时是自己写的对位的处理。现在看到BitSet，对bit的操作实现的更舒服。
 
-##### 默认参数
+##### 一、默认参数
 
 BitSet中存储位的值所使用的word是long变量，也就是说，一个word有64个位。BitSet使用long数组存储。BitSet中的默认值如下：
 
@@ -24,7 +24,7 @@ BitSet中存储位的值所使用的word是long变量，也就是说，一个wor
 
 由于long存储64位值，因此每个word需要寻址位数为6（2^6 = 64）。
 
-##### 构造方法
+##### 二、构造方法
 
 BitSet构造方法有两种，空参数构建和int参数构建。空参数构建时默认为64个bit，有参数时按照参数设定的bit位数构建。代码如下：
 
@@ -48,7 +48,7 @@ BitSet构造方法有两种，空参数构建和int参数构建。空参数构�
 
 我们可以看到，BitSet的初始化参数可以为0，但不能为负数。若为空，默认初始化为BITS_PER_WORD=64位。
 
-##### 位操作
+##### 三、位操作
 
 BitSet中，对位的操作有两类，包括：取值和设值。
 
@@ -123,7 +123,7 @@ clear()方法为设定bitIndex为false，代码如下：
             clear(bitIndex);
     }
 
-flip方法为设定bitIndex为对应位的相反值，可以使用对应位与1异或的方法，代码如下：
+flip()方法为设定bitIndex为对应位的相反值，可以使用对应位与1异或的方法，代码如下：
 
     /**
      * Sets the bit at the specified index to the complement of its
@@ -146,7 +146,7 @@ flip方法为设定bitIndex为对应位的相反值，可以使用对应位与1�
         checkInvariants();
     }
 
-##### 位操作寻址和数组的扩展
+##### 四、位操作寻址和数组的扩展
 
 之前代码中已经看到，若要对位操作，先需要确定某位所在的word的wordIndex，方法如下：
 

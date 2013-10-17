@@ -1,7 +1,14 @@
 ---
 layout: default
-title: 映射的世界之五：特殊哈希算法之相似哈希（SimHash）
+title: 映射的世界之五：特殊哈希算法之相似哈希（SimHash）【有新材料补充，待完善】
 ---
+【新材料补充如下】
+http://www.wumii.com/topbar/173O3fyTh
+http://www.cnblogs.com/linecong/archive/2010/08/28/simhash.html
+[海量数据相似度计算之simhash和海明距](http://www.lanceyan.com/tech/arch/simhash_hamming_distance_similarity.html)
+[海量数据相似度计算之simhash短文本查找](http://www.lanceyan.com/tech/arch/simhash_hamming_distance_similarity2-html.html)
+---
+
 一、相似哈希介绍
 
 哈希算法一般作为信息指纹，用来鉴别两者是否是相同信息。在这些情况下，不同字符串的哈希值自然是越不同越好，尤其是相似的字符串的哈希值，最好是差距巨大，只改变一位也会导致哈希值的巨大变化，这样才更准确判断两个字符串是否不同。
