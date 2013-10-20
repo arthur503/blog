@@ -20,3 +20,6 @@ title: 《改变未来的九大算法》BR
 
 有时间的时候再看看其他的部分，不过也只能当做入门看。
 
+参考资料：
+
+* [ArPageRank](https://github.com/arthur503/ArPageRank)
