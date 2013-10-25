@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Java基础：Java中的关键字之transient和valatile
+title: Java基础：Java中的关键字之transient和volatile
 ---
 
 #### transient
