@@ -2,7 +2,7 @@
 layout: default
 title: 算法：快速排序
 ---
-Java代码如下，注释见代码：
+快速排序Java代码如下，需注意问题见代码注释：
 
 	package com.arthur.sort;
 
