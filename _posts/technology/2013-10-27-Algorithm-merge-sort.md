@@ -25,11 +25,12 @@ title: 算法：归并排序
 		}
 		
 		public int[] sort(int[] array, int low, int high){
-			System.out.println("Sort array. low:"+low+" high:"+high);//+StringUtils.arrayToString(array));
+			System.out.println("Sort array. low:"+low+" high:"+high);
 			
 			if(high-low <= 0){
 				return array; 
 			}
+			
 			if(high - low == 1){
 				if(array[low] <= array[high]){
 					return array;
@@ -39,7 +40,6 @@ title: 算法：归并排序
 				array[high] = tmp;
 				System.out.println("Sort result:"+StringUtils.arrayToString(array));
 			}
-
 			
 			if(high-low > 1){
 				int mid = (low + high)/2;
@@ -85,3 +85,7 @@ title: 算法：归并排序
 		
 	}
 
+
+参考资料：
+
+* 《大话数据结构》
