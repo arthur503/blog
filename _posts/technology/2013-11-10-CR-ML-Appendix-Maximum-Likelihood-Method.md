@@ -122,8 +122,8 @@ P(H=3,T=2|p=4/5) = C_{5}^{3}  * (4/5)^{3} * (1-4/5)^{2} = 0.2048
 
 参考资料：
 
-> [极大似然估计](http://baike.baidu.com/view/185250.htm)
-> [最大似然估计(Maximum likelihood estimation)](http://www.cnblogs.com/liliu/archive/2010/11/22/1883702.html)
-> [似然函数](http://baike.baidu.com/view/1864828.htm)
-> [最大似然估计](http://zh.wikipedia.org/zh/%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1)
-> [极大似然估计的朴素理解](http://www.zhizhihu.com/html/y2010/1520.html)
+* [极大似然估计](http://baike.baidu.com/view/185250.htm)
+* [最大似然估计(Maximum likelihood estimation)](http://www.cnblogs.com/liliu/archive/2010/11/22/1883702.html)
+* [似然函数](http://baike.baidu.com/view/1864828.htm)
+* [最大似然估计](http://zh.wikipedia.org/zh/%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1)
+* [极大似然估计的朴素理解](http://www.zhizhihu.com/html/y2010/1520.html)
