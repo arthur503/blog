@@ -8,7 +8,7 @@ Kullback–Leibler divergence也叫相对熵（relative entropy），是在概�
 
 1. 离散概率分布：
 
-若P和Q是离散的概率分布，则KL分歧计算公式为：
+若P和Q是离散的概率分布，则KL分歧（差异）计算公式为：
 <img src="http://upload.wikimedia.org/math/8/7/7/8770ad83aa7cc87d2ad9f5ca2579bea5.png">
 
 也就是：概率分布P与Q的对数差的期望。其中：
